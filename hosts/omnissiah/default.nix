@@ -41,18 +41,6 @@
     #    '';
     #  }
     #];
-
-    loader = {
-      grub = {
-        enable = true;
-        efiSupport = true;
-        useOSProber = true;
-        configurationLimit = 3;
-        device = "nodev";
-      };
-
-      efi.canTouchEfiVariables = true;
-    };
   };
 
   hardware = {

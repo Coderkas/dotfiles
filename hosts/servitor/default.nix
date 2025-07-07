@@ -15,7 +15,7 @@
 
   # Bootloader.
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_zen;
     kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
     initrd = {
       availableKernelModules = [
@@ -24,17 +24,6 @@
       ];
       luks.devices."luks-e57d3198-6f5b-42d9-a67b-a34a65b71897".device =
         "/dev/disk/by-uuid/e57d3198-6f5b-42d9-a67b-a34a65b71897";
-    };
-    loader = {
-      grub = {
-        enable = true;
-        efiSupport = true;
-        useOSProber = true;
-        configurationLimit = 3;
-        device = "nodev";
-      };
-
-      efi.canTouchEfiVariables = true;
     };
 
     extraModprobeConfig = ''
