@@ -16,7 +16,12 @@
 
   # Bootloader.
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos;
+    kernelPackages =
+      # changing to zen if a kernel version has some sort of regression
+      if pkgs.linuxPackages_cachyos.kernel.version == "6.15.4" then
+        pkgs.linuxPackages_zen
+      else
+        pkgs.linuxPackages_cachyos;
     kernel.sysctl = {
       "vm.max_map_count" = 16777216;
       "fs.file-max" = 524288;
