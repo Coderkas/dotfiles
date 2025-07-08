@@ -1,7 +1,5 @@
 {
   pkgs,
-  inputs,
-  system,
   hypr-pkgs,
   ...
 }:
@@ -12,6 +10,8 @@
     ./inputMethods.nix
   ];
 
+  # desktop portal stuff
+  # https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
   environment.pathsToLink = [
     "/share/xdg-desktop-portal"
     "/share/applications"

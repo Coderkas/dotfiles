@@ -11,22 +11,6 @@
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home/hypr";
       recursive = true;
     };
-
-    portal = {
-      enable = true;
-      xdgOpenUsePortal = true;
-      config = {
-        common.default = [ "gtk" ];
-        hyprland.default = [
-          "gtk"
-          "hyprland"
-        ];
-      };
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-        hypr-pkgs.portal
-      ];
-    };
   };
 
   home.packages = [ hypr-pkgs.picker ];
@@ -46,7 +30,7 @@
       source = ./modules/misc.conf
       source = ./modules/${host_name}.conf
     '';
-    systemd.variables = "--all";
+    systemd.variables = [ "--all" ];
   };
 
   programs.hyprlock = {
