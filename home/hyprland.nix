@@ -1,21 +1,41 @@
 {
-  inputs,
   host_name,
-  system,
   config,
+  hypr-pkgs,
+  pkgs,
   ...
 }:
 {
-  xdg.configFile."hypr/modules" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home/hypr";
-    recursive = true;
+  xdg = {
+    configFile."hypr/modules" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home/hypr";
+      recursive = true;
+    };
+
+    portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      config = {
+        common.default = [ "gtk" ];
+        hyprland.default = [
+          "gtk"
+          "hyprland"
+        ];
+      };
+      extraPortals = [
+        pkgs.xdg-desktop-portal-gtk
+        hypr-pkgs.portal
+      ];
+    };
   };
+
+  home.packages = [ hypr-pkgs.picker ];
 
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    package = inputs.hyprland.packages.${system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
+    package = null;
+    portalPackage = null;
     extraConfig = ''
       # You can split this configuration into multiple files
       # Create your files separately and then link them to this file like this:
@@ -26,10 +46,12 @@
       source = ./modules/misc.conf
       source = ./modules/${host_name}.conf
     '';
+    systemd.variables = "--all";
   };
 
   programs.hyprlock = {
     enable = true;
+    package = hypr-pkgs.lock;
     settings = {
       general = {
         disable_loading_bar = true;
@@ -67,7 +89,7 @@
   services = {
     hyprpaper = {
       enable = true;
-      package = inputs.hyprpaper.packages.${system}.default;
+      package = hypr-pkgs.paper;
       settings = {
         ipc = "on";
         preload = [ "/home/lorkas/Pictures/AmeIna.png" ];
@@ -77,6 +99,7 @@
 
     hypridle = {
       enable = true;
+      package = hypr-pkgs.idle;
       settings = {
         general = {
           lock_cmd = "pidof hyprlock || hyprlock";

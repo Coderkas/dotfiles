@@ -34,7 +34,6 @@
     };
 
     packages = [
-      inputs.hyprpicker.packages.${system}.default
       inputs.ags.packages.${system}.io
       # So that the power menu is in path and gets recognized by rofi
       pkgs.rofi-power-menu
@@ -72,22 +71,6 @@
           "text/xml"
         ];
       };
-    };
-
-    portal = {
-      enable = true;
-      xdgOpenUsePortal = true;
-      config = {
-        common.default = [ "gtk" ];
-        hyprland.default = [
-          "gtk"
-          "hyprland"
-        ];
-      };
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland
-      ];
     };
   };
 
@@ -207,12 +190,6 @@
         inputs.ags.packages.${system}.tray
         inputs.ags.packages.${system}.wireplumber
         inputs.ags.packages.${system}.apps
-        inputs.ags.packages.${system}.notifd
-        pkgs.typescript
-        pkgs.dart-sass
-        pkgs.gobject-introspection
-        pkgs.glib
-        pkgs.wireplumber
       ];
     };
 

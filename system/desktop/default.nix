@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   system,
+  hypr-pkgs,
   ...
 }:
 {
@@ -20,8 +21,8 @@
     # Hyprland
     hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${system}.hyprland;
-      portalPackage = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
+      package = hypr-pkgs.land;
+      portalPackage = hypr-pkgs.portal;
     };
 
     dconf.enable = true;
@@ -39,7 +40,7 @@
     };
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
-      inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland
+      hypr-pkgs.portal
     ];
   };
 
