@@ -206,6 +206,7 @@
         "drun"
         "run"
         "window"
+        "combi"
       ];
       plugins = [
         pkgs.rofi-calc
