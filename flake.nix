@@ -69,7 +69,7 @@
       system = "x86_64-linux";
       # quickly switch between stable and unstable hyprland packages
       hypr-pkgs =
-        if true then
+        if false then
           {
             land = inputs.hyprland.packages.${system}.hyprland;
             portal = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
