@@ -66,6 +66,7 @@
     gnutar
     wget
     cabextract
+    ffmpeg
     # Latex/markdown
     glow
     tectonic-unwrapped

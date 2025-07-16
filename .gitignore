@@ -5,4 +5,4 @@ gtk-4.0/*
 systemd/*
 environment.d/*
 starship.toml
-
+assets

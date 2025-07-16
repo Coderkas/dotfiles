@@ -4,6 +4,7 @@
 
 {
   pkgs,
+  config,
   ...
 }:
 
@@ -41,6 +42,30 @@
     #    '';
     #  }
     #];
+  };
+
+  systemd.services = {
+    hydrate-reminder = {
+      path = [
+        pkgs.libnotify
+      ];
+      script = ''notify-send -i /home/lorkas/dotfiles/assets/chug.png "Reminder" "Stay hydrated!"; mpv ~/dotfiles/assets/poi.mp3'';
+      startAt = "*-*-* *:30:00";
+    };
+    rsi-reminder = {
+      path = [
+        pkgs.libnotify
+      ];
+      script = ''notify-send -i /home/lorkas/dotfiles/assets/peek.png "Reminder" "Posture check!"; mpv ~/dotfiles/assets/poi.mp3'';
+      startAt = "hourly";
+    };
+    shutdown-reminder = {
+      path = [
+        pkgs.libnotify
+      ];
+      script = ''notify-send -i /home/lorkas/dotfiles/assets/stare.png -u critical "Attention" "If you dont shutdown now you are gonna regret it in 9 hours!"; mpv ~/dotfiles/assets/panic.ogg'';
+      startAt = "*-*-* 02:00:00";
+    };
   };
 
   hardware = {

@@ -25,6 +25,7 @@
     obsidian
     libreoffice
     gimp
+    inkscape-with-extensions
     helvum
     gnome-clocks
     element-desktop
