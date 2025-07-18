@@ -6,7 +6,37 @@
   system,
   ...
 }:
+let
+  dev_pkgs = [
+    # Servers
+    pkgs.clang-tools
+    pkgs.cmake-language-server
+    pkgs.gopls
+    pkgs.rust-analyzer
+    pkgs.bash-language-server
+    pkgs.lua-language-server
+    inputs.nil.packages.${system}.default
+    # deno - build failure 16.06.2025
+    pkgs.typescript-language-server
+    pkgs.vscode-langservers-extracted
+    pkgs.basedpyright
+    pkgs.ols
+    pkgs.ltex-ls-plus
+    pkgs.texlab
 
+    # Formatters/linters
+    pkgs.rustfmt
+    pkgs.nixfmt-rfc-style
+    pkgs.stylua
+    pkgs.prettierd
+    pkgs.beautysh
+    pkgs.markdown-oxide
+    pkgs.ruff
+
+    # Nix docs query in the terminal
+    pkgs.manix
+  ];
+in
 {
   imports = [ ./desktop.nix ];
 
@@ -63,6 +93,10 @@
       "info"
       "devdoc"
     ];
+
+    # because just adding it to nvim packages doesnt expose it to user
+    packages = dev_pkgs;
+
   };
 
   manual = {
@@ -130,35 +164,7 @@
     neovim = {
       enable = true;
       defaultEditor = true;
-      extraPackages = with pkgs; [
-        # Servers
-        clang-tools
-        cmake-language-server
-        gopls
-        rust-analyzer
-        bash-language-server
-        lua-language-server
-        inputs.nil.packages.${system}.default
-        # deno - build failure 16.06.2025
-        typescript-language-server
-        vscode-langservers-extracted
-        basedpyright
-        ols
-        ltex-ls-plus
-        texlab
-
-        # Formatters/linters
-        rustfmt
-        nixfmt-rfc-style
-        stylua
-        prettierd
-        beautysh
-        markdown-oxide
-        ruff
-
-        # Nix docs query in the terminal
-        manix
-      ];
+      extraPackages = dev_pkgs;
       plugins = with pkgs.vimPlugins; [
         plenary-nvim
         comment-nvim

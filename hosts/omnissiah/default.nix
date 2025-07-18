@@ -150,6 +150,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # System specific
+    waydroid-helper
     vesktop
     anki
     amdgpu_top
