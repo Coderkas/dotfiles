@@ -141,7 +141,7 @@
 
   # Virtualisation
   virtualisation = {
-    waydroid.enable = true;
+    waydroid.enable = false;
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
   };
@@ -150,7 +150,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # System specific
-    waydroid-helper
     vesktop
     anki
     amdgpu_top
