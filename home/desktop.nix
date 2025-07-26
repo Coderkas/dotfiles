@@ -98,10 +98,10 @@
       size = 24;
     };
     font.name = "CascadiaCode";
-    gkt3.extraConfig = {
+    gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
     };
-    gkt4.extraConfig = {
+    gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
     };
   };
