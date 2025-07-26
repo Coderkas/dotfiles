@@ -26,6 +26,7 @@ let
 
     # Formatters/linters
     pkgs.rustfmt
+    pkgs.clippy
     pkgs.nixfmt-rfc-style
     pkgs.stylua
     pkgs.prettierd
