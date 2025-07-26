@@ -76,7 +76,7 @@
 
   qt = {
     enable = true;
-    platformTheme.name = "gtk3";
+    platformTheme.name = "gtk";
   };
 
   gtk = {
@@ -98,6 +98,12 @@
       size = 24;
     };
     font.name = "CascadiaCode";
+    gkt3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gkt4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
   };
 
   programs = {

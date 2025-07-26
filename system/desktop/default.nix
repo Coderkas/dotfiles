@@ -25,7 +25,20 @@
       portalPackage = hypr-pkgs.portal;
     };
 
-    dconf.enable = true;
+    dconf = {
+      enable = true;
+      profiles.user.databases = [
+        {
+          settings = {
+            "org/gnome/desktop/interface" = {
+              color-scheme = "prefer-dark";
+              gtk-theme = "Gruvbox-Dark";
+              icon-theme = "Gruvbox-Plus-Dark";
+            };
+          };
+        }
+      ];
+    };
   };
 
   xdg.portal = {
