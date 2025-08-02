@@ -80,10 +80,11 @@ return {
     },
   },
   settings = {
-    ['rust_analyzer'] = {
-      checkOnSave = {
+    ['rust-analyzer'] = {
+      check = {
         command = 'clippy',
       },
+      checkOnSave = true,
     },
   },
   before_init = function(init_params, config)

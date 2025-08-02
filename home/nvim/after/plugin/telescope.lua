@@ -30,7 +30,7 @@ local manix_ops = {
 local builtin = require 'telescope.builtin'
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind live grep' })
+vim.keymap.set('n', '<leader>fl', builtin.live_grep, { desc = '[F]ind [L]ive grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffers' })
 vim.keymap.set('n', '<leader>fk', builtin.keymaps, { desc = '[F]ind [K]eymaps' })
 vim.keymap.set('n', '<leader>fo', builtin.oldfiles, { desc = '[F]ind [O]ldfiles' })
@@ -44,11 +44,13 @@ vim.keymap.set('n', '<leader>fgb', builtin.git_bcommits, { desc = '[F]ind [G]it 
 vim.keymap.set('n', '<leader>fgs', builtin.git_status, { desc = '[F]ind [G]it [S]tatus' })
 
 -- Use telescope for lsp stuff
-vim.keymap.set('n', 'grr', builtin.lsp_references, { desc = '[G]oto [R]eferences' })
-vim.keymap.set('n', 'gri', builtin.lsp_implementations, { desc = '[G]oto [I]mplementations' })
-vim.keymap.set('n', 'grr', builtin.lsp_definitions, { desc = '[G]oto [D]efinitions' })
-vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { desc = '[O]pen document symbols' })
-vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { desc = '[O]pen workspace symbols' })
+vim.keymap.set('n', '<leader>ti', builtin.lsp_incoming_calls, { desc = '[T]elescope [I]ncoming' })
+vim.keymap.set('n', '<leader>to', builtin.lsp_outgoing_calls, { desc = '[T]elescope [O]utgoing' })
+vim.keymap.set('n', '<leader>tr', builtin.lsp_references, { desc = '[T]elescope [R]eferences' })
+vim.keymap.set('n', '<leader>tI', builtin.lsp_implementations, { desc = '[T]elescope [I]mplementations' })
+vim.keymap.set('n', '<leader>td', builtin.lsp_definitions, { desc = '[T]elescope [D]efinitions' })
+vim.keymap.set('n', '<leader>tD', builtin.lsp_document_symbols, { desc = '[T]elescope [D]ocument symbols' })
+vim.keymap.set('n', '<leader>tW', builtin.lsp_dynamic_workspace_symbols, { desc = '[T]elescope [W]orkspace symbols' })
 
 -- Me grok brain
 -- Me copy function from main repo and switch veritcal and horizontal cmd
