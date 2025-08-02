@@ -27,10 +27,9 @@
       NIXOS_OZONE_WL = "1";
       QT_QPA_PLATFORM = "wayland";
       XDG_SESSION_TYPE = "wayland";
-      # causes issues with easy anti cheat
+      # not adding ",x11,windos" causes issues with easy anti cheat
       SDL_VIDEODRIVER = "wayland,x11,windows";
       BROWSER = "firefox";
-      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
     };
 
     packages = [
