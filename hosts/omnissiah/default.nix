@@ -26,6 +26,7 @@
     kernel.sysctl = {
       "vm.max_map_count" = 16777216;
       "fs.file-max" = 524288;
+      "kernel.split_lock_mitigate" = 0;
     };
     kernelParams = [
       # https://gitlab.freedesktop.org/drm/amd/-/issues/2516#note_2119750
