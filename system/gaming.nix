@@ -61,5 +61,6 @@
     prismlauncher
     linuxConsoleTools
     jstest-gtk
+    vkbasalt
   ];
 }

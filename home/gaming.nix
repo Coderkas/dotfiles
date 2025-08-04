@@ -6,6 +6,7 @@
 {
   home.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+    PROTON_ENABLE_WAYLAND = "1";
     PROTON_NO_WM_DECORATION = "1";
     PROTON_PREFER_SDL_INPUT = "1";
     WINE_NO_WM_DECORATION = "1";
