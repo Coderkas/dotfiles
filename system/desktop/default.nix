@@ -116,6 +116,8 @@
     wl-clipboard
     via
 
+    kdePackages.okular
+
     # Change monitor config
     xorg.xrandr
     wlr-randr
