@@ -1,6 +1,8 @@
 {
   osConfig,
   pkgs,
+  inputs,
+  system,
   ...
 }:
 {
@@ -24,13 +26,16 @@
       gamescope
       gamemode
       protonup-qt
-      proton-ge-custom
-      proton-cachyos
     ];
     protonPackages = [
       pkgs.proton-ge-bin
     ];
     steamPackage = osConfig.programs.steam.package;
-    winePackages = [ pkgs.wineWowPackages.waylandFull ];
+    winePackages = [
+      pkgs.wineWowPackages.waylandFull
+      inputs.nix-gaming.packages.${system}.wine-ge
+      inputs.nix-gaming.packages.${system}.wine-tkg
+      inputs.nix-gaming.packages.${system}.wine-cachyos
+    ];
   };
 }

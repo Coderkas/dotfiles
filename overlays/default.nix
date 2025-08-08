@@ -20,14 +20,14 @@
         patches = (oldAttrs.patches or [ ]) ++ [ ./manix.patch ];
       });
       # Bleeding edge lutris 10.06.2025
-      #lutris-unwrapped = prev.lutris-unwrapped.overrideAttrs (oldAttrs: {
-      #  src = final.fetchFromGitHub {
-      #    owner = "lutris";
-      #    repo = "lutris";
-      #    rev = "ff961daee1c3419f9bccc4256eff28b23e37d73b";
-      #    hash = "sha256-9oR87fGx9BlXjk0P5HHYBzhVhK1FCu3A1FVTeETaVDI=";
-      #  };
-      #});
+      lutris-unwrapped = prev.lutris-unwrapped.overrideAttrs (oldAttrs: {
+        src = final.fetchFromGitHub {
+          owner = "lutris";
+          repo = "lutris";
+          rev = "96779137fe8ac684c89f4090e60fb8f9f8839d38";
+          hash = "sha256-UoSj/72i4BHg43tmXr7UTQIXY0o6pVnmezc7wBpEAYQ=";
+        };
+      });
       # Get additional properties for media files (see nautilus entry in nixos wiki)
       nautilus = prev.nautilus.overrideAttrs (oldAttrs: {
         buildInputs =

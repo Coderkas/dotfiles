@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  inputs,
+  system,
+  ...
+}:
 {
   programs = {
     gamescope = {
@@ -52,6 +57,9 @@
     (heroic.override {
       extraPkgs = pkgs: [ pkgs.gamescope ];
     })
+    inputs.nix-gaming.packages.${system}.wine-ge
+    inputs.nix-gaming.packages.${system}.wine-tkg
+    inputs.nix-gaming.packages.${system}.wine-cachyos
     wineWowPackages.waylandFull
     mangohud
     steamtinkerlaunch

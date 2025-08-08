@@ -61,6 +61,7 @@
     nil.url = "github:oxalica/nil";
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    nix-gaming.url = "github:fufexan/nix-gaming";
   };
 
   outputs =
