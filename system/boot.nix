@@ -23,7 +23,7 @@
     };
     lanzaboote = {
       enable = true;
-      pkiBundle = "var/lib/sbctl";
+      pkiBundle = "/var/lib/sbctl";
     };
   };
 
