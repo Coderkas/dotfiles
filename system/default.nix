@@ -63,6 +63,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    signal-desktop
     # Official rust tldr client
     tlrc
     # Extracting things

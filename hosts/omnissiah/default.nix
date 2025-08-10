@@ -33,6 +33,11 @@
       "gpu_sched.sched.policy=0"
     ];
 
+    loader.grub.extraGrubInstallArgs = [
+      "--modules=\"tpm\""
+      "--disable-shim-lock"
+    ];
+
     # Enable LOGITECH_FF option to make controller work if used kernel has it not enabled by default
     #kernelPatches = [
     #  {
@@ -154,6 +159,7 @@
     vesktop
     anki
     amdgpu_top
+    sbctl
   ];
 
   # This value determines the NixOS release from which the default

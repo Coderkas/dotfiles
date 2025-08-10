@@ -59,7 +59,7 @@
         name = "Immersion";
         genericName = "Web Browser";
         icon = "firefox";
-        exec = "firefox %U -P Immersion";
+        exec = "firefox --name immersion --class immersion -P Immersion %U";
         terminal = false;
         categories = [
           "Network"
@@ -69,6 +69,9 @@
           "text/html"
           "text/xml"
         ];
+        settings = {
+          "StartupWMClass" = "immersion";
+        };
       };
     };
   };
