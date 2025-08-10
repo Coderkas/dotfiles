@@ -19,11 +19,11 @@
 
       systemd-boot.enable = lib.mkForce false;
       efi.canTouchEfiVariables = true;
-      timeout = 0;
     };
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
+      configurationLimit = 3;
     };
   };
 
