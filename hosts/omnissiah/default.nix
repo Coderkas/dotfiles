@@ -34,7 +34,7 @@
     ];
 
     loader.grub.extraGrubInstallArgs = [
-      "--modules=\"tpm\""
+      "--modules=tpm"
       "--disable-shim-lock"
     ];
 
