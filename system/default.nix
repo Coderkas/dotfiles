@@ -60,6 +60,8 @@
     nerd-fonts.caskaydia-cove
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
+    ipaexfont
+    jigmo
   ];
 
   environment.systemPackages = with pkgs; [
@@ -87,15 +89,11 @@
     # Compiler and runtimes
     clang
     cmake
-    dotnet-sdk_8
-    dotnet-runtime_8
-    dotnet-aspnetcore_8
     gcc
     gdb
     go
     gnumake
     mono
-    ninja
     nodePackages_latest.nodejs
     odin
     rustc
