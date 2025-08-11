@@ -1109,7 +1109,8 @@
         "lanzaboote": "lanzaboote",
         "nil": "nil",
         "nix-gaming": "nix-gaming",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_5",
+        "umu": "umu"
       }
     },
     "rust-overlay": {
@@ -1166,6 +1167,28 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default-linux",
+        "type": "github"
+      }
+    },
+    "umu": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "packaging/nix",
+        "lastModified": 1754522985,
+        "narHash": "sha256-hJJsCMuWacxiCUXbK6uwf6Bl+WjYjLogkUutpaZTjUI=",
+        "owner": "Open-Wine-Components",
+        "repo": "umu-launcher",
+        "rev": "61ce5572d092764a75621eeb9dd4f90d3c0fe601",
+        "type": "github"
+      },
+      "original": {
+        "dir": "packaging/nix",
+        "owner": "Open-Wine-Components",
+        "repo": "umu-launcher",
         "type": "github"
       }
     },
