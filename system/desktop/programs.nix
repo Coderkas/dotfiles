@@ -4,26 +4,17 @@
     java.enable = true;
     seahorse.enable = true;
     kdeconnect.enable = true;
-
-    nix-ld = {
-      enable = true;
-      libraries = with pkgs; [
-        clang
-        clang-tools
-      ];
-    };
-
     thunderbird.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
+    signal-desktop
     keepassxc
     firefox
     # maybe necessary for some notification stuff?
     libnotify
     discord
     obsidian
-    libreoffice
     gimp
     inkscape-with-extensions
     helvum

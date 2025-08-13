@@ -58,11 +58,6 @@
   };
 
   services = {
-    # Configure keymap in X11
-    xserver = {
-      enable = true;
-    };
-
     pipewire = {
       enable = true;
       alsa.enable = true;

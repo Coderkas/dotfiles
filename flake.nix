@@ -71,6 +71,8 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nvf.url = "github:notashelf/nvf";
   };
 
   outputs =
@@ -97,14 +99,31 @@
             lock = inputs.nixpkgs.legacyPackages.${system}.hyprlock;
             idle = inputs.nixpkgs.legacyPackages.${system}.hypridle;
           };
+
+      nvfim = inputs.nvf.lib.neovimConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = {
+          inherit system;
+          myInputs = inputs;
+        };
+        modules = [ ./nvf ];
+      };
     in
     {
+      # for resting package without rebuilding system
+      nvfim-test = nvfim.neovim;
+
       nixosConfigurations = {
         omnissiah = nixpkgs.lib.nixosSystem {
           system = system;
           specialArgs = {
             host_name = "omnissiah";
-            inherit inputs system hypr-pkgs;
+            inherit
+              inputs
+              system
+              hypr-pkgs
+              nvfim
+              ;
           };
           modules = [
             ./hosts/omnissiah
@@ -119,7 +138,12 @@
           system = system;
           specialArgs = {
             host_name = "servitor";
-            inherit inputs system hypr-pkgs;
+            inherit
+              inputs
+              system
+              hypr-pkgs
+              nvfim
+              ;
           };
           modules = [
             ./hosts/servitor

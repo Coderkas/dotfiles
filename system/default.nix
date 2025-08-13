@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, nvfim, ... }:
 {
   imports = [
     ./boot.nix
@@ -65,7 +65,10 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    signal-desktop
+    # nvf neovim package
+    nvfim.neovim
+    # nix options and package searcher
+    manix
     # Official rust tldr client
     tlrc
     # Extracting things
@@ -86,20 +89,5 @@
     # File type detection and pdf rendering for other applications like yazi
     file
     poppler_utils
-    # Compiler and runtimes
-    clang
-    cmake
-    gcc
-    gdb
-    go
-    gnumake
-    mono
-    nodePackages_latest.nodejs
-    odin
-    rustc
-    cargo
-    python3
-    valgrind
-    mars-mips
   ];
 }

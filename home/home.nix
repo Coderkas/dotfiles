@@ -1,43 +1,9 @@
 {
   config,
   pkgs,
-  inputs,
   host_name,
-  system,
   ...
 }:
-let
-  dev_pkgs = [
-    # Servers
-    pkgs.clang-tools
-    pkgs.cmake-language-server
-    pkgs.gopls
-    pkgs.rust-analyzer
-    pkgs.bash-language-server
-    pkgs.lua-language-server
-    inputs.nil.packages.${system}.default
-    # deno - build failure 16.06.2025
-    pkgs.typescript-language-server
-    pkgs.vscode-langservers-extracted
-    pkgs.basedpyright
-    pkgs.ols
-    pkgs.ltex-ls-plus
-    pkgs.texlab
-
-    # Formatters/linters
-    pkgs.rustfmt
-    pkgs.clippy
-    pkgs.nixfmt-rfc-style
-    pkgs.stylua
-    pkgs.prettierd
-    pkgs.beautysh
-    pkgs.markdown-oxide
-    pkgs.ruff
-
-    # Nix docs query in the terminal
-    pkgs.manix
-  ];
-in
 {
   imports = [ ./desktop.nix ];
 
@@ -94,10 +60,6 @@ in
       "info"
       "devdoc"
     ];
-
-    # because just adding it to nvim packages doesnt expose it to user
-    packages = dev_pkgs;
-
   };
 
   manual = {
@@ -160,43 +122,6 @@ in
       settings = {
         "$schema" = "https://starship.rs/config-schema.json";
       };
-    };
-
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      extraPackages = dev_pkgs;
-      plugins = with pkgs.vimPlugins; [
-        plenary-nvim
-        comment-nvim
-        gitsigns-nvim
-        which-key-nvim
-        telescope-nvim
-        telescope-fzf-native-nvim
-        telescope-ui-select-nvim
-        telescope-manix
-        nvim-web-devicons
-        conform-nvim
-        blink-cmp
-        friendly-snippets
-        luasnip
-        gruvbox-nvim
-        vim-suda
-        vimtex
-        nvim-treesitter.withAllGrammars
-        nvim-treesitter-textobjects
-        nvim-treesitter-endwise
-        mini-ai
-        mini-surround
-        mini-splitjoin
-        vim-sleuth
-      ];
-      viAlias = true;
-      vimAlias = true;
-      vimdiffAlias = true;
-      withNodeJs = true;
-      withPython3 = true;
-      withRuby = true;
     };
 
     fd = {

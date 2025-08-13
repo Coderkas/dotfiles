@@ -109,8 +109,9 @@
   };
 
   programs = {
+    # maybe get rid of later
     kitty = {
-      enable = true;
+      enable = false;
       themeFile = "GruvboxMaterialDarkHard";
       extraConfig = ''
         window_margin_width 10
