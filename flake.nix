@@ -115,12 +115,12 @@
 
       nixosConfigurations = {
         omnissiah = nixpkgs.lib.nixosSystem {
-          system = system;
+          inherit system;
           specialArgs = {
             host_name = "omnissiah";
             inherit
-              inputs
               system
+              inputs
               hypr-pkgs
               nvfim
               ;
@@ -130,17 +130,19 @@
             ./system
             ./system/desktop
             ./home
+            ./overlays
             inputs.chaotic.nixosModules.default
-            (import ./overlays)
+            inputs.home-manager.nixosModules.home-manager
+            inputs.lanzaboote.nixosModules.lanzaboote
           ];
         };
         servitor = nixpkgs.lib.nixosSystem {
-          system = system;
+          inherit system;
           specialArgs = {
             host_name = "servitor";
             inherit
-              inputs
               system
+              inputs
               hypr-pkgs
               nvfim
               ;
@@ -150,7 +152,9 @@
             ./system
             ./system/desktop
             ./home
-            (import ./overlays)
+            ./overlays
+            inputs.home-manager.nixosModules.home-manager
+            inputs.lanzaboote.nixosModules.lanzaboote
           ];
         };
       };

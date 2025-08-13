@@ -1,11 +1,9 @@
 {
   pkgs,
   lib,
-  inputs,
   ...
 }:
 {
-  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
   boot = {
     loader = {
       #grub = {
