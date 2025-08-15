@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   services = {
     # Configure keymap in X11
     xserver = {
@@ -17,9 +18,9 @@
       enable = true;
       fcitx5 = {
         waylandFrontend = true;
-        addons = with pkgs; [
-          fcitx5-mozc-ut
-          fcitx5-gtk
+        addons = [
+          pkgs.fcitx5-mozc-ut
+          pkgs.fcitx5-gtk
         ];
         settings = {
           inputMethod = {

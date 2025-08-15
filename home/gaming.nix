@@ -20,12 +20,12 @@
 
   programs.lutris = {
     enable = true;
-    extraPackages = with pkgs; [
-      mangohud
-      winetricks
-      gamescope
-      gamemode
-      protonup-qt
+    extraPackages = [
+      pkgs.mangohud
+      pkgs.winetricks
+      pkgs.gamescope
+      pkgs.gamemode
+      pkgs.protonup-qt
     ];
     protonPackages = [
       pkgs.proton-ge-bin

@@ -51,8 +51,8 @@
         "hyprland"
       ];
     };
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
       hypr-pkgs.portal
     ];
   };
@@ -81,9 +81,9 @@
       };
     };
 
-    dbus.packages = with pkgs; [
-      gcr
-      gnome-settings-daemon
+    dbus.packages = [
+      pkgs.gcr
+      pkgs.gnome-settings-daemon
     ];
   };
 
@@ -100,24 +100,24 @@
     pam.services.hyprlock = { };
   };
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     # Desktop environment
-    xdg-utils
-    wayfreeze
-    grim
-    slurp
-    tesseract
-    kdePackages.xwaylandvideobridge
-    wl-clipboard
-    via
+    pkgs.xdg-utils
+    pkgs.wayfreeze
+    pkgs.grim
+    pkgs.slurp
+    pkgs.tesseract
+    pkgs.kdePackages.xwaylandvideobridge
+    pkgs.wl-clipboard
+    pkgs.via
 
-    kdePackages.okular
+    pkgs.kdePackages.okular
 
     # Change monitor config
-    xorg.xrandr
-    wlr-randr
+    pkgs.xorg.xrandr
+    pkgs.wlr-randr
     # Event viewer
-    wev
-    xorg.xev
+    pkgs.wev
+    pkgs.xorg.xev
   ];
 }

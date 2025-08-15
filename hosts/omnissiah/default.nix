@@ -149,11 +149,11 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     # System specific
-    vesktop
-    anki
-    amdgpu_top
+    pkgs.vesktop
+    pkgs.anki
+    pkgs.amdgpu_top
   ];
 
   # This value determines the NixOS release from which the default

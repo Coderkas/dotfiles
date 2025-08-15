@@ -2,7 +2,6 @@
   host_name,
   config,
   hypr-pkgs,
-  pkgs,
   ...
 }:
 {

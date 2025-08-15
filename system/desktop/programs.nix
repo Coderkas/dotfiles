@@ -7,22 +7,22 @@
     thunderbird.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    signal-desktop
-    keepassxc
-    firefox
+  environment.systemPackages = [
+    pkgs.signal-desktop
+    pkgs.keepassxc
+    pkgs.firefox
     # maybe necessary for some notification stuff?
-    libnotify
-    discord
-    obsidian
-    gimp
-    inkscape-with-extensions
-    helvum
-    gnome-clocks
-    element-desktop
+    pkgs.libnotify
+    pkgs.discord
+    pkgs.obsidian
+    pkgs.gimp
+    pkgs.inkscape-with-extensions
+    pkgs.helvum
+    pkgs.gnome-clocks
+    pkgs.element-desktop
 
     # Gnome files with plugin for previewer
-    nautilus
-    sushi
+    pkgs.nautilus
+    pkgs.sushi
   ];
 }

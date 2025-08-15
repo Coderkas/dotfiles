@@ -53,23 +53,23 @@
     uinput.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    (heroic.override {
+  environment.systemPackages = [
+    (pkgs.heroic.override {
       extraPkgs = pkgs: [ pkgs.gamescope ];
     })
     inputs.nix-gaming.packages.${system}.wine-ge
     inputs.nix-gaming.packages.${system}.wine-tkg
     inputs.nix-gaming.packages.${system}.wine-cachyos
     inputs.umu.packages.${system}.default
-    wineWowPackages.waylandFull
-    mangohud
-    steamtinkerlaunch
-    protonup-qt
-    winetricks
-    r2modman
-    prismlauncher
-    linuxConsoleTools
-    jstest-gtk
-    vkbasalt
+    pkgs.wineWowPackages.waylandFull
+    pkgs.mangohud
+    pkgs.steamtinkerlaunch
+    pkgs.protonup-qt
+    pkgs.winetricks
+    pkgs.r2modman
+    pkgs.prismlauncher
+    pkgs.linuxConsoleTools
+    pkgs.jstest-gtk
+    pkgs.vkbasalt
   ];
 }

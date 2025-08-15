@@ -29,9 +29,7 @@
       ls = "eza";
       cd = "z";
       grep = "rg";
-      icat = "kitten icat";
       cat = "bat";
-      sshk = "kitten ssh";
       fvi = "nvim $(fzf)";
       nixc = "nix-collect-garbage -d && sudo nix-collect-garbage -d";
       # add untracked files and rebuild system
@@ -40,10 +38,6 @@
       nixu = "~/dotfiles/nix.sh 2 '${host_name}'";
       dot = "z ~/dotfiles && fvi";
       nt = "z ~/Sync/Obsidian-Vault && fvi";
-      # cd into projects folder, select working directory and interactively open file in nvim
-      prse = "z $(fd --ignore -t d -c never . ~/Projects | fzf) && fvi";
-      prs = "z $(fd --ignore -t d -c never . ~/Projects | fzf)";
-      prg = "z ~/Projects";
       gaa = "git add .";
       gac = "git add . && git commit -m ";
       gc = "git commit -m ";
@@ -71,11 +65,6 @@
     userDirs = {
       enable = true;
       createDirectories = true;
-    };
-
-    configFile."nvim" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home/nvim";
-      recursive = true;
     };
   };
 
@@ -107,11 +96,11 @@
       plugins = [
         {
           name = "fzf.fish";
-          src = pkgs.fishPlugins.fzf-fish.src;
+          inherit (pkgs.fishPlugins.fzf-fish) src;
         }
         {
           name = "forgit";
-          src = pkgs.fishPlugins.forgit.src;
+          inherit (pkgs.fishPlugins.forgit) src;
         }
       ];
 
@@ -139,11 +128,11 @@
     bat = {
       enable = true;
       config.theme = "gruvbox-dark";
-      extraPackages = with pkgs.bat-extras; [
-        batdiff
-        batgrep
-        batman
-        batpipe
+      extraPackages = [
+        pkgs.bat-extras.batdiff
+        pkgs.bat-extras.batgrep
+        pkgs.bat-extras.batman
+        pkgs.bat-extras.batpipe
       ];
     };
 

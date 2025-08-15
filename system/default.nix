@@ -50,44 +50,46 @@
     wirelessRegulatoryDatabase = true;
   };
 
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-cjk-serif
-    noto-fonts-color-emoji
-    nerd-fonts.iosevka
-    nerd-fonts.iosevka-term
-    nerd-fonts.caskaydia-cove
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.symbols-only
-    ipaexfont
-    jigmo
+  fonts.packages = [
+    pkgs.noto-fonts
+    pkgs.noto-fonts-cjk-sans
+    pkgs.noto-fonts-cjk-serif
+    pkgs.noto-fonts-color-emoji
+    pkgs.nerd-fonts.iosevka
+    pkgs.nerd-fonts.iosevka-term
+    pkgs.nerd-fonts.caskaydia-cove
+    pkgs.nerd-fonts.jetbrains-mono
+    pkgs.nerd-fonts.symbols-only
+    pkgs.ipaexfont
+    pkgs.jigmo
   ];
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     # nvf neovim package
     nvfim.neovim
     # nix options and package searcher
-    manix
+    pkgs.manix
     # Official rust tldr client
-    tlrc
+    pkgs.tlrc
     # Extracting things
-    curl
-    unzip
-    p7zip
-    unrar
-    gnutar
-    wget
-    cabextract
-    ffmpeg
+    pkgs.curl
+    pkgs.unzip
+    pkgs.p7zip
+    pkgs.unrar
+    pkgs.gnutar
+    pkgs.wget
+    pkgs.cabextract
+    pkgs.ffmpeg
     # Latex/markdown
-    glow
-    tectonic-unwrapped
-    biber
+    pkgs.glow
+    pkgs.tectonic-unwrapped
+    pkgs.biber
     # Probing for usb devices and stuff
-    usbutils
+    pkgs.usbutils
     # File type detection and pdf rendering for other applications like yazi
-    file
-    poppler_utils
+    pkgs.file
+    pkgs.poppler_utils
+    # terminal image renderer via kitty protocol
+    pkgs.viu
   ];
 }
