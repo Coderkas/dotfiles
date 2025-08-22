@@ -84,7 +84,6 @@
         "poweroff"
       ];
       bashrcExtra = "export PROMPT_COMMAND='history -a'";
-      initExtra = "fastfetch";
     };
 
     fish = {
@@ -150,8 +149,10 @@
     fastfetch = {
       enable = true;
       settings = {
-        logo.source = "nixos";
-        general.multithreading = true;
+        logo = {
+          source = "linux";
+          padding.top = 1;
+        };
         display = {
           separator = " ";
           key.width = 17;
@@ -159,21 +160,17 @@
         modules = [
           "title"
           "os"
-          "host"
           "kernel"
-          "uptime"
           "packages"
           "shell"
-          "wm"
-          "theme"
-          "icons"
-          "cursor"
           "terminal"
           "terminalfont"
-          "editor"
+          "theme"
+          "wm"
           "cpu"
           "gpu"
           "memory"
+          "board"
           "break"
           "colors"
         ];
