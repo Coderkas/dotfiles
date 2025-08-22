@@ -86,7 +86,7 @@
       ];
       serviceConfig.User = config.users.users.lorkas.name;
       script = ''notify-send -i /home/lorkas/dotfiles/assets/stare.png -u critical "Attention" "If you dont shutdown now you are gonna regret it in 9 hours!"; mpv /home/lorkas/dotfiles/assets/panic.ogg'';
-      startAt = "*-*-* 01:30:00";
+      startAt = "*-*-* 02:00:00";
     };
   };
 

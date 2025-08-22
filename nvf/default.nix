@@ -354,12 +354,9 @@
               command = 'clippy',
               extraArgs = {
                 '--',
-                '-Dclippy::correctness',
-                '-Wclippy::suspicious',
-                '-Wclippy::complexity',
-                '-Wclippy::perf',
-                '-Wclippy::style',
                 '-Wclippy::pedantic',
+                '-Wclippy::nursery',
+                '-Aclippy::too-many-lines',
               },
             },
             procMacro = {
