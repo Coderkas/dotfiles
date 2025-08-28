@@ -10,6 +10,8 @@
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
     PROTON_ENABLE_WAYLAND = "1";
     PROTON_NO_WM_DECORATION = "1";
+    # tell at least proton-ge which one is the main monitor on wayland
+    WAYLANDDRV_PRIMARY_MONITOR = "DP-2";
     WINE_NO_WM_DECORATION = "1";
     # maybe fix for controller stuff?
     PROTON_PREFER_SDL_INPUT = "1";
@@ -21,11 +23,9 @@
   programs.lutris = {
     enable = true;
     extraPackages = [
-      pkgs.mangohud
       pkgs.winetricks
       pkgs.gamescope
       pkgs.gamemode
-      pkgs.protonup-qt
     ];
     protonPackages = [
       pkgs.proton-ge-bin

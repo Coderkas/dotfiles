@@ -76,7 +76,7 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    { nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
       # quickly switch between stable and unstable hyprland packages
@@ -134,6 +134,7 @@
             inputs.chaotic.nixosModules.default
             inputs.home-manager.nixosModules.home-manager
             inputs.lanzaboote.nixosModules.lanzaboote
+            inputs.nix-gaming.nixosModules.pipewireLowLatency
           ];
         };
         servitor = nixpkgs.lib.nixosSystem {

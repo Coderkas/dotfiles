@@ -23,9 +23,12 @@
     };
 
     sessionVariables = {
-      NIXPKGS_ALLOW_UNFREE = "1";
       NIXOS_OZONE_WL = "1";
-      QT_QPA_PLATFORM = "wayland";
+      ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+      GDK_BACKEND = "wayland,x11,*";
+      QT_QPA_PLATFORM = "wayland;xcb";
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       XDG_SESSION_TYPE = "wayland";
       # not adding ",x11,windos" causes issues with easy anti cheat
       SDL_VIDEODRIVER = "wayland,x11,windows";
@@ -38,6 +41,7 @@
       pkgs.rofi-power-menu
       # To make rofi firefox bookmark script work
       pkgs.sqlite
+      pkgs.gruvbox-kvantum
     ];
   };
 
@@ -45,12 +49,44 @@
     mimeApps = {
       enable = true;
       associations.added = {
-        "application/pdf" = [ "firefox.desktop" ];
+        "application/pdf" = [
+          "firefox.desktop"
+          "org.pwmt.zathura.desktop"
+        ];
       };
       defaultApplications = {
         "x-scheme-handler/ror2mm" = [ "r2modman.desktop" ];
         "application/pdf" = [ "org.pwmt.zathura.desktop" ];
-        "inode/directory" = [ "thunar.desktop" ];
+        "application/epub+zip" = [ "org.pwmt.zathura.desktop" ];
+        "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
+        "text/plain" = [ "nvim.desktop" ];
+        "image/apng" = [ "oculante.desktop" ];
+        "image/bmp" = [ "oculante.desktop" ];
+        "image/avif" = [ "oculante.desktop" ];
+        "image/gif" = [ "oculante.desktop" ];
+        "image/vnd.microsoft.icon" = [ "oculante.desktop" ];
+        "image/jpeg" = [ "oculante.desktop" ];
+        "image/png" = [ "oculante.desktop" ];
+        "image/svg+xml" = [ "oculante.desktop" ];
+        "image/tiff" = [ "oculante.desktop" ];
+        "image/webp" = [ "oculante.desktop" ];
+        "audio/aac" = [ "mpv.desktop" ];
+        "audio/midi" = [ "mpv.desktop" ];
+        "audio/x-midi" = [ "mpv.desktop" ];
+        "audio/mpeg" = [ "mpv.desktop" ];
+        "audio/ogg" = [ "mpv.desktop" ];
+        "audio/wav" = [ "mpv.desktop" ];
+        "audio/webm" = [ "mpv.desktop" ];
+        "audio/3gpp" = [ "mpv.desktop" ];
+        "audio/3gpp2" = [ "mpv.desktop" ];
+        "video/x-msvideo" = [ "mpv.desktop" ];
+        "video/mp4" = [ "mpv.desktop" ];
+        "video/mpeg" = [ "mpv.desktop" ];
+        "video/mp2t" = [ "mpv.desktop" ];
+        "video/ogg" = [ "mpv.desktop" ];
+        "video/webm" = [ "mpv.desktop" ];
+        "video/3gpp" = [ "mpv.desktop" ];
+        "video/3gpp2" = [ "mpv.desktop" ];
       };
     };
 
@@ -74,11 +110,21 @@
         };
       };
     };
+
+    configFile = {
+      "Kvantum/kvantum.kvconfig".text = ''
+        [General]
+        theme=Gruvbox-Dark-Brown
+      '';
+
+      "Kvantum/Gruvbox-Dark-Brown".source = "${pkgs.gruvbox-kvantum}/share/Kvantum/Gruvbox-Dark-Brown";
+    };
   };
 
   qt = {
     enable = true;
-    platformTheme.name = "gtk";
+    platformTheme.name = "qtct";
+    style.name = "kvantum";
   };
 
   gtk = {
@@ -226,7 +272,13 @@
       theme = ./rofi-theme.rasi;
     };
 
-    mpv.enable = true;
+    mpv = {
+      enable = true;
+      config = {
+        volume = 20;
+      };
+    };
+
     yt-dlp.enable = true;
     texlive.enable = true;
     obs-studio.enable = true;

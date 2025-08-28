@@ -110,8 +110,7 @@
     pkgs.kdePackages.xwaylandvideobridge
     pkgs.wl-clipboard
     pkgs.via
-
-    pkgs.kdePackages.okular
+    pkgs.oculante
 
     # Change monitor config
     pkgs.xorg.xrandr

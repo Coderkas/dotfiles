@@ -1,7 +1,7 @@
 {
-  config,
   pkgs,
   host_name,
+  nvfim,
   ...
 }:
 {
@@ -13,8 +13,10 @@
     stateVersion = "24.05";
 
     sessionVariables = {
-      MANPAGER = "nvim +Man!";
-      VISUAL = "nvim";
+      MANPAGER = "${nvfim.neovim}/bin/nvim +Man!";
+      VISUAL = "${nvfim.neovim}/bin/nvim";
+      EDITOR = "${nvfim.neovim}/bin/nvim";
+      NIXPKGS_ALLOW_UNFREE = "1";
     };
 
     # Actually unnecessary because enableShellIntegration is true by default which provides its value to all other shell.enable*Integration options.

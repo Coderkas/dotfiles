@@ -72,11 +72,9 @@
     # Official rust tldr client
     pkgs.tlrc
     # Extracting things
-    pkgs.curl
     pkgs.unzip
     pkgs.p7zip
     pkgs.unrar
-    pkgs.gnutar
     pkgs.wget
     pkgs.cabextract
     pkgs.ffmpeg

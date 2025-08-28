@@ -57,7 +57,7 @@
         pkgs.mpv
       ];
       serviceConfig.User = config.users.users.lorkas.name;
-      script = ''notify-send -i /home/lorkas/dotfiles/assets/chug.png "Reminder" "Stay hydrated!"; mpv /home/lorkas/dotfiles/assets/poi.mp3'';
+      script = ''notify-send -i /home/lorkas/dotfiles/assets/chug.png "Reminder" "Stay hydrated!"; mpv /home/lorkas/dotfiles/assets/poi.mp3 --volume=100'';
       startAt = "*-*-* *:30:00";
     };
     rsi-reminder = {
@@ -71,7 +71,7 @@
         pkgs.mpv
       ];
       serviceConfig.User = config.users.users.lorkas.name;
-      script = ''notify-send -i /home/lorkas/dotfiles/assets/peek.png "Reminder" "Posture check!"; mpv /home/lorkas/dotfiles/assets/poi.mp3'';
+      script = ''notify-send -i /home/lorkas/dotfiles/assets/peek.png "Reminder" "Posture check!"; mpv /home/lorkas/dotfiles/assets/poi.mp3 --volume=100'';
       startAt = "hourly";
     };
     shutdown-reminder = {
@@ -85,7 +85,7 @@
         pkgs.mpv
       ];
       serviceConfig.User = config.users.users.lorkas.name;
-      script = ''notify-send -i /home/lorkas/dotfiles/assets/stare.png -u critical "Attention" "If you dont shutdown now you are gonna regret it in 9 hours!"; mpv /home/lorkas/dotfiles/assets/panic.ogg'';
+      script = ''notify-send -i /home/lorkas/dotfiles/assets/stare.png -u critical "Attention" "If you dont shutdown now you are gonna regret it in 9 hours!"; mpv /home/lorkas/dotfiles/assets/panic.ogg --volume=100'';
       startAt = "*-*-* 02:00:00";
     };
   };
@@ -151,7 +151,6 @@
   # $ nix search wget
   environment.systemPackages = [
     # System specific
-    pkgs.vesktop
     pkgs.anki
     pkgs.amdgpu_top
   ];

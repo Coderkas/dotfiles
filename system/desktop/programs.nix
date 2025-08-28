@@ -3,8 +3,8 @@
   programs = {
     java.enable = true;
     seahorse.enable = true;
-    kdeconnect.enable = true;
     thunderbird.enable = true;
+    nano.enable = false;
   };
 
   environment.systemPackages = [
@@ -16,7 +16,6 @@
     pkgs.discord
     pkgs.obsidian
     pkgs.gimp
-    pkgs.inkscape-with-extensions
     pkgs.helvum
     pkgs.gnome-clocks
     pkgs.element-desktop

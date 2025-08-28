@@ -62,14 +62,10 @@
     inputs.nix-gaming.packages.${system}.wine-cachyos
     inputs.umu.packages.${system}.default
     pkgs.wineWowPackages.waylandFull
-    pkgs.mangohud
-    pkgs.steamtinkerlaunch
-    pkgs.protonup-qt
     pkgs.winetricks
     pkgs.r2modman
     pkgs.prismlauncher
     pkgs.linuxConsoleTools
-    pkgs.jstest-gtk
     pkgs.vkbasalt
   ];
 }
