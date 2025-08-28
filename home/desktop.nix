@@ -53,6 +53,14 @@
           "firefox.desktop"
           "org.pwmt.zathura.desktop"
         ];
+        "text/json" = [ "nvim.desktop" ];
+        "text/html" = [ "nvim.desktop" ];
+        "text/markdown" = [ "nvim.desktop" ];
+        "text/xml" = [ "nvim.desktop" ];
+        "application/xml" = [ "nvim.desktop" ];
+        "application/json" = [ "nvim.desktop" ];
+        "application/yaml" = [ "nvim.desktop" ];
+        "application/toml" = [ "nvim.desktop" ];
       };
       defaultApplications = {
         "x-scheme-handler/ror2mm" = [ "r2modman.desktop" ];
@@ -60,6 +68,14 @@
         "application/epub+zip" = [ "org.pwmt.zathura.desktop" ];
         "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
         "text/plain" = [ "nvim.desktop" ];
+        "text/json" = [ "nvim.desktop" ];
+        "text/html" = [ "nvim.desktop" ];
+        "text/markdown" = [ "nvim.desktop" ];
+        "text/xml" = [ "nvim.desktop" ];
+        "application/xml" = [ "nvim.desktop" ];
+        "application/json" = [ "nvim.desktop" ];
+        "application/yaml" = [ "nvim.desktop" ];
+        "application/toml" = [ "nvim.desktop" ];
         "image/apng" = [ "oculante.desktop" ];
         "image/bmp" = [ "oculante.desktop" ];
         "image/avif" = [ "oculante.desktop" ];
@@ -118,6 +134,16 @@
       '';
 
       "Kvantum/Gruvbox-Dark-Brown".source = "${pkgs.gruvbox-kvantum}/share/Kvantum/Gruvbox-Dark-Brown";
+    };
+
+    terminal-exec = {
+      enable = true;
+      settings = {
+        default = [
+          "com.mitchellh.ghostty.desktop"
+          "kitty.desktop"
+        ];
+      };
     };
   };
 

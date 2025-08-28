@@ -13,9 +13,9 @@
     stateVersion = "24.05";
 
     sessionVariables = {
-      MANPAGER = "${nvfim.neovim}/bin/nvim +Man!";
-      VISUAL = "${nvfim.neovim}/bin/nvim";
-      EDITOR = "${nvfim.neovim}/bin/nvim";
+      MANPAGER = "${nvfim.neovim.outPath}/bin/nvim +Man!";
+      VISUAL = "${nvfim.neovim.outPath}/bin/nvim";
+      EDITOR = "${nvfim.neovim.outPath}/bin/nvim";
       NIXPKGS_ALLOW_UNFREE = "1";
     };
 
