@@ -12,6 +12,6 @@ elif [[ "$1" == 2 ]]; then
     elif ! git diff --cached --quiet; then
         echo -e "\033[0;95mwarning:\033[0m there are uncommited files so the updated was aborted"
     else
-        nix flake update && git commit -a -m 'flake update' && sudo nixos-rebuild switch --flake ~/dotfiles#"$2" --upgrade
+        nh os switch ~/dotfiles -H "$2" -u && git commit -a -m 'flake update'
     fi
 fi
