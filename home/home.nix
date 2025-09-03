@@ -33,7 +33,7 @@
       grep = "rg";
       cat = "bat";
       fvi = "nvim $(fzf)";
-      nixc = "nix-collect-garbage -d && sudo nix-collect-garbage -d";
+      nixc = "nh clean all";
       # add untracked files and rebuild system
       nixr = "~/dotfiles/nix.sh 1 '${host_name}'";
       # Update flake inputs, create commit and run system upgrade
@@ -43,6 +43,8 @@
       gaa = "git add .";
       gac = "git add . && git commit -m ";
       gc = "git commit -m ";
+      dd = "echo -e '\033[0;95mReminder:\033[0m caligula is also installed' && dd";
+      df = "echo -e '\033[0;95mReminder:\033[0m duf is also installed' && df";
     };
 
     keyboard = {
@@ -90,10 +92,7 @@
 
     fish = {
       enable = true;
-      interactiveShellInit = ''
-        set fish_greeting
-        fastfetch
-      '';
+      interactiveShellInit = "set fish_greeting";
       plugins = [
         {
           name = "fzf.fish";
@@ -117,13 +116,10 @@
     fd = {
       enable = true;
       hidden = true;
-      extraOptions = [ "--no-ignore" ];
-      ignores = [ ".git/" ];
     };
 
     ripgrep = {
       enable = true;
-      arguments = [ "-uu" ];
     };
 
     bat = {
@@ -211,14 +207,39 @@
       userEmail = "92148778+Coderkas@users.noreply.github.com";
       userName = "Coderkas";
       extraConfig.credential.helper = [ "libsecret" ];
+      delta.enable = true;
     };
 
-    btop = {
+    #btop = {
+    #  enable = true;
+    #  settings.color_theme = "gruvbox_dark_v2";
+    #};
+
+    bottom = {
       enable = true;
-      settings.color_theme = "gruvbox_dark_v2";
+      settings = {
+        styles = {
+          theme = "gruvbox";
+        };
+      };
     };
 
-    ssh.enable = true;
+    ssh = {
+      enable = true;
+      matchBlocks."*" = {
+        forwardAgent = false;
+        addKeysToAgent = "no";
+        compression = false;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        hashKnownHosts = false;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        controlMaster = "no";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlPersist = "no";
+      };
+    };
+
     jq.enable = true;
     yazi.enable = true;
     zoxide.enable = true;

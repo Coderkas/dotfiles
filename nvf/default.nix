@@ -327,7 +327,10 @@
       enableFormat = true;
       enableTreesitter = true;
       bash.enable = true;
-      clang.enable = true;
+      clang = {
+        enable = true;
+        cHeader = true;
+      };
       css.enable = true;
       go.enable = true;
       html.enable = true;

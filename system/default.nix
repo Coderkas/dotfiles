@@ -89,5 +89,9 @@
     pkgs.poppler_utils
     # terminal image renderer via kitty protocol
     pkgs.viu
+    # better dd in rust
+    pkgs.caligula
+    # disk usage analyzer
+    pkgs.dua
   ];
 }

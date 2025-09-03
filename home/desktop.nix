@@ -175,24 +175,23 @@
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
     };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
   };
 
   programs = {
     # maybe get rid of later
     kitty = {
       enable = false;
-      themeFile = "GruvboxMaterialDarkHard";
+      themeFile = "gruvbox-dark-hard";
       extraConfig = ''
         window_margin_width 10
 
         tab_bar_style fade
         tab_fade 1
+        shell .
       '';
       font = {
         name = "JetBrainsMono Nerd Font";
+        size = 14;
       };
     };
 
@@ -202,9 +201,12 @@
         font-family = "JetBrainsMono Nerd Font";
         theme = "GruvboxDarkHard";
         command = "fish";
-        window-padding-x = 15;
-        window-padding-y = 10;
-        font-size = 11;
+        window-padding-x = 5;
+        window-padding-y = [
+          5
+          10
+        ];
+        font-size = 14;
         window-theme = "ghostty";
         adw-toolbar-style = "flat";
         gtk-wide-tabs = false;

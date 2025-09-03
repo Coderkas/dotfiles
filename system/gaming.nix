@@ -59,7 +59,7 @@
     })
     inputs.nix-gaming.packages.${system}.wine-ge
     inputs.nix-gaming.packages.${system}.wine-tkg
-    inputs.nix-gaming.packages.${system}.wine-cachyos
+    #inputs.nix-gaming.packages.${system}.wine-cachyos
     inputs.umu.packages.${system}.default
     pkgs.wineWowPackages.waylandFull
     pkgs.winetricks
