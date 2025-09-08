@@ -147,6 +147,10 @@
     spiceUSBRedirection.enable = true;
   };
 
+  networking = {
+    firewall.trustedInterfaces = [ "virbr0" ];
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = [

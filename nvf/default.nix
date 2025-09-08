@@ -299,7 +299,11 @@
     formatter.conform-nvim = {
       enable = true;
       setupOpts = {
-        formatters_by_ft.odin = [ "odinfmt" ];
+        formatters_by_ft = {
+          c = lib.generators.mkLuaInline ''{"clang-format",lsp_format = "fallback"}'';
+          cpp = lib.generators.mkLuaInline ''{"clang-format",lsp_format = "fallback"}'';
+          odin = [ "odinfmt" ];
+        };
         formatters = {
           odinfmt = {
             command = "odinfmt";

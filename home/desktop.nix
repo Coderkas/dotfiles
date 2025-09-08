@@ -115,7 +115,6 @@
         terminal = false;
         categories = [
           "Network"
-          "WebBrowser"
         ];
         mimeType = [
           "text/html"
@@ -283,6 +282,8 @@
       extraConfig = {
         show-icons = true;
         window-match-fields = "class";
+        # dont show firefox in drun, use script instead
+        drun-exclude-categories = "WebBrowser";
       };
       location = "center";
       modes = [

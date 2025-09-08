@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   hypr-pkgs,
   ...
@@ -16,6 +17,18 @@
     "/share/xdg-desktop-portal"
     "/share/applications"
   ];
+
+  # Instead of using the default stuff we use our own.
+  # This builds a derivation named man-paths, which takes the combined package lists of nixos and home-manager,
+  # makes sure to install the man output for them and links all of the content under /share/man of each pkg into the directory of the derivation.
+  # Now we have a single man_db.conf instead of one for nixos and .manpath for home.
+  documentation.man.man-db.manualPages = pkgs.buildEnv {
+    name = "man-paths";
+    paths = config.environment.systemPackages ++ config.home-manager.users.lorkas.home.packages;
+    pathsToLink = [ "/share/man" ];
+    extraOutputsToInstall = [ "man" ];
+    ignoreCollisions = true;
+  };
 
   programs = {
     # Hyprland

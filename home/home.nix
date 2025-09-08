@@ -52,12 +52,6 @@
       variant = "qwerty";
       options = "grp:super_space_toggle,ctrl:nocaps";
     };
-
-    extraOutputsToInstall = [
-      "doc"
-      "info"
-      "devdoc"
-    ];
   };
 
   manual = {
@@ -74,7 +68,7 @@
 
   programs = {
     home-manager.enable = true;
-    man.generateCaches = true;
+    man.generateCaches = false;
     bash = {
       enable = true;
       enableCompletion = true;
