@@ -31,6 +31,7 @@
       extraCompatPackages = [
         pkgs.proton-ge-custom
         pkgs.proton-cachyos
+        pkgs.steamtinkerlaunch
       ];
     };
 
@@ -67,5 +68,6 @@
     pkgs.prismlauncher
     pkgs.linuxConsoleTools
     pkgs.vkbasalt
+    pkgs.steamtinkerlaunch
   ];
 }

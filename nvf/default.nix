@@ -125,23 +125,11 @@
     undoFile.enable = true;
     diagnostics.enable = true;
 
+    ui = {
+      borders.enable = true;
+    };
+
     keymaps = [
-      {
-        key = "<leader>e";
-        mode = "n";
-        action = ''
-          function()
-            local curr = vim.diagnostic.config().virtual_lines
-            if not curr then
-              vim.diagnostic.config { virtual_lines = { current_line = true } }
-            else
-              vim.diagnostic.config { virtual_lines = false }
-            end
-          end
-        '';
-        desc = "Show [e]rror on current line";
-        lua = true;
-      }
       {
         key = "<leader>pv";
         mode = "n";
@@ -149,36 +137,17 @@
         desc = "Open folder in Netrw";
       }
       {
-        key = "<leader>h";
-        mode = "n";
-        action = ''
-          function()
-            for _, win_id in ipairs(vim.api.nvim_list_wins()) do
-              local bufnr = vim.api.nvim_win_get_buf(win_id)
-              if vim.api.nvim_get_option_value('buftype', { buf = bufnr }) == 'help' then
-                vim.cmd 'helpc'
-                return true
-              end
-            end
-            vim.cmd 'vert h'
-            return false
-          end
-        '';
-        desc = "Open [h]elp";
-        lua = true;
-      }
-      {
         key = "<leader>fk";
         mode = "n";
         action = ''require("telescope.builtin").keymaps'';
-        desc = "[F]ind [K]eymaps";
+        desc = "Keymaps [Telescope]";
         lua = true;
       }
       {
         key = "<leader>fn";
         mode = "n";
         action = ''require("telescope-manix").search'';
-        desc = "[F]ind ma[N]ix";
+        desc = "Manix [Telescope]";
         lua = true;
       }
       {
@@ -188,71 +157,17 @@
           function()
             require("telescope.builtin").man_pages {
               sections = {'ALL'},
-              attach_mappings = function(prompt_bufnr)
-                local action_set = require 'telescope.actions.set'
-                local action_state = require 'telescope.actions.state'
-                local actions = require 'telescope.actions'
-                local utils = require 'telescope.utils'
-                action_set.select:replace(function(_, cmd)
-                  local selection = action_state.get_selected_entry()
-                  if selection == nil then
-                    utils.__warn_no_selection 'builtin.man_pages'
-                    return
-                  end
-
-                  local args = selection.section .. ' ' .. selection.value
-                  actions.close(prompt_bufnr)
-                  if cmd == 'default' or cmd == 'vertical' then
-                    vim.cmd('vert Man ' .. args)
-                  elseif cmd == 'horizontal' then
-                    vim.cmd('Man ' .. args)
-                  elseif cmd == 'tab' then
-                    vim.cmd('tab Man ' .. args)
-                  end
-                end)
-
-                return true
-              end
             }
           end
         '';
-        desc = "[F]ind [M]an pages";
+        desc = "Man pages [Telescope]";
         lua = true;
       }
       {
-        key = "<leader>fh";
+        key = "<leader>q";
         mode = "n";
-        action = ''
-          function()
-            require("telescope.builtin").help_tags {
-              attach_mappings = function(prompt_bufnr)
-                local action_set = require 'telescope.actions.set'
-                local action_state = require 'telescope.actions.state'
-                local actions = require 'telescope.actions'
-                local utils = require 'telescope.utils'
-                action_set.select:replace(function(_, cmd)
-                  local selection = action_state.get_selected_entry()
-                  if selection == nil then
-                    utils.__warn_no_selection 'builtin.help_tags'
-                    return
-                  end
-
-                  actions.close(prompt_bufnr)
-                  if cmd == 'default' or cmd == 'vertical' then
-                    vim.cmd('vert help ' .. selection.value)
-                  elseif cmd == 'horizontal' then
-                    vim.cmd('help ' .. selection.value)
-                  elseif cmd == 'tab' then
-                    vim.cmd('tab help ' .. selection.value)
-                  end
-                end)
-
-                return true
-              end
-            }
-          end
-        '';
-        desc = "[F]ind [H]elp tags";
+        action = ''require("telescope.builtin").quickfix'';
+        desc = "Quickfixes [Telescope]";
         lua = true;
       }
     ];
@@ -294,7 +209,17 @@
     };
 
     snippets.luasnip.enable = true;
-    binds.whichKey.enable = true;
+    binds.whichKey = {
+      enable = true;
+      register = {
+        "<leader>fl" = null;
+        "<leader>fm" = null;
+        "<leader>d" = "+Diagnostics";
+        "<leader>l" = "+Lsp";
+        "<leader>lf" = "+Format";
+        "<leader>lw" = "+Workspace";
+      };
+    };
     comments.comment-nvim.enable = true;
     formatter.conform-nvim = {
       enable = true;
@@ -324,6 +249,23 @@
     lsp = {
       enable = true;
       formatOnSave = true;
+      mappings = {
+        hover = "K";
+        signatureHelp = "<leader>lS";
+        openDiagnosticFloat = "<leader>e";
+        nextDiagnostic = "<leader>dn";
+        previousDiagnostic = "<leader>dp";
+        format = "<leader>lfb";
+        toggleFormatOnSave = "<leader>lft";
+        documentHighlight = null;
+        goToDeclaration = null;
+        goToDefinition = null;
+        goToType = null;
+        listDocumentSymbols = null;
+        listImplementations = null;
+        listReferences = null;
+        listWorkspaceSymbols = null;
+      };
       otter-nvim.enable = true;
     };
     languages = {
@@ -402,6 +344,9 @@
         {
           name = "ui-select";
           packages = [ pkgs.vimPlugins.telescope-ui-select-nvim ];
+          setup = {
+            ui-select = lib.generators.mkLuaInline ''{require("telescope.themes").get_dropdown(),},'';
+          };
         }
         {
           name = "manix";
@@ -422,17 +367,17 @@
         }
       ];
       mappings = {
-        diagnostics = "<leader>q";
+        diagnostics = "<leader>dl";
         gitBranches = "<leader>fvg";
         gitBufferCommits = "<leader>fvb";
         gitCommits = "<leader>fvc";
         gitStatus = "<leader>fvs";
-        lspDefinitions = "<leader>td";
-        lspDocumentSymbols = "<leader>ts";
-        lspImplementations = "<leader>ti";
-        lspReferences = "<leader>tr";
-        lspTypeDefinitions = "<leader>tt";
-        lspWorkspaceSymbols = "<leader>tw";
+        lspDefinitions = "<leader>ld";
+        lspDocumentSymbols = "<leader>ls";
+        lspImplementations = "<leader>li";
+        lspReferences = "<leader>lr";
+        lspTypeDefinitions = "<leader>lt";
+        lspWorkspaceSymbols = "<leader>lws";
       };
       setupOpts = {
         defaults = {
