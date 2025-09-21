@@ -5,7 +5,10 @@
 
   services = {
     # More scheduling stuff
-    scx.enable = true;
+    scx = {
+      enable = true;
+      package = pkgs.scx.rustscheds;
+    };
 
     pipewire = {
       enable = true;

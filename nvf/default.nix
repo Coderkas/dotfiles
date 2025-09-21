@@ -15,10 +15,6 @@
     extraPlugins = {
       vimtex = {
         package = pkgs.vimPlugins.vimtex;
-        setup = ''
-          vim.g.vimtex_view_method = 'zathura_simple'
-          vim.g.vimtex_compiler_method = 'tectonic'
-        '';
       };
     };
     augroups = [ { name = "MyUtils"; } ];
@@ -120,6 +116,10 @@
       cursorline = true;
       scrolloff = 10;
     };
+    globals = {
+      vimtex_view_method = "zathura_simple";
+      vimtex_compiler_method = "tectonic";
+    };
     searchCase = "smart";
     syntaxHighlighting = true;
     undoFile.enable = true;
@@ -128,6 +128,7 @@
     ui = {
       borders.enable = true;
     };
+    bell = "visual";
 
     keymaps = [
       {
@@ -154,13 +155,80 @@
         key = "<leader>fm";
         mode = "n";
         action = ''
-          function()
-            require("telescope.builtin").man_pages {
-              sections = {'ALL'},
-            }
+            function()
+              require("telescope.builtin").man_pages {
+                sections = { 'ALL' };
+                attach_mappings = function(prompt_bufnr)
+                  local action_set = require 'telescope.actions.set'
+                  local action_state = require 'telescope.actions.state'
+                  local actions = require 'telescope.actions'
+                  local utils = require 'telescope.utils'
+                  action_set.select:replace(function(_, cmd)
+                    local selection = action_state.get_selected_entry()
+                    if selection == nil then
+                      utils.__warn_no_selection 'builtin.man_pages'
+                      return
+                    end
+
+                    local args = selection.section .. ' ' .. selection.value
+                    actions.close(prompt_bufnr)
+                    if cmd == 'default' then
+                      vim.cmd('hide Man ' .. args)
+                    elseif cmd == 'vertical' then
+                      local curr_win_width = vim.api.nvim_win_get_width(0) / 2 - 5
+                      vim.cmd(':let $MANWIDTH=' .. curr_win_width .. ' | :vert Man ' .. args)
+                    elseif cmd == 'horizontal' then
+                      vim.cmd('Man ' .. args)
+                    elseif cmd == 'tab' then
+                      vim.cmd('tab Man ' .. args)
+                    end
+                  end)
+
+                  return true
+                end
+              }
           end
         '';
         desc = "Man pages [Telescope]";
+        lua = true;
+      }
+      {
+        key = "<leader>fh";
+        mode = "n";
+        action = ''
+            function()
+              require("telescope.builtin").help_tags {
+                attach_mappings = function(prompt_bufnr)
+                  local action_set = require 'telescope.actions.set'
+                  local action_state = require 'telescope.actions.state'
+                  local actions = require 'telescope.actions'
+                  local utils = require 'telescope.utils'
+                  action_set.select:replace(function(_, cmd)
+                    local selection = action_state.get_selected_entry()
+                    if selection == nil then
+                      utils.__warn_no_selection 'builtin.help_tags'
+                      return
+                    end
+
+                    actions.close(prompt_bufnr)
+                    if cmd == 'default' then
+                      local curr_win_id = vim.api.nvim_get_current_win()
+                      vim.cmd('help ' .. selection.value .. ' |:' .. curr_win_id .. 'hide')
+                    elseif cmd == 'vertical' then
+                      vim.cmd('vert help ' .. selection.value)
+                    elseif cmd == 'horizontal' then
+                      vim.cmd('help ' .. selection.value)
+                    elseif cmd == 'tab' then
+                      vim.cmd('tab help ' .. selection.value)
+                    end
+                  end)
+
+                  return true
+                end
+              }
+          end
+        '';
+        desc = "Help tags [Telescope]";
         lua = true;
       }
       {
@@ -378,12 +446,14 @@
         lspReferences = "<leader>lr";
         lspTypeDefinitions = "<leader>lt";
         lspWorkspaceSymbols = "<leader>lws";
+        helpTags = null;
       };
       setupOpts = {
         defaults = {
           color_devicons = true;
           layout_config.horizontal.prompt_position = "bottom";
           sorting_strategy = "descending";
+          selectoin_caret = ">";
         };
       };
     };

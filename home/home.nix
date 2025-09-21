@@ -32,14 +32,15 @@
       cd = "z";
       grep = "rg";
       cat = "bat";
-      fvi = "nvim $(fzf)";
+      fzn = "${nvfim.neovim.outPath}/bin/nvim $(fzf)";
+      fdn = "fd main -X ${nvfim.neovim.outPath}/bin/nvim";
       nixc = "nh clean all";
       # add untracked files and rebuild system
       nixr = "~/dotfiles/nix.sh 1 '${host_name}'";
       # Update flake inputs, create commit and run system upgrade
       nixu = "~/dotfiles/nix.sh 2 '${host_name}'";
-      dot = "z ~/dotfiles && fvi";
-      nt = "z ~/Sync/Obsidian-Vault && fvi";
+      dot = "z ~/dotfiles && fzn";
+      nt = "z ~/Sync/Obsidian-Vault && fzn";
       gaa = "git add .";
       gac = "git add . && git commit -m ";
       gc = "git commit -m ";

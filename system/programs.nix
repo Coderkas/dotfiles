@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   programs = {
     # Some programs need SUID wrappers, can be configured further or are
@@ -8,6 +9,8 @@
       enableSSHSupport = true;
       enableBrowserSocket = true;
     };
+
+    kdeconnect.enable = true;
 
     nh = {
       enable = true;
