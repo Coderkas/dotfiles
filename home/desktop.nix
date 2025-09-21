@@ -210,7 +210,6 @@
         adw-toolbar-style = "flat";
         gtk-wide-tabs = false;
         gtk-tabs-location = "bottom";
-        gtk-gsk-renderer = "default";
         gtk-single-instance = true;
         gtk-custom-css = "~/dotfiles/home/ghostty.css";
         auto-update = "off";
@@ -277,7 +276,7 @@
 
     rofi = {
       enable = true;
-      package = pkgs.rofi-wayland;
+      package = pkgs.rofi;
       cycle = true;
       extraConfig = {
         show-icons = true;
