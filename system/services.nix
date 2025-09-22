@@ -1,8 +1,5 @@
 { pkgs, ... }:
 {
-  # Something about cpu scheduling and pipewire
-  security.rtkit.enable = true;
-
   services = {
     # More scheduling stuff
     scx = {
@@ -17,10 +14,6 @@
       jack.enable = true;
       pulse.enable = true;
       wireplumber.enable = true;
-
-      lowLatency = {
-        enable = true;
-      };
     };
 
     syncthing = {
@@ -51,7 +44,6 @@
     # Enable the OpenSSH daemon.
     openssh.enable = true;
     fail2ban.enable = true;
-
     devmon.enable = true;
     udisks2.enable = true;
     # Enable udev rules for via compatible devices

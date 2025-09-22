@@ -5,17 +5,9 @@
   ...
 }:
 {
-
   imports = [
     ./programs.nix
     ./inputMethods.nix
-  ];
-
-  # desktop portal stuff
-  # https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
-  environment.pathsToLink = [
-    "/share/xdg-desktop-portal"
-    "/share/applications"
   ];
 
   # Instead of using the default stuff we use our own.
@@ -28,30 +20,6 @@
     pathsToLink = [ "/share/man" ];
     extraOutputsToInstall = [ "man" ];
     ignoreCollisions = true;
-  };
-
-  programs = {
-    # Hyprland
-    hyprland = {
-      enable = true;
-      package = hypr-pkgs.land;
-      portalPackage = hypr-pkgs.portal;
-    };
-
-    dconf = {
-      enable = true;
-      profiles.user.databases = [
-        {
-          settings = {
-            "org/gnome/desktop/interface" = {
-              color-scheme = "prefer-dark";
-              gtk-theme = "Gruvbox-Dark";
-              icon-theme = "Gruvbox-Plus-Dark";
-            };
-          };
-        }
-      ];
-    };
   };
 
   xdg.portal = {
@@ -71,15 +39,6 @@
   };
 
   services = {
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      audio.enable = true;
-      jack.enable = true;
-      pulse.enable = true;
-      wireplumber.enable = true;
-    };
-
     greetd = {
       enable = true;
       settings = {
@@ -101,35 +60,75 @@
   };
 
   hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
     opentabletdriver = {
       enable = true;
       daemon.enable = true;
     };
-    enableAllFirmware = true;
   };
 
-  security = {
-    pam.services.greetd.enableGnomeKeyring = true;
-    pam.services.hyprlock = { };
+  security.pam.services = {
+    greetd.enableGnomeKeyring = true;
+    hyprlock = { };
   };
 
-  environment.systemPackages = [
-    # Desktop environment
-    pkgs.xdg-utils
-    pkgs.wayfreeze
-    pkgs.grim
-    pkgs.slurp
-    pkgs.tesseract
-    pkgs.kdePackages.xwaylandvideobridge
-    pkgs.wl-clipboard
-    pkgs.via
-    pkgs.oculante
+  environment = {
+    # desktop portal stuff
+    # https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
+    pathsToLink = [
+      "/share/xdg-desktop-portal"
+      "/share/applications"
+    ];
 
-    # Change monitor config
-    pkgs.xorg.xrandr
-    pkgs.wlr-randr
-    # Event viewer
-    pkgs.wev
-    pkgs.xorg.xev
-  ];
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+      GDK_BACKEND = "wayland,x11,*";
+      QT_QPA_PLATFORM = "wayland;xcb";
+      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+      XDG_SESSION_TYPE = "wayland";
+      # not adding ",x11,windos" causes issues with easy anti cheat
+      SDL_VIDEODRIVER = "wayland,x11,windows";
+      BROWSER = "firefox";
+    };
+
+    systemPackages = [
+      pkgs.signal-desktop
+      pkgs.keepassxc
+      pkgs.firefox
+      pkgs.discord
+      pkgs.obsidian
+      pkgs.gimp
+      pkgs.helvum
+      pkgs.gnome-clocks
+      pkgs.element-desktop
+      pkgs.oculante
+      pkgs.via
+      # Gnome files with plugin for previewer
+      pkgs.nautilus
+      pkgs.sushi
+
+      # Desktop environment
+      pkgs.xdg-utils
+      pkgs.wayfreeze
+      pkgs.grim
+      pkgs.slurp
+      pkgs.tesseract
+      pkgs.kdePackages.xwaylandvideobridge
+      pkgs.wl-clipboard
+      # necessary for some notification stuff
+      pkgs.libnotify
+
+      # Change monitor config
+      pkgs.xorg.xrandr
+      pkgs.wlr-randr
+      # Event viewer
+      pkgs.wev
+      pkgs.xorg.xev
+    ];
+  };
 }

@@ -12,11 +12,18 @@
       pkgs.manix
       pkgs.clippy
     ];
-    extraPlugins = {
+    lazy.plugins = {
+      telescope.event = "VimEnter";
       vimtex = {
         package = pkgs.vimPlugins.vimtex;
+        before = ''
+          vim.g.vimtex_view_method = 'zathura_simple'
+          vim.g.vimtex_compiler_method = 'tectonic'
+        '';
+        ft = "tex";
       };
     };
+
     augroups = [ { name = "MyUtils"; } ];
     autocmds = [
       {
@@ -116,18 +123,11 @@
       cursorline = true;
       scrolloff = 10;
     };
-    globals = {
-      vimtex_view_method = "zathura_simple";
-      vimtex_compiler_method = "tectonic";
-    };
     searchCase = "smart";
     syntaxHighlighting = true;
     undoFile.enable = true;
     diagnostics.enable = true;
-
-    ui = {
-      borders.enable = true;
-    };
+    ui.borders.enable = true;
     bell = "visual";
 
     keymaps = [
@@ -212,8 +212,8 @@
 
                     actions.close(prompt_bufnr)
                     if cmd == 'default' then
-                      local curr_win_id = vim.api.nvim_get_current_win()
-                      vim.cmd('help ' .. selection.value .. ' |:' .. curr_win_id .. 'hide')
+                      local curr_buf_id = vim.api.nvim_get_current_buf()
+                      vim.cmd('help ' .. selection.value .. ' |:' .. curr_buf_id .. 'hide')
                     elseif cmd == 'vertical' then
                       vim.cmd('vert help ' .. selection.value)
                     elseif cmd == 'horizontal' then
@@ -400,37 +400,31 @@
         {
           name = "fzf";
           packages = [ pkgs.vimPlugins.telescope-fzf-native-nvim ];
-          setup = {
-            fzf = {
-              fuzzy = true;
-              override_generic_sorter = true;
-              override_file_sorter = true;
-              case_mode = "smart_case";
-            };
+          setup.fzf = {
+            fuzzy = true;
+            override_generic_sorter = true;
+            override_file_sorter = true;
+            case_mode = "smart_case";
           };
         }
         {
           name = "ui-select";
           packages = [ pkgs.vimPlugins.telescope-ui-select-nvim ];
-          setup = {
-            ui-select = lib.generators.mkLuaInline ''{require("telescope.themes").get_dropdown(),},'';
-          };
+          setup.ui-select = lib.generators.mkLuaInline ''{require("telescope.themes").get_dropdown(),},'';
         }
         {
           name = "manix";
           packages = [ pkgs.vimPlugins.telescope-manix ];
-          setup = {
-            manix = {
-              manix_args = [
-                "--source"
-                "hm_options"
-                "--source"
-                "nixos_options"
-                "--source"
-                "nixpkgs_tree"
-              ];
-              cword = false;
-            };
+          setup.manix = {
+            manix_args = [
+              "--source"
+              "hm_options"
+              "--source"
+              "nixos_options"
+              "--source"
+              "nixpkgs_tree"
+            ];
+            cword = false;
           };
         }
       ];
@@ -448,18 +442,14 @@
         lspWorkspaceSymbols = "<leader>lws";
         helpTags = null;
       };
-      setupOpts = {
-        defaults = {
-          color_devicons = true;
-          layout_config.horizontal.prompt_position = "bottom";
-          sorting_strategy = "descending";
-          selectoin_caret = ">";
-        };
+      setupOpts.defaults = {
+        color_devicons = true;
+        layout_config.horizontal.prompt_position = "bottom";
+        sorting_strategy = "descending";
+        selection_caret = " >";
       };
     };
 
     treesitter.textobjects.enable = true;
-
-    startPlugins = [ pkgs.vimPlugins.vimtex ];
   };
 }

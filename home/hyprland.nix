@@ -5,11 +5,9 @@
   ...
 }:
 {
-  xdg = {
-    configFile."hypr/modules" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home/hypr";
-      recursive = true;
-    };
+  xdg.configFile."hypr/modules" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/home/hypr";
+    recursive = true;
   };
 
   home.packages = [ hypr-pkgs.picker ];

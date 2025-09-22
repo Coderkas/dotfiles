@@ -21,9 +21,7 @@
     # Steam
     steam = {
       enable = true;
-      protontricks = {
-        enable = true;
-      };
+      protontricks.enable = true;
       gamescopeSession.enable = true;
       extest.enable = true;
       remotePlay.openFirewall = true;
@@ -37,37 +35,54 @@
 
     gamemode = {
       enable = true;
-      settings = {
-        general = {
-          softrealtime = "auto";
-          renice = 15;
-        };
+      settings.general = {
+        softrealtime = "auto";
+        renice = 15;
       };
     };
   };
 
-  # Enable udev rules for various devices collected in this repo: https://codeberg.org/fabiscafe/game-devices-udev
-  services.udev.packages = [ pkgs.game-devices-udev-rules ];
+  services = {
+    # Pipewire goes brr thanks to nix-gaming by fufexan
+    pipewire.lowLatency.enable = true;
+    # Enable udev rules for various devices collected in this repo: https://codeberg.org/fabiscafe/game-devices-udev
+    udev.packages = [ pkgs.game-devices-udev-rules ];
+  };
 
   hardware = {
     steam-hardware.enable = true;
     uinput.enable = true;
   };
 
-  environment.systemPackages = [
-    (pkgs.heroic.override {
-      extraPkgs = pkgs: [ pkgs.gamescope ];
-    })
-    inputs.nix-gaming.packages.${system}.wine-ge
-    inputs.nix-gaming.packages.${system}.wine-tkg
-    #inputs.nix-gaming.packages.${system}.wine-cachyos
-    inputs.umu.packages.${system}.default
-    pkgs.wineWowPackages.waylandFull
-    pkgs.winetricks
-    pkgs.r2modman
-    pkgs.prismlauncher
-    pkgs.linuxConsoleTools
-    pkgs.vkbasalt
-    pkgs.steamtinkerlaunch
-  ];
+  environment = {
+    sessionVariables = {
+      STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+      PROTON_ENABLE_WAYLAND = "1";
+      PROTON_NO_WM_DECORATION = "1";
+      # tell at least proton-ge which one is the main monitor on wayland
+      WAYLANDDRV_PRIMARY_MONITOR = "DP-2";
+      WINE_NO_WM_DECORATION = "1";
+      # maybe fix for controller stuff?
+      PROTON_PREFER_SDL_INPUT = "1";
+      WINE_PREFER_SDL_INPUT = "1";
+      # bigger shader cache size so they dont have to be processed every time
+      MESA_SHADER_CACHE_MAX_SIZE = "12G";
+    };
+
+    systemPackages = [
+      (pkgs.heroic.override {
+        extraPkgs = pkgs: [ pkgs.gamescope ];
+      })
+      inputs.nix-gaming.packages.${system}.wine-tkg
+      inputs.nix-gaming.packages.${system}.wine-cachyos
+      inputs.umu.packages.${system}.default
+      pkgs.wineWowPackages.waylandFull
+      pkgs.winetricks
+      pkgs.r2modman
+      pkgs.prismlauncher
+      pkgs.linuxConsoleTools
+      pkgs.vkbasalt
+      pkgs.steamtinkerlaunch
+    ];
+  };
 }

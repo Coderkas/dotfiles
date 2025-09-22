@@ -1,6 +1,5 @@
-{ ... }:
 {
-  # Set your time zone.
+  # Set time zone.
   time.timeZone = "Europe/Berlin";
 
   # Select internationalisation properties.

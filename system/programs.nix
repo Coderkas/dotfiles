@@ -1,22 +1,18 @@
-{ pkgs, ... }:
 {
   programs = {
-    # Some programs need SUID wrappers, can be configured further or are
-    # started in user sessions.
-    # programs.mtr.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
       enableBrowserSocket = true;
     };
 
-    kdeconnect.enable = true;
+    nano.enable = false;
 
     nh = {
       enable = true;
       clean = {
         enable = true;
-        extraArgs = "--keep-since 4d --keep 3";
+        extraArgs = "--keep 2";
       };
       flake = "/home/lorkas/dotfiles";
     };

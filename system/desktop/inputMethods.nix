@@ -1,17 +1,13 @@
 { pkgs, ... }:
 {
-  services = {
-    # Configure keymap in X11
-    xserver = {
-      xkb = {
-        layout = "us,de";
-        variant = ",qwerty";
-        options = "grp:win_space_toggle,ctrl:nocaps";
-      };
-    };
+  # Configure keymap in X11
+  services.xserver.xkb = {
+    layout = "us,de";
+    variant = ",qwerty";
+    options = "grp:win_space_toggle,ctrl:nocaps";
   };
 
-  # Select internationalisation properties.
+  # Configure IME/Input method
   i18n = {
     inputMethod = {
       type = "fcitx5";

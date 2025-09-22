@@ -3,7 +3,6 @@
   host_name,
   system,
   hypr-pkgs,
-  nvfim,
   ...
 }:
 {
@@ -14,7 +13,6 @@
         host_name
         system
         hypr-pkgs
-        nvfim
         ;
     };
     users.lorkas = import ./home.nix;

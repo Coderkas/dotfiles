@@ -5,9 +5,7 @@
   system,
   ...
 }:
-
 {
-
   imports = [
     ./hyprland.nix
     ./gaming.nix
@@ -20,19 +18,6 @@
       package = pkgs.capitaine-cursors-themed;
       name = "Capitaine Cursors (Gruvbox)";
       size = 24;
-    };
-
-    sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-      ELECTRON_OZONE_PLATFORM_HINT = "wayland";
-      GDK_BACKEND = "wayland,x11,*";
-      QT_QPA_PLATFORM = "wayland;xcb";
-      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      XDG_SESSION_TYPE = "wayland";
-      # not adding ",x11,windos" causes issues with easy anti cheat
-      SDL_VIDEODRIVER = "wayland,x11,windows";
-      BROWSER = "firefox";
     };
 
     packages = [
@@ -113,9 +98,7 @@
         icon = "firefox";
         exec = "firefox --name immersion --class immersion -P Immersion %U";
         terminal = false;
-        categories = [
-          "Network"
-        ];
+        categories = [ "Network" ];
         mimeType = [
           "text/html"
           "text/xml"
@@ -137,12 +120,10 @@
 
     terminal-exec = {
       enable = true;
-      settings = {
-        default = [
-          "com.mitchellh.ghostty.desktop"
-          "kitty.desktop"
-        ];
-      };
+      settings.default = [
+        "com.mitchellh.ghostty.desktop"
+        "kitty.desktop"
+      ];
     };
   };
 
@@ -171,9 +152,7 @@
       size = 24;
     };
     font.name = "CascadiaCode";
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
   };
 
   programs = {
@@ -198,7 +177,7 @@
       enable = true;
       settings = {
         font-family = "JetBrainsMono Nerd Font";
-        theme = "GruvboxDarkHard";
+        theme = "Gruvbox Dark Hard";
         command = "fish";
         window-padding-x = 5;
         window-padding-y = [
@@ -276,7 +255,6 @@
 
     rofi = {
       enable = true;
-      package = pkgs.rofi;
       cycle = true;
       extraConfig = {
         show-icons = true;
@@ -302,9 +280,7 @@
 
     mpv = {
       enable = true;
-      config = {
-        volume = 20;
-      };
+      config.volume = 20;
     };
 
     yt-dlp.enable = true;
@@ -313,9 +289,7 @@
   };
 
   services = {
-    udiskie = {
-      notify = true;
-    };
+    udiskie.notify = true;
 
     dunst = {
       enable = true;

@@ -18,6 +18,7 @@
       systemd-boot.enable = lib.mkForce false;
       efi.canTouchEfiVariables = true;
     };
+    # Secure boot
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";

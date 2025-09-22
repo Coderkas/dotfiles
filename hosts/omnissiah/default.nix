@@ -1,21 +1,15 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   pkgs,
   config,
   ...
 }:
-
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../system/gaming.nix
   ];
 
-  # Bootloader.
+  # Kernel stuff
   boot = {
     kernelPackages =
       # changing to zen if a kernel version has some sort of regression
@@ -28,10 +22,8 @@
       "fs.file-max" = 524288;
       "kernel.split_lock_mitigate" = 0;
     };
-    kernelParams = [
-      # https://gitlab.freedesktop.org/drm/amd/-/issues/2516#note_2119750
-      "gpu_sched.sched.policy=0"
-    ];
+    # https://gitlab.freedesktop.org/drm/amd/-/issues/2516#note_2119750
+    kernelParams = [ "gpu_sched.sched.policy=0" ];
 
     # Enable LOGITECH_FF option to make controller work if used kernel has it not enabled by default
     #kernelPatches = [
@@ -91,25 +83,14 @@
   };
 
   hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
     amdgpu = {
       initrd.enable = true;
       # Ai stuff... i think?
       opencl.enable = true;
-
-      # For running propriatary drivers instead of mesa:
-      #amdvlk = {
-      #  enable = true;
-      #  support32Bit.enable = true;
-      #};
     };
     keyboard.qmk.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     users.lorkas = {
       extraGroups = [
@@ -147,12 +128,8 @@
     spiceUSBRedirection.enable = true;
   };
 
-  networking = {
-    firewall.trustedInterfaces = [ "virbr0" ];
-  };
+  networking.firewall.trustedInterfaces = [ "virbr0" ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = [
     # System specific
     pkgs.anki

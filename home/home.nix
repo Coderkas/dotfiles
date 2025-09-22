@@ -1,7 +1,5 @@
 {
   pkgs,
-  host_name,
-  nvfim,
   ...
 }:
 {
@@ -12,13 +10,6 @@
     homeDirectory = "/home/lorkas";
     stateVersion = "24.05";
 
-    sessionVariables = {
-      MANPAGER = "${nvfim.neovim.outPath}/bin/nvim +Man!";
-      VISUAL = "${nvfim.neovim.outPath}/bin/nvim";
-      EDITOR = "${nvfim.neovim.outPath}/bin/nvim";
-      NIXPKGS_ALLOW_UNFREE = "1";
-    };
-
     # Actually unnecessary because enableShellIntegration is true by default which provides its value to all other shell.enable*Integration options.
     # Sets enableShellIntegration in all other options to that value.
     shell = {
@@ -26,31 +17,9 @@
       enableFishIntegration = true;
     };
 
-    shellAliases = {
-      ip = "ip --pretty --color";
-      ls = "eza";
-      cd = "z";
-      grep = "rg";
-      cat = "bat";
-      fzn = "${nvfim.neovim.outPath}/bin/nvim $(fzf)";
-      fdn = "fd main -X ${nvfim.neovim.outPath}/bin/nvim";
-      nixc = "nh clean all";
-      # add untracked files and rebuild system
-      nixr = "~/dotfiles/nix.sh 1 '${host_name}'";
-      # Update flake inputs, create commit and run system upgrade
-      nixu = "~/dotfiles/nix.sh 2 '${host_name}'";
-      dot = "z ~/dotfiles && fzn";
-      nt = "z ~/Sync/Obsidian-Vault && fzn";
-      gaa = "git add .";
-      gac = "git add . && git commit -m ";
-      gc = "git commit -m ";
-      dd = "echo -e '\033[0;95mReminder:\033[0m caligula is also installed' && dd";
-      df = "echo -e '\033[0;95mReminder:\033[0m duf is also installed' && df";
-    };
-
     keyboard = {
       layout = "us,de";
-      variant = "qwerty";
+      variant = ",qwerty";
       options = "grp:super_space_toggle,ctrl:nocaps";
     };
   };
@@ -113,9 +82,7 @@
       hidden = true;
     };
 
-    ripgrep = {
-      enable = true;
-    };
+    ripgrep.enable = true;
 
     bat = {
       enable = true;
@@ -212,11 +179,7 @@
 
     bottom = {
       enable = true;
-      settings = {
-        styles = {
-          theme = "gruvbox";
-        };
-      };
+      settings.styles.theme = "gruvbox";
     };
 
     ssh = {
@@ -243,7 +206,6 @@
 
   services = {
     gnome-keyring.enable = true;
-
     udiskie = {
       enable = true;
       automount = true;

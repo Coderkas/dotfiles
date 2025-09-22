@@ -1,27 +1,31 @@
-{ pkgs, ... }:
+{ hypr-pkgs, ... }:
 {
   programs = {
     java.enable = true;
     seahorse.enable = true;
     thunderbird.enable = true;
-    nano.enable = false;
+    kdeconnect.enable = true;
+
+    # Hyprland
+    hyprland = {
+      enable = true;
+      package = hypr-pkgs.land;
+      portalPackage = hypr-pkgs.portal;
+    };
+
+    dconf = {
+      enable = true;
+      profiles.user.databases = [
+        {
+          settings = {
+            "org/gnome/desktop/interface" = {
+              color-scheme = "prefer-dark";
+              gtk-theme = "Gruvbox-Dark";
+              icon-theme = "Gruvbox-Plus-Dark";
+            };
+          };
+        }
+      ];
+    };
   };
-
-  environment.systemPackages = [
-    pkgs.signal-desktop
-    pkgs.keepassxc
-    pkgs.firefox
-    # maybe necessary for some notification stuff?
-    pkgs.libnotify
-    pkgs.discord
-    pkgs.obsidian
-    pkgs.gimp
-    pkgs.helvum
-    pkgs.gnome-clocks
-    pkgs.element-desktop
-
-    # Gnome files with plugin for previewer
-    pkgs.nautilus
-    pkgs.sushi
-  ];
 }
