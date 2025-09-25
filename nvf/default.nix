@@ -24,6 +24,19 @@
       };
     };
 
+    pluginRC.treesitter-textobjects-ext =
+      myInputs.nvf.lib.nvim.dag.entryAfter [ "treesitter-textobjects" ]
+        ''
+          local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+
+          vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+          vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+          vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
+          vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
+          vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
+          vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
+        '';
+
     augroups = [ { name = "MyUtils"; } ];
     autocmds = [
       {
@@ -450,6 +463,161 @@
       };
     };
 
-    treesitter.textobjects.enable = true;
+    treesitter.textobjects = {
+      enable = true;
+      setupOpts = {
+        select = {
+          enable = true;
+          lookahead = true;
+          keymaps = {
+            "af" = {
+              query = "@function.outer";
+              desc = "Select outer part of a function region";
+            };
+            "if" = {
+              query = "@function.inner";
+              desc = "Select inner part of a function region";
+            };
+            "ac" = {
+              query = "@class.outer";
+              desc = "Select outer part of a class region";
+            };
+            "ic" = {
+              query = "@class.inner";
+              desc = "Select inner part of a class region";
+            };
+            "as" = {
+              query = "@local.scope";
+              query_group = "locals";
+              desc = "Select language scope";
+            };
+          };
+          selection_modes = {
+            "@parameter.outer" = "v";
+            "@function.outer" = "V";
+            "@class.outer" = "<c-v>";
+          };
+          include_surrounding_whitespace = false;
+        };
+        move = {
+          enable = true;
+          set_jumps = true;
+          goto_next_start = {
+            "]m" = {
+              query = "@function.outer";
+              desc = "Next function start";
+            };
+            "]]" = {
+              query = "@class.outer";
+              desc = "Next class start";
+            };
+            "]o" = "@loop.*";
+            "]s" = {
+              query = "@local.scope";
+              query_group = "locals";
+              desc = "Next scope";
+            };
+            "]z" = {
+              query = "@fold";
+              query_group = "folds";
+              desc = "Next fold";
+            };
+            "]g" = {
+              query = "@block.*";
+              desc = "Next block start";
+            };
+          };
+          goto_next_end = {
+            "]M" = {
+              query = "@function.outer";
+              desc = "Next function end";
+            };
+            "][" = {
+              query = "@class.outer";
+              desc = "Next class end";
+            };
+            "]G" = {
+              query = "@block.*";
+              desc = "Next block end";
+            };
+          };
+          goto_previous_start = {
+            "[m" = {
+              query = "@function.outer";
+              desc = "Prev function start";
+            };
+            "[[" = {
+              query = "@class.outer";
+              desc = "Prev class start";
+            };
+            "[s" = {
+              query = "@local.scope";
+              query_group = "locals";
+              desc = "Prev scope";
+            };
+            "[z" = {
+              query = "@fold";
+              query_group = "folds";
+              desc = "Prev fold";
+            };
+            "[g" = {
+              query = "@block.*";
+              desc = "Prev block start";
+            };
+          };
+          goto_previous_end = {
+            "[M" = {
+              query = "@function.outer";
+              desc = "Prev function end";
+            };
+            "[]" = {
+              query = "@class.outer";
+              desc = "Prev class end";
+            };
+            "[G" = {
+              query = "@block.*";
+              desc = "Prev block end";
+            };
+          };
+          goto_next."]d" = {
+            query = "@conditional.outer";
+            desc = "Go to next condition";
+          };
+          goto_previous."[d" = {
+            query = "@conditional.outer";
+            desc = "Go to prev condition";
+          };
+        };
+        swap = {
+          enable = true;
+          swap_next = {
+            "<leader>a" = {
+              query = "@parameter.inner";
+              desc = "Swap with next parameter";
+            };
+          };
+          swap_previous = {
+            "<leader>A" = {
+              query = "@parameter.inner";
+              desc = "Swap with prev parameter";
+            };
+          };
+        };
+        lsp_interop = {
+          enable = true;
+          floating_preview_opts.border = "rounded";
+          peek_definition_code = {
+            "<leader>df" = {
+              query = "@function.outer";
+              desc = "Peek function definition";
+            };
+            "<leader>dF" = {
+              query = "@class.outer";
+              desc = "Peek class definition";
+            };
+          };
+        };
+      };
+    };
   };
 }
