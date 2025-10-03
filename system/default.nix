@@ -105,16 +105,17 @@
       fdn = "fd main -X nvim";
       nixc = "nh clean all";
       # add untracked files and rebuild system
-      nixr = "~/dotfiles/nix.sh 1 '${host_name}'";
+      nixr = ''~/dotfiles/nix.sh 1 "${host_name}"'';
       # Update flake inputs, create commit and run system upgrade
-      nixu = "~/dotfiles/nix.sh 2 '${host_name}'";
+      nixu = ''~/dotfiles/nix.sh 2 "${host_name}"'';
       dot = "z ~/dotfiles && fzn";
       nt = "z ~/Sync/Obsidian-Vault && fzn";
       gaa = "git add .";
       gac = "git add . && git commit -m ";
       gc = "git commit -m ";
-      dd = "echo -e '\033[0;95mReminder:\033[0m caligula is also installed' && dd";
-      df = "echo -e '\033[0;95mReminder:\033[0m duf is also installed' && df";
+      dd = ''echo -e "\033[0;95mReminder:\033[0m caligula is also installed"; ${pkgs.coreutils-full}/bin/dd'';
+      df = ''echo -e "\033[0;95mReminder:\033[0m dua is also installed"; ${pkgs.coreutils-full}/bin/df'';
+      du = ''echo -e "\033[0;95mReminder:\033[0m dua is also installed"; ${pkgs.coreutils-full}/bin/du'';
     };
 
     systemPackages = [
