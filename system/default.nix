@@ -2,6 +2,8 @@
   pkgs,
   host_name,
   nvfim,
+  inputs,
+  system,
   ...
 }:
 {
@@ -147,6 +149,8 @@
       pkgs.caligula
       # disk usage analyzer
       pkgs.dua
+      # Flake linter
+      inputs.flint.packages.${system}.flint
     ];
   };
 }
