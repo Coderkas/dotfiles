@@ -348,6 +348,7 @@
         listWorkspaceSymbols = null;
       };
       otter-nvim.enable = true;
+      servers.nil.cmd = lib.mkForce ["${myInputs.nil.packages.${system}.default}/bin/nil"];
     };
     languages = {
       enableExtraDiagnostics = true;
@@ -365,7 +366,6 @@
       markdown.enable = true;
       nix = {
         enable = true;
-        lsp.package = myInputs.nil.packages.${system}.default;
         format = {
           package = pkgs.nixfmt-rfc-style;
           type = "nixfmt";
