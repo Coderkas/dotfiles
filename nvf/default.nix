@@ -9,7 +9,6 @@
   vim = {
     enableLuaLoader = true;
     extraPackages = [
-      pkgs.manix
       pkgs.clippy
     ];
     lazy.plugins = {
@@ -155,13 +154,6 @@
         mode = "n";
         action = ''require("telescope.builtin").keymaps'';
         desc = "Keymaps [Telescope]";
-        lua = true;
-      }
-      {
-        key = "<leader>fn";
-        mode = "n";
-        action = ''require("telescope-manix").search'';
-        desc = "Manix [Telescope]";
         lua = true;
       }
       {
@@ -348,7 +340,7 @@
         listWorkspaceSymbols = null;
       };
       otter-nvim.enable = true;
-      servers.nil.cmd = lib.mkForce ["${myInputs.nil.packages.${system}.default}/bin/nil"];
+      servers.nil.cmd = lib.mkForce [ "${myInputs.nil.packages.${system}.default}/bin/nil" ];
     };
     languages = {
       enableExtraDiagnostics = true;
@@ -424,21 +416,6 @@
           name = "ui-select";
           packages = [ pkgs.vimPlugins.telescope-ui-select-nvim ];
           setup.ui-select = lib.generators.mkLuaInline ''{require("telescope.themes").get_dropdown(),},'';
-        }
-        {
-          name = "manix";
-          packages = [ pkgs.vimPlugins.telescope-manix ];
-          setup.manix = {
-            manix_args = [
-              "--source"
-              "hm_options"
-              "--source"
-              "nixos_options"
-              "--source"
-              "nixpkgs_tree"
-            ];
-            cword = false;
-          };
         }
       ];
       mappings = {

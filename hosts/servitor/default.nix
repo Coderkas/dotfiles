@@ -1,16 +1,15 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
-  imports = [ ./hardware-configuration.nix ];
-
   # Kernel stuff
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
     kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
+    kernelModules = [ "kvm-amd" ];
+
     initrd = {
-      availableKernelModules = [
-        "usb_storage"
-        "sd_mod"
-      ];
+      availableKernelModules = [ "thunderbolt" ];
+      luks.devices."luks-7a488d44-e655-44ba-8871-241df2728fe1".device =
+        "/dev/disk/by-uuid/7a488d44-e655-44ba-8871-241df2728fe1";
       luks.devices."luks-e57d3198-6f5b-42d9-a67b-a34a65b71897".device =
         "/dev/disk/by-uuid/e57d3198-6f5b-42d9-a67b-a34a65b71897";
     };
@@ -25,11 +24,28 @@
     upower.enable = true;
   };
 
-  environment.systemPackages = [
-    # Desktop environment
-    pkgs.brightnessctl
+  environment.systemPackages = [ pkgs.brightnessctl ];
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/8bb605f3-824a-40d8-a22c-4dc3d660a7af";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/6369-1E47";
+      fsType = "vfat";
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
+  };
+
+  swapDevices = [
+    { device = "/dev/disk/by-uuid/adcbb887-8ee3-4b4c-a1d7-da7de86a1ebd"; }
   ];
 
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

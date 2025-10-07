@@ -35,10 +35,9 @@
       ];
     };
 
-    avahi = {
+    fstrim = {
       enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
+      interval = "weekly";
     };
 
     # Enable the OpenSSH daemon.

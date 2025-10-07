@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   hypr-pkgs,
   ...
@@ -9,18 +8,6 @@
     ./programs.nix
     ./inputMethods.nix
   ];
-
-  # Instead of using the default stuff we use our own.
-  # This builds a derivation named man-paths, which takes the combined package lists of nixos and home-manager,
-  # makes sure to install the man output for them and links all of the content under /share/man of each pkg into the directory of the derivation.
-  # Now we have a single man_db.conf instead of one for nixos and .manpath for home.
-  documentation.man.man-db.manualPages = pkgs.buildEnv {
-    name = "man-paths";
-    paths = config.environment.systemPackages ++ config.home-manager.users.lorkas.home.packages;
-    pathsToLink = [ "/share/man" ];
-    extraOutputsToInstall = [ "man" ];
-    ignoreCollisions = true;
-  };
 
   xdg.portal = {
     enable = true;
@@ -38,6 +25,17 @@
     ];
   };
 
+  # make tuigreet not obscure the login screen with possible errors
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInputs = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal";
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
+
   services = {
     greetd = {
       enable = true;
@@ -53,10 +51,13 @@
       };
     };
 
-    dbus.packages = [
-      pkgs.gcr
-      pkgs.gnome-settings-daemon
-    ];
+    dbus = {
+      packages = [
+        pkgs.gcr
+        pkgs.gnome-settings-daemon
+      ];
+      implementation = "broker";
+    };
   };
 
   hardware = {
@@ -95,40 +96,5 @@
       SDL_VIDEODRIVER = "wayland,x11,windows";
       BROWSER = "firefox";
     };
-
-    systemPackages = [
-      pkgs.signal-desktop
-      pkgs.keepassxc
-      pkgs.firefox
-      pkgs.discord
-      pkgs.obsidian
-      pkgs.gimp
-      pkgs.helvum
-      pkgs.gnome-clocks
-      pkgs.element-desktop
-      pkgs.oculante
-      pkgs.via
-      # Gnome files with plugin for previewer
-      pkgs.nautilus
-      pkgs.sushi
-
-      # Desktop environment
-      pkgs.xdg-utils
-      pkgs.wayfreeze
-      pkgs.grim
-      pkgs.slurp
-      pkgs.tesseract
-      pkgs.kdePackages.xwaylandvideobridge
-      pkgs.wl-clipboard
-      # necessary for some notification stuff
-      pkgs.libnotify
-
-      # Change monitor config
-      pkgs.xorg.xrandr
-      pkgs.wlr-randr
-      # Event viewer
-      pkgs.wev
-      pkgs.xorg.xev
-    ];
   };
 }

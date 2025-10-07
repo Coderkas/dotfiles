@@ -2,25 +2,26 @@
   description = "Nixos config flake";
 
   inputs = {
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/ffa8ef09b95be162416645fedeb87f51ad5cea9c";
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     systems.url = "github:nix-systems/default-linux";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
     };
-    flake-compat.url = "github:edolstra/flake-compat";
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs-unstable";
-    };
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
     hyprland.url = "github:hyprwm/hyprland";
@@ -69,38 +70,31 @@
 
     astal = {
       url = "github:aylur/astal";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     ags = {
       url = "github:aylur/ags";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.astal.follows = "astal";
     };
 
-    nil = {
-      url = "github:oxalica/nil";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
-
     umu = {
       url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
         flake-compat.follows = "flake-compat";
-        rust-overlay.follows = "rust-overlay";
+        rust-overlay.follows = "chaotic/rust-overlay";
         pre-commit-hooks-nix.follows = "";
       };
     };
@@ -108,20 +102,26 @@
     nvf = {
       url = "github:notashelf/nvf/v0.8";
       inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
+        nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
         flake-parts.follows = "flake-parts";
         flake-compat.follows = "flake-compat";
       };
     };
+
+    nil = {
+      url = "github:oxalica/nil";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flint = {
       url = "github:notashelf/flint";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    { nixpkgs-unstable, ... }@inputs:
+    { nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
       # quickly switch between stable and unstable hyprland packages
@@ -137,16 +137,16 @@
           }
         else
           {
-            land = inputs.nixpkgs-unstable.legacyPackages.${system}.hyprland;
-            portal = inputs.nixpkgs-unstable.legacyPackages.${system}.xdg-desktop-portal-hyprland;
-            picker = inputs.nixpkgs-unstable.legacyPackages.${system}.hyprpicker;
-            paper = inputs.nixpkgs-unstable.legacyPackages.${system}.hyprpaper;
-            lock = inputs.nixpkgs-unstable.legacyPackages.${system}.hyprlock;
-            idle = inputs.nixpkgs-unstable.legacyPackages.${system}.hypridle;
+            land = inputs.nixpkgs.legacyPackages.${system}.hyprland;
+            portal = inputs.nixpkgs.legacyPackages.${system}.xdg-desktop-portal-hyprland;
+            picker = inputs.nixpkgs.legacyPackages.${system}.hyprpicker;
+            paper = inputs.nixpkgs.legacyPackages.${system}.hyprpaper;
+            lock = inputs.nixpkgs.legacyPackages.${system}.hyprlock;
+            idle = inputs.nixpkgs.legacyPackages.${system}.hypridle;
           };
 
       nvfim = inputs.nvf.lib.neovimConfiguration {
-        pkgs = nixpkgs-unstable.legacyPackages.${system};
+        pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {
           inherit system;
           myInputs = inputs;
@@ -156,10 +156,10 @@
     in
     {
       # for resting package without rebuilding system
-      nvfim-test = nvfim.neovim;
+      packages.${system}.nvfim-test = nvfim.neovim;
 
       nixosConfigurations = {
-        omnissiah = nixpkgs-unstable.lib.nixosSystem {
+        omnissiah = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             host_name = "omnissiah";
@@ -174,15 +174,15 @@
             ./hosts/omnissiah
             ./system
             ./system/desktop
+            ./system/gaming.nix
             ./home
-            ./overlays
             inputs.chaotic.nixosModules.default
             inputs.home-manager.nixosModules.home-manager
             inputs.lanzaboote.nixosModules.lanzaboote
             inputs.nix-gaming.nixosModules.pipewireLowLatency
           ];
         };
-        servitor = nixpkgs-unstable.lib.nixosSystem {
+        servitor = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             host_name = "servitor";
@@ -198,7 +198,6 @@
             ./system
             ./system/desktop
             ./home
-            ./overlays
             inputs.home-manager.nixosModules.home-manager
             inputs.lanzaboote.nixosModules.lanzaboote
           ];

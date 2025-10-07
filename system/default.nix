@@ -1,9 +1,8 @@
 {
   pkgs,
   host_name,
-  nvfim,
-  inputs,
-  system,
+  lib,
+  config,
   ...
 }:
 {
@@ -15,35 +14,8 @@
     ./security.nix
     ./services.nix
     ./users.nix
+    ./nix.nix
   ];
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  nix = {
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      substituters = [
-        "https://hyprland.cachix.org"
-        "https://nix-gaming.cachix.org"
-      ];
-      trusted-substituters = [
-        "https://hyprland.cachix.org"
-        "https://nix-gaming.cachix.org"
-      ];
-      trusted-public-keys = [
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-        "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
-      ];
-      trusted-users = [ "lorkas" ];
-      download-buffer-size = 500000000;
-      auto-optimise-store = true;
-      builders-use-substitutes = true;
-    };
-  };
 
   # Colors for tty
   console.colors = [
@@ -66,13 +38,30 @@
   ];
 
   # Documentation
-  documentation.man.generateCaches = true;
+  documentation = {
+    man = {
+      # Instead of using the default stuff we use our own.
+      # This builds a derivation named man-paths, which takes the combined package lists of nixos and home-manager,
+      # makes sure to install the man output for them and links all of the content under /share/man of each pkg into the directory of the derivation.
+      # Now we have a single man_db.conf instead of one for nixos and .manpath for home.
+      man-db.manualPages = pkgs.buildEnv {
+        name = "man-paths";
+        paths = config.environment.systemPackages ++ config.home-manager.users.lorkas.home.packages;
+        pathsToLink = [ "/share/man" ];
+        extraOutputsToInstall = [ "man" ];
+        ignoreCollisions = true;
+      };
+      generateCaches = true;
+    };
+    doc.enable = false;
+    info.enable = false;
+  };
 
   # Hardware stuff
   hardware = {
     bluetooth.enable = true;
     wirelessRegulatoryDatabase = true;
-    enableAllFirmware = true;
+    enableAllFirmware = lib.mkDefault true;
   };
 
   fonts.packages = [
@@ -94,7 +83,6 @@
       MANPAGER = "nvim +Man!";
       VISUAL = "nvim";
       EDITOR = "nvim";
-      NIXPKGS_ALLOW_UNFREE = "1";
     };
 
     shellAliases = {
@@ -119,38 +107,5 @@
       df = ''echo -e "\033[0;95mReminder:\033[0m dua is also installed"; ${pkgs.coreutils-full}/bin/df'';
       du = ''echo -e "\033[0;95mReminder:\033[0m dua is also installed"; ${pkgs.coreutils-full}/bin/du'';
     };
-
-    systemPackages = [
-      # nvf neovim package
-      nvfim.neovim
-      # nix options and package searcher
-      pkgs.manix
-      # Official rust tldr client
-      pkgs.tlrc
-      # Extracting things
-      pkgs.unzip
-      pkgs.p7zip
-      pkgs.unrar
-      pkgs.wget
-      pkgs.cabextract
-      pkgs.ffmpeg
-      # Latex/markdown
-      pkgs.glow
-      pkgs.tectonic-unwrapped
-      pkgs.biber
-      # Probing for usb devices and stuff
-      pkgs.usbutils
-      # File type detection and pdf rendering for other applications like yazi
-      pkgs.file
-      pkgs.poppler_utils
-      # terminal image renderer via kitty protocol
-      pkgs.viu
-      # better dd in rust
-      pkgs.caligula
-      # disk usage analyzer
-      pkgs.dua
-      # Flake linter
-      inputs.flint.packages.${system}.flint
-    ];
   };
 }
