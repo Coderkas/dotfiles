@@ -15,19 +15,23 @@
   };
   outputs =
     {
-      self,
       nixpkgs,
       ags,
       astal,
+      ...
     }:
     let
+      pname = "ags-bundled";
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      nativeBuildInputs = [
+        pkgs.wrapGAppsHook3
+        pkgs.gobject-introspection
+        ags.packages.${system}.default
+      ];
       buildInputs = [
         pkgs.glib
         pkgs.gjs
-        pkgs.wrapGAppsHook3
-        pkgs.gobject-introspection
         astal.packages.${system}.io
         astal.packages.${system}.astal3
         astal.packages.${system}.battery
@@ -37,41 +41,52 @@
         astal.packages.${system}.apps
       ];
 
-      bins = [
-        pkgs.gjs
+      extraDev = [
         pkgs.nodejs
         pkgs.dart-sass
-        astal.packages.${system}.io
       ];
 
-      girDirs =
-        let
-          depsOf = pkg: [ (pkg.dev or pkg) ] ++ (map depsOf (pkg.propagatedBuildInputs or [ ]));
-        in
-        pkgs.symlinkJoin {
-          name = "gir-dirs";
-          paths = pkgs.lib.flatten (map depsOf buildInputs);
-        };
+      girDirs = pkgs.symlinkJoin {
+        name = "gir-dirs";
+        paths = map (
+          pkg:
+          if (pkgs.lib.filesystem.pathIsDirectory "${pkg.dev}/share/gir-1.0") then
+            "${pkg.dev}/share/gir-1.0"
+          else
+            null
+        ) buildInputs;
+      };
     in
     {
-      devShells.${system}.default =
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = buildInputs ++ extraDev;
+        inherit nativeBuildInputs;
 
-        pkgs.mkShell {
-          buildInputs = buildInputs;
+        shellHook = ''
+          rm -rd ./@girs
+          rm -rd ./node_modules
+          ags types -d .
+          mkdir node_modules
+          ln -s ${ags.packages.${system}.ags.jsPackage} ./node_modules/ags
+        '';
+        GIO_EXTRA_MODULES = "${pkgs.glib-networking}/lib/gio/modules";
+        EXTRA_GIR_DIRS = "${girDirs}";
+      };
 
-          preFixup = ''
-            gappsWrapperArgs+=(
-            --prefix EXTRA_GIR_DIR : "${girDirs}/share/gir-1.0"
-            --prefix PATH : "${pkgs.lib.makeBinPath (bins)}"
-            )
-          '';
+      packages.${system}.default = pkgs.stdenv.mkDerivation {
+        name = pname;
+        src = ./.;
+        inherit nativeBuildInputs;
+        inherit buildInputs;
 
-          shellHook = ''
-            ags types -d .
-            mkdir node_modules
-            ln -s ${ags.packages.${system}.gjsPackage}/share/ags/js ./node_modules/ags
-          '';
-          GIO_EXTRA_MODULES = "${pkgs.glib-networking}/lib/gio/modules";
-        };
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out/bin
+          mkdir -p $out/share
+          cp -r * $out/share
+          ags bundle app.tsx $out/bin/${pname} -d "SRC='$out/share'"
+          runHook postInstall
+        '';
+      };
     };
 }

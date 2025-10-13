@@ -49,5 +49,6 @@
     udev.packages = [ pkgs.via ];
     gvfs.enable = true;
     fwupd.enable = true;
+    upower.enable = true;
   };
 }

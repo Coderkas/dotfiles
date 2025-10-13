@@ -2,14 +2,19 @@
   description = "Nixos config flake";
 
   inputs = {
-    #nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/ffa8ef09b95be162416645fedeb87f51ad5cea9c";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     systems.url = "github:nix-systems/default-linux";
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+      inputs = {
+        jovian.follows = "";
+        home-manager.follows = "";
+      };
+    };
 
     flake-utils = {
       url = "github:numtide/flake-utils";
@@ -24,7 +29,20 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/hyprland";
+    hyprland = {
+      url = "github:hyprwm/hyprland";
+      inputs = {
+        hyprland-qtutils.inputs = {
+          hyprutils.follows = "hyprland/hyprutils";
+          hyprland-qt-support.inputs = {
+            hyprlang.follows = "hyprland/hyprlang";
+            nixpkgs.follows = "hyprland/nixpkgs";
+            systems.follows = "hyprland/systems";
+          };
+        };
+        pre-commit-hooks.follows = "";
+      };
+    };
     hyprpaper = {
       url = "github:hyprwm/hyprpaper";
       inputs = {
@@ -124,26 +142,14 @@
     { nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
-      # quickly switch between stable and unstable hyprland packages
-      hypr-pkgs =
-        if true then
-          {
-            land = inputs.hyprland.packages.${system}.hyprland;
-            portal = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
-            picker = inputs.hyprpicker.packages.${system}.hyprpicker;
-            paper = inputs.hyprpaper.packages.${system}.hyprpaper;
-            lock = inputs.hyprlock.packages.${system}.hyprlock;
-            idle = inputs.hypridle.packages.${system}.hypridle;
-          }
-        else
-          {
-            land = inputs.nixpkgs.legacyPackages.${system}.hyprland;
-            portal = inputs.nixpkgs.legacyPackages.${system}.xdg-desktop-portal-hyprland;
-            picker = inputs.nixpkgs.legacyPackages.${system}.hyprpicker;
-            paper = inputs.nixpkgs.legacyPackages.${system}.hyprpaper;
-            lock = inputs.nixpkgs.legacyPackages.${system}.hyprlock;
-            idle = inputs.nixpkgs.legacyPackages.${system}.hypridle;
-          };
+      hypr-pkgs = {
+        land = inputs.hyprland.packages.${system}.hyprland;
+        portal = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
+        picker = inputs.hyprpicker.packages.${system}.hyprpicker;
+        paper = inputs.hyprpaper.packages.${system}.hyprpaper;
+        lock = inputs.hyprlock.packages.${system}.hyprlock;
+        idle = inputs.hypridle.packages.${system}.hypridle;
+      };
 
       nvfim = inputs.nvf.lib.neovimConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
@@ -155,7 +161,7 @@
       };
     in
     {
-      # for resting package without rebuilding system
+      # for testing package without rebuilding system
       packages.${system}.nvfim-test = nvfim.neovim;
 
       nixosConfigurations = {
@@ -163,12 +169,10 @@
           inherit system;
           specialArgs = {
             host_name = "omnissiah";
-            inherit
-              system
-              inputs
-              hypr-pkgs
-              nvfim
-              ;
+            inherit system;
+            inherit inputs;
+            inherit hypr-pkgs;
+            inherit nvfim;
           };
           modules = [
             ./hosts/omnissiah
@@ -186,12 +190,10 @@
           inherit system;
           specialArgs = {
             host_name = "servitor";
-            inherit
-              system
-              inputs
-              hypr-pkgs
-              nvfim
-              ;
+            inherit system;
+            inherit inputs;
+            inherit hypr-pkgs;
+            inherit nvfim;
           };
           modules = [
             ./hosts/servitor

@@ -6,10 +6,7 @@
   ...
 }:
 {
-  imports = [
-    ./hyprland.nix
-    ./gaming.nix
-  ];
+  imports = [ ./hyprland.nix ];
 
   home = {
     pointerCursor = {
@@ -177,7 +174,7 @@
       enable = true;
       settings = {
         font-family = "JetBrainsMono Nerd Font";
-        theme = "Gruvbox Dark Hard";
+        theme = "GruvboxDarkHard";
         command = "fish";
         window-padding-x = 5;
         window-padding-y = [
