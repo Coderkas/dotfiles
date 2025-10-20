@@ -41,7 +41,6 @@
 
       trusted-users = [ "lorkas" ];
       download-buffer-size = 500000000;
-      auto-optimise-store = true;
       keep-going = true;
       warn-dirty = false;
       accept-flake-config = false;

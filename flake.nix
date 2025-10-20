@@ -131,11 +131,6 @@
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    flint = {
-      url = "github:notashelf/flint";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =

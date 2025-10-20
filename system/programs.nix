@@ -1,8 +1,6 @@
 {
-  inputs,
   nvfim,
   pkgs,
-  system,
   ...
 }:
 {
@@ -25,6 +23,13 @@
     };
 
     fish.enable = true;
+    direnv = {
+      enable = true;
+      settings.global = {
+        warn_timeout = "15s";
+        hide_env_diff = true;
+      };
+    };
   };
 
   environment.systemPackages = [
@@ -54,7 +59,5 @@
     pkgs.caligula
     # disk usage analyzer
     pkgs.dua
-    # Flake linter
-    inputs.flint.packages.${system}.flint
   ];
 }

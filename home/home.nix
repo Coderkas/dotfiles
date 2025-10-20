@@ -32,7 +32,6 @@
   };
 
   programs = {
-    home-manager.enable = true;
     man.generateCaches = false; # because we do that ourselves in system/default.nix
     bash = {
       enable = true;

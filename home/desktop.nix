@@ -174,7 +174,7 @@
       enable = true;
       settings = {
         font-family = "JetBrainsMono Nerd Font";
-        theme = "GruvboxDarkHard";
+        theme = "Gruvbox Dark Hard";
         command = "fish";
         window-padding-x = 5;
         window-padding-y = [
