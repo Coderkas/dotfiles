@@ -447,7 +447,7 @@
               },
             }
           '';
-          extensions.creates-nvim.enable = false;
+          extensions.crates-nvim.enable = false;
         };
         ts = {
           enable = true;
