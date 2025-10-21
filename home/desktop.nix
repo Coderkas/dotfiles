@@ -1,8 +1,6 @@
 {
   pkgs,
-  inputs,
   lib,
-  system,
   ...
 }:
 {
@@ -18,7 +16,6 @@
     };
 
     packages = [
-      inputs.ags.packages.${system}.io
       # So that the power menu is in path and gets recognized by rofi
       pkgs.rofi-power-menu
       # To make rofi firefox bookmark script work
@@ -236,18 +233,6 @@
         set recolor                     "true"
         set recolor-keephue             "true"                 # keep original color
       '';
-    };
-
-    ags = {
-      enable = true;
-      configDir = ./ags;
-      extraPackages = [
-        inputs.ags.packages.${system}.battery
-        inputs.ags.packages.${system}.hyprland
-        inputs.ags.packages.${system}.tray
-        inputs.ags.packages.${system}.wireplumber
-        inputs.ags.packages.${system}.apps
-      ];
     };
 
     rofi = {

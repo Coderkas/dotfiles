@@ -3,6 +3,7 @@ import Bar from "./widget/Bar";
 import { timeout } from "ags/time";
 import app from "ags/gtk3/app";
 import { Astal } from "ags/gtk3";
+import Gdk from "gi://Gdk?version=3.0";
 
 app.start({
   css: style,
@@ -13,24 +14,28 @@ app.start({
     const monitorCount = app.get_monitors().length;
     let appWidget = Bar(main_monitor) as Astal.Window;
 
-    app.connect("monitor-added", (_, monitor) => {
+    const wl_display = Gdk.Display.get_default();
+    if (!wl_display) return;
+
+    wl_display.connect("monitor-added", (_, monitor) => {
       timeout(500, () => {
-        print("Added event");
         if (monitor.get_workarea().x === 1440) {
-          print("Added");
           appWidget = Bar(monitor) as Astal.Window;
         } else if (monitorCount === 1) {
-          print("Added alt");
           appWidget = Bar(monitor) as Astal.Window;
         }
       });
     });
 
-    app.connect("monitor-removed", (_, monitor) => {
+    wl_display.connect("monitor-removed", (_, monitor) => {
       if (monitor.get_workarea().x === 1440 || monitorCount === 1) {
         appWidget.destroy();
         app.remove_window(appWidget);
       }
     });
+  },
+  requestHandler(_, response) {
+    response("Quitting...");
+    app.quit();
   },
 });

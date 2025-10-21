@@ -137,6 +137,7 @@
     { nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
       hypr-pkgs = {
         land = inputs.hyprland.packages.${system}.hyprland;
         portal = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
@@ -147,17 +148,28 @@
       };
 
       nvfim = inputs.nvf.lib.neovimConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+        inherit pkgs;
         extraSpecialArgs = {
           inherit system;
           myInputs = inputs;
         };
         modules = [ ./nvf ];
       };
+
+      ags = import ./ags {
+        inherit pkgs;
+        inherit system;
+        inherit inputs;
+      };
     in
     {
       # for testing package without rebuilding system
-      packages.${system}.nvfim-test = nvfim.neovim;
+      packages.${system} = {
+        nvfim-test = nvfim.neovim;
+        ags-bundled = ags.package;
+      };
+
+      devShells.${system}.ags-shell = ags.shell;
 
       nixosConfigurations = {
         omnissiah = nixpkgs.lib.nixosSystem {
@@ -168,6 +180,7 @@
             inherit inputs;
             inherit hypr-pkgs;
             inherit nvfim;
+            inherit ags;
           };
           modules = [
             ./hosts/omnissiah
@@ -189,6 +202,7 @@
             inherit inputs;
             inherit hypr-pkgs;
             inherit nvfim;
+            inherit ags;
           };
           modules = [
             ./hosts/servitor

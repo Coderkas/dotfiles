@@ -17,7 +17,6 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "backup";
-    sharedModules = [ inputs.ags.homeManagerModules.default ];
     enableLegacyProfileManagement = false;
   };
 }

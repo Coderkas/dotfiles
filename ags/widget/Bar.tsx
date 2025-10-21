@@ -146,7 +146,9 @@ function Reminders(): Astal.Box {
 
 function WorkspaceStatus({ hyprInstance }: HyprlandWidgetsParams): Astal.Box {
   const kanji = ["一", "二", "三", "四", "五", "六", "七", "八", "九"];
-  const spaces = createBinding(hyprInstance, "workspaces");
+  const spaces = createBinding(hyprInstance, "workspaces").as((x) =>
+    x.reverse(),
+  );
 
   return (
     <box class="WorkspaceStatus" halign={Gtk.Align.END}>

@@ -1,4 +1,9 @@
-{ hypr-pkgs, pkgs, ... }:
+{
+  hypr-pkgs,
+  pkgs,
+  ags,
+  ...
+}:
 {
   programs = {
     java.enable = true;
@@ -34,6 +39,7 @@
   };
 
   environment.systemPackages = [
+    ags.package
     pkgs.signal-desktop
     pkgs.keepassxc
     pkgs.firefox
