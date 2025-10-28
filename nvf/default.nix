@@ -271,11 +271,8 @@
       utility.sleuth.enable = true;
 
       visuals = {
-        cellular-automaton = {
-          enable = true;
-          mappings.makeItRain = "<leader>gg";
-        };
         nvim-web-devicons.enable = true;
+        fidget-nvim.enable = true;
       };
 
       autocomplete.blink-cmp = {
@@ -306,8 +303,10 @@
           "<leader>fm" = null;
           "<leader>d" = "+Diagnostics";
           "<leader>l" = "+Lsp";
-          "<leader>lf" = "+Format";
           "<leader>lw" = "+Workspace";
+          "<leader>fv" = null;
+          "<leader>h" = null;
+          "<leader>g" = "+Git";
         };
       };
       comments.comment-nvim.enable = true;
@@ -331,8 +330,19 @@
       git.gitsigns = {
         enable = true;
         mappings = {
-          toggleBlame = "<leader>gb";
-          toggleDeleted = "<leader>gt";
+          nextHunk = "<leader>ghn";
+          previousHunk = "<leader>ghp";
+          stageHunk = "<leader>ghs";
+          undoStageHunk = "<leader>ghu";
+          resetHunk = "<leader>ghr";
+          previewHunk = "<leader>ghP";
+          stageBuffer = "<leader>gBs";
+          resetBuffer = "<leader>gBr";
+          blameLine = "<leader>gb";
+          toggleBlame = "<leader>gbt";
+          diffThis = "<leader>gDt";
+          diffProject = "<leader>gDp";
+          toggleDeleted = "<leader>gd";
         };
       };
 
@@ -345,8 +355,8 @@
           openDiagnosticFloat = "<leader>e";
           nextDiagnostic = "<leader>dn";
           previousDiagnostic = "<leader>dp";
-          format = "<leader>lfb";
-          toggleFormatOnSave = "<leader>lft";
+          format = "<leader>lf";
+          toggleFormatOnSave = null;
           documentHighlight = null;
           goToDeclaration = null;
           goToDefinition = null;
@@ -389,7 +399,7 @@
                   maxMemoryMB = 4096;
                   flake = {
                     autoArchive = true;
-                    autoEvalInputs = true;
+                    autoEvalInputs = false;
                   };
                 };
               };
@@ -481,11 +491,11 @@
           }
         ];
         mappings = {
-          diagnostics = "<leader>dl";
-          gitBranches = "<leader>fvg";
-          gitBufferCommits = "<leader>fvb";
-          gitCommits = "<leader>fvc";
-          gitStatus = "<leader>fvs";
+          gitBranches = null;
+          gitBufferCommits = "<leader>gBc";
+          gitCommits = "<leader>gc";
+          gitStatus = "<leader>gs";
+          gitStash = "<leader>gS";
           lspDefinitions = "<leader>ld";
           lspDocumentSymbols = "<leader>ls";
           lspImplementations = "<leader>li";
@@ -493,6 +503,7 @@
           lspTypeDefinitions = "<leader>lt";
           lspWorkspaceSymbols = "<leader>lws";
           helpTags = null;
+          diagnostics = "<leader>dl";
         };
         setupOpts.defaults = {
           color_devicons = true;
@@ -502,159 +513,197 @@
         };
       };
 
-      treesitter.textobjects = {
-        enable = true;
-        setupOpts = {
-          select = {
-            enable = true;
-            lookahead = true;
-            keymaps = {
-              "af" = {
-                query = "@function.outer";
-                desc = "Select outer part of a function region";
+      treesitter = {
+        autotagHtml = true;
+        context.enable = true;
+        mappings.incrementalSelection = {
+          decrementByNode = "-";
+          incrementByNode = "+";
+          incrementByScope = null;
+          init = "<leader>ti";
+        };
+        textobjects = {
+          enable = true;
+          setupOpts = {
+            select = {
+              enable = true;
+              lookahead = true;
+              keymaps = {
+                "<C-T>f" = {
+                  query = "@function.inner";
+                  desc = "Select function body";
+                };
+                "<C-T>s" = {
+                  query = "@class.inner";
+                  desc = "Select class/struct body";
+                };
+                "<C-T>l" = {
+                  query = "@local.scope";
+                  query_group = "locals";
+                  desc = "Select language scope";
+                };
+                "<C-T>r" = {
+                  query = "@return.inner";
+                  desc = "Select return";
+                };
+                "<C-T>b" = {
+                  query = "@block.inner";
+                  desc = "Select inner block";
+                };
+                "<C-T>c" = {
+                  query = "@call.inner";
+                  desc = "Select call";
+                };
               };
-              "if" = {
-                query = "@function.inner";
-                desc = "Select inner part of a function region";
+              selection_modes = {
+                "@parameter.outer" = "v";
+                "@function.outer" = "V";
+                "@class.outer" = "<c-v>";
               };
-              "ac" = {
-                query = "@class.outer";
-                desc = "Select outer part of a class region";
+              include_surrounding_whitespace = false;
+            };
+            move = {
+              enable = true;
+              set_jumps = true;
+              goto_next_start = {
+                "]f" = {
+                  query = "@function.outer";
+                  desc = "Next function start";
+                };
+                "]c" = {
+                  query = "@class.outer";
+                  desc = "Next class start";
+                };
+                "]o" = {
+                  query = "@loop.outer";
+                  desc = "Next loop start";
+                };
+                "]s" = {
+                  query = "@local.scope";
+                  query_group = "locals";
+                  desc = "Next scope";
+                };
+                "]g" = {
+                  query = "@block.outer";
+                  desc = "Next block start";
+                };
+                "]a" = {
+                  query = "@assignment.outer";
+                  desc = "Next assignment";
+                };
+                "]r" = {
+                  query = "@return.inner";
+                  desc = "Next return";
+                };
+                "]i" = {
+                  query = "@conditional.outer";
+                  desc = "Next conditional";
+                };
+                "]b" = {
+                  query = "@conditional.inner";
+                  desc = "Next branch";
+                };
+                "]p" = {
+                  query = "@parameter.inner";
+                  desc = "Next parameter";
+                };
               };
-              "ic" = {
-                query = "@class.inner";
-                desc = "Select inner part of a class region";
+              goto_next_end = {
+                "]C" = {
+                  query = "@class.outer";
+                  desc = "Next class end";
+                };
+                "]F" = {
+                  query = "@function.outer";
+                  desc = "Next function end";
+                };
+                "]G" = {
+                  query = "@block.outer";
+                  desc = "Next block end";
+                };
               };
-              "as" = {
-                query = "@local.scope";
-                query_group = "locals";
-                desc = "Select language scope";
+              goto_previous_start = {
+                "[f" = {
+                  query = "@function.outer";
+                  desc = "Prev function start";
+                };
+                "[c" = {
+                  query = "@class.outer";
+                  desc = "Prev class start";
+                };
+                "[o" = {
+                  query = "@loop.outer";
+                  desc = "Prev loop start";
+                };
+                "[s" = {
+                  query = "@local.scope";
+                  query_group = "locals";
+                  desc = "Prev scope";
+                };
+                "[g" = {
+                  query = "@block.outer";
+                  desc = "Prev block start";
+                };
+                "[a" = {
+                  query = "@assignment.outer";
+                  desc = "Prev assignment";
+                };
+                "[r" = {
+                  query = "@return.inner";
+                  desc = "Prev return";
+                };
+                "[i" = {
+                  query = "@conditional.outer";
+                  desc = "Prev conditional";
+                };
+                "[b" = {
+                  query = "@conditional.inner";
+                  desc = "Prev branch";
+                };
+                "[p" = {
+                  query = "@parameter.inner";
+                  desc = "Prev parameter";
+                };
+              };
+              goto_previous_end = {
+                "[C" = {
+                  query = "@class.outer";
+                  desc = "Prev class end";
+                };
+                "[F" = {
+                  query = "@function.outer";
+                  desc = "Prev function end";
+                };
+                "[G" = {
+                  query = "@block.outer";
+                  desc = "Prev block end";
+                };
               };
             };
-            selection_modes = {
-              "@parameter.outer" = "v";
-              "@function.outer" = "V";
-              "@class.outer" = "<c-v>";
-            };
-            include_surrounding_whitespace = false;
-          };
-          move = {
-            enable = true;
-            set_jumps = true;
-            goto_next_start = {
-              "]m" = {
-                query = "@function.outer";
-                desc = "Next function start";
+            swap = {
+              enable = true;
+              swap_next = {
+                "<leader>tp" = {
+                  query = "@parameter.inner";
+                  desc = "Swap with next parameter";
+                };
+                "<leader>ta" = {
+                  query = "@assignment.outer";
+                  desc = "Swap with next assignment";
+                };
               };
-              "]]" = {
-                query = "@class.outer";
-                desc = "Next class start";
-              };
-              "]o" = "@loop.*";
-              "]s" = {
-                query = "@local.scope";
-                query_group = "locals";
-                desc = "Next scope";
-              };
-              "]z" = {
-                query = "@fold";
-                query_group = "folds";
-                desc = "Next fold";
-              };
-              "]g" = {
-                query = "@block.*";
-                desc = "Next block start";
+              swap_previous = {
+                "<leader>tP" = {
+                  query = "@parameter.inner";
+                  desc = "Swap with prev parameter";
+                };
+                "<leader>tA" = {
+                  query = "@assignment.outer";
+                  desc = "Swap with prev assignment";
+                };
               };
             };
-            goto_next_end = {
-              "]M" = {
-                query = "@function.outer";
-                desc = "Next function end";
-              };
-              "][" = {
-                query = "@class.outer";
-                desc = "Next class end";
-              };
-              "]G" = {
-                query = "@block.*";
-                desc = "Next block end";
-              };
-            };
-            goto_previous_start = {
-              "[m" = {
-                query = "@function.outer";
-                desc = "Prev function start";
-              };
-              "[[" = {
-                query = "@class.outer";
-                desc = "Prev class start";
-              };
-              "[s" = {
-                query = "@local.scope";
-                query_group = "locals";
-                desc = "Prev scope";
-              };
-              "[z" = {
-                query = "@fold";
-                query_group = "folds";
-                desc = "Prev fold";
-              };
-              "[g" = {
-                query = "@block.*";
-                desc = "Prev block start";
-              };
-            };
-            goto_previous_end = {
-              "[M" = {
-                query = "@function.outer";
-                desc = "Prev function end";
-              };
-              "[]" = {
-                query = "@class.outer";
-                desc = "Prev class end";
-              };
-              "[G" = {
-                query = "@block.*";
-                desc = "Prev block end";
-              };
-            };
-            goto_next."]d" = {
-              query = "@conditional.outer";
-              desc = "Go to next condition";
-            };
-            goto_previous."[d" = {
-              query = "@conditional.outer";
-              desc = "Go to prev condition";
-            };
-          };
-          swap = {
-            enable = true;
-            swap_next = {
-              "<leader>a" = {
-                query = "@parameter.inner";
-                desc = "Swap with next parameter";
-              };
-            };
-            swap_previous = {
-              "<leader>A" = {
-                query = "@parameter.inner";
-                desc = "Swap with prev parameter";
-              };
-            };
-          };
-          lsp_interop = {
-            enable = true;
-            floating_preview_opts.border = "rounded";
-            peek_definition_code = {
-              "<leader>df" = {
-                query = "@function.outer";
-                desc = "Peek function definition";
-              };
-              "<leader>dF" = {
-                query = "@class.outer";
-                desc = "Peek class definition";
-              };
-            };
+            lsp_interop.enable = false;
           };
         };
       };
