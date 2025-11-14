@@ -77,8 +77,8 @@
       (pkgs.heroic.override {
         extraPkgs = pkgs: [ pkgs.gamescope ];
       })
-      inputs.nix-gaming.packages.${system}.wine-tkg
-      inputs.nix-gaming.packages.${system}.wine-cachyos
+      #inputs.nix-gaming.packages.${system}.wine-tkg
+      #inputs.nix-gaming.packages.${system}.wine-cachyos
       inputs.umu.packages.${system}.default
       pkgs.wineWowPackages.waylandFull
       pkgs.winetricks

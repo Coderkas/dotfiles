@@ -5,6 +5,17 @@
 }:
 {
   programs = {
+    git = {
+      enable = true;
+      config = {
+        credential.helper = "libsecret";
+        init.defaultBranch = "main";
+        user = {
+          email = "92148778+Coderkas@users.noreply.github.com";
+          name = "Coderkas";
+        };
+      };
+    };
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
@@ -22,7 +33,17 @@
       flake = "/home/lorkas/dotfiles";
     };
 
-    fish.enable = true;
+    fish = {
+      enable = true;
+      useBabelfish = true;
+      interactiveShellInit = "set fish_greeting";
+    };
+
+    starship = {
+      enable = true;
+      transientPrompt.enable = true;
+    };
+
     direnv = {
       enable = true;
       settings.global = {
@@ -30,6 +51,9 @@
         hide_env_diff = true;
       };
     };
+
+    yazi.enable = true;
+    zoxide.enable = true;
   };
 
   environment.systemPackages = [
@@ -52,12 +76,24 @@
     pkgs.usbutils
     # File type detection and pdf rendering for other applications like yazi
     pkgs.file
-    pkgs.poppler_utils
+    pkgs.poppler-utils
     # terminal image renderer via kitty protocol
     pkgs.viu
     # better dd in rust
     pkgs.caligula
     # disk usage analyzer
     pkgs.dua
+
+    pkgs.numbat
+    pkgs.yt-dlp
+    pkgs.texliveBasic
+    pkgs.ripgrep
+    pkgs.fd
+    pkgs.jq
+
+    pkgs.babelfish
+    pkgs.fishPlugins.fzf-fish
+    pkgs.fishPlugins.forgit
+    pkgs.fishPlugins.fifc
   ];
 }

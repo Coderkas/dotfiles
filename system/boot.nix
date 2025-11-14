@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}:
+{ pkgs, lib, ... }:
 {
   boot = {
     kernelParams = [ "acpi_backlight=native" ];

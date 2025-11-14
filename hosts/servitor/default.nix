@@ -19,7 +19,10 @@
     '';
   };
 
-  services.power-profiles-daemon.enable = true;
+  services = {
+    power-profiles-daemon.enable = true;
+    fprintd.enable = true;
+  };
 
   environment.systemPackages = [ pkgs.brightnessctl ];
 

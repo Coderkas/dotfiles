@@ -264,10 +264,6 @@
       enable = true;
       config.volume = 20;
     };
-
-    yt-dlp.enable = true;
-    texlive.enable = true;
-    obs-studio.enable = true;
   };
 
   services = {

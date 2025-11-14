@@ -4,7 +4,7 @@ import Gtk from "gi://Gtk?version=3.0";
 import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import { Accessor, createBinding, createState, For, With } from "ags";
-import { timeout, interval, createPoll } from "ags/time";
+import { timeout, interval, createPoll, Timer } from "ags/time";
 import Battery from "gi://AstalBattery";
 import Hyprland from "gi://AstalHyprland";
 import Tray from "gi://AstalTray";
@@ -32,20 +32,16 @@ export default function Bar(gdkmonitor: Gdk.Monitor): Astal.Window {
         case RSWindowType.AudioWin:
           if (nextState == RSWindowType.AudioWin) {
             rs_window.type = RSWindowType.None;
-            rs_window.windowInstance.destroy();
           } else if (nextState == RSWindowType.CalendarWin) {
             rs_window.type = RSWindowType.CalendarWin;
-            rs_window.windowInstance.destroy();
             CreateRSWindow(Calendar(), rs_window);
           }
           break;
         case RSWindowType.CalendarWin:
           if (nextState == RSWindowType.CalendarWin) {
             rs_window.type = RSWindowType.None;
-            rs_window.windowInstance.destroy();
           } else if (nextState == RSWindowType.AudioWin) {
             rs_window.type = RSWindowType.AudioWin;
-            rs_window.windowInstance.destroy();
             CreateRSWindow(SpeakersList(wp_audio!, rs_window), rs_window);
           }
           break;
@@ -105,27 +101,27 @@ function BatteryStatus(): Astal.Box {
 }
 
 function Reminders(): Astal.Box {
-  let drop_visible = createState(false);
-  let stand_visible = createState(false);
-  let move_visible = createState(false);
+  let [showDrop, setShowDrop] = createState(false);
+  let [showStand, setShowStand] = createState(false);
+  let [showMove, setShowMove] = createState(false);
   const minute = 60000;
 
-  const hydration = interval(10 * minute, () => {
-    drop_visible[1](true);
-    timeout(minute, () => drop_visible[1](false));
+  let hydrate_timeout: Timer;
+  const hydrate_timer = interval(10 * minute, () => {
+    setShowDrop(true);
+    hydrate_timeout = timeout(minute, () => setShowDrop(false));
   });
-  const standup = interval(60 * minute, () => {
-    let animate_var = true;
-    let animate_time = interval(1000, () => {
-      stand_visible[1](animate_var);
-      move_visible[1](!animate_var);
-      animate_var = !animate_var;
-    });
-    timeout(5 * minute, () => {
-      stand_visible[1](false);
-      move_visible[1](false);
-      animate_time.cancel();
-    });
+
+  let move_timeout: Timer;
+  let animate = false;
+  let showAnimation = false;
+  const move_timer = interval(60 * minute, () => {
+    showAnimation = true;
+    move_timeout = timeout(5 * minute, () => (showAnimation = false));
+  });
+  const animation_timer = interval(1000, () => {
+    setShowStand(showAnimation && !animate);
+    setShowMove(showAnimation && animate);
   });
 
   return (
@@ -133,13 +129,16 @@ function Reminders(): Astal.Box {
       class="Reminders"
       halign={Gtk.Align.CENTER}
       onDestroy={() => {
-        hydration.cancel();
-        standup.cancel();
+        hydrate_timer?.cancel();
+        hydrate_timeout?.cancel();
+        move_timer?.cancel();
+        move_timeout?.cancel();
+        animation_timer?.cancel();
       }}
     >
-      <icon visible={drop_visible[0]} icon={"colors-chromablue"} />
-      <label visible={stand_visible[0]} label={"\udb81\udd83"} />
-      <label visible={move_visible[0]} label={"\udb81\udf0e"} />
+      <icon visible={showDrop} icon={"colors-chromablue"} />
+      <label visible={showStand} label={"\udb81\udd83"} />
+      <label visible={showMove} label={"\udb81\udf0e"} />
     </box>
   ) as Astal.Box;
 }
@@ -170,7 +169,7 @@ function FocusedClientStatus({
   hyprInstance,
 }: HyprlandWidgetsParams): Astal.Box {
   return (
-    <box>
+    <box onDestroy={(_) => print("destroying focused client")}>
       <With value={createBinding(hyprInstance, "focusedClient")}>
         {(c: Hyprland.Client) => (
           <label
@@ -222,9 +221,7 @@ function AudioButton(rs_window: RSWindow): Astal.Button {
   return (
     <button
       class="AudioButton"
-      onClick={() => {
-        rs_window.stateChange(RSWindowType.AudioWin);
-      }}
+      onClick={() => rs_window.stateChange(RSWindowType.AudioWin)}
     >
       <icon icon={"audio-speaker-right-side"} />
     </button>

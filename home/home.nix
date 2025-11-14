@@ -48,35 +48,7 @@
       bashrcExtra = "export PROMPT_COMMAND='history -a'";
     };
 
-    fish = {
-      enable = true;
-      interactiveShellInit = "set fish_greeting";
-      plugins = [
-        {
-          name = "fzf.fish";
-          inherit (pkgs.fishPlugins.fzf-fish) src;
-        }
-        {
-          name = "forgit";
-          inherit (pkgs.fishPlugins.forgit) src;
-        }
-      ];
-
-    };
-
-    starship = {
-      enable = true;
-      settings = {
-        "$schema" = "https://starship.rs/config-schema.json";
-      };
-    };
-
-    fd = {
-      enable = true;
-      hidden = true;
-    };
-
-    ripgrep.enable = true;
+    fish.enable = true;
 
     bat = {
       enable = true;
@@ -134,68 +106,12 @@
     fzf = {
       enable = true;
       defaultOptions = [ "--style=full" ];
-      fileWidgetOptions = [
-        "--preview 'bat -pp --color=always {}'"
-        "--bind 'focus:transform-header:file --brief {}'"
-      ];
-      changeDirWidgetOptions = [
-        "--preview 'bat -pp --color=always {}'"
-        "--bind 'focus:transform-header:file --brief {}'"
-      ];
-      colors = {
-        fg = "#ebdbb2";
-        bg = "#282828";
-        hl = "#fabd2f";
-        "fg+" = "#ebdbb2";
-        "bg+" = "#3c3836";
-        "hl+" = "#fabd2f";
-        info = "#83a598";
-        prompt = "#bdae93";
-        spinner = "#fabd2f";
-        pointer = "#83a598";
-        marker = "#fe8019";
-        header = "#665c54";
-      };
     };
-
-    git = {
-      enable = true;
-      userEmail = "92148778+Coderkas@users.noreply.github.com";
-      userName = "Coderkas";
-      extraConfig.credential.helper = [ "libsecret" ];
-      delta.enable = true;
-    };
-
-    #btop = {
-    #  enable = true;
-    #  settings.color_theme = "gruvbox_dark_v2";
-    #};
 
     bottom = {
       enable = true;
       settings.styles.theme = "gruvbox";
     };
-
-    ssh = {
-      enable = true;
-      matchBlocks."*" = {
-        forwardAgent = false;
-        addKeysToAgent = "no";
-        compression = false;
-        serverAliveInterval = 0;
-        serverAliveCountMax = 3;
-        hashKnownHosts = false;
-        userKnownHostsFile = "~/.ssh/known_hosts";
-        controlMaster = "no";
-        controlPath = "~/.ssh/master-%r@%n:%p";
-        controlPersist = "no";
-      };
-    };
-
-    jq.enable = true;
-    yazi.enable = true;
-    zoxide.enable = true;
-    pistol.enable = true;
   };
 
   services = {

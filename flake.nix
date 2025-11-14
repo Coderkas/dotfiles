@@ -31,17 +31,7 @@
 
     hyprland = {
       url = "github:hyprwm/hyprland";
-      inputs = {
-        hyprland-qtutils.inputs = {
-          hyprutils.follows = "hyprland/hyprutils";
-          hyprland-qt-support.inputs = {
-            hyprlang.follows = "hyprland/hyprlang";
-            nixpkgs.follows = "hyprland/nixpkgs";
-            systems.follows = "hyprland/systems";
-          };
-        };
-        pre-commit-hooks.follows = "";
-      };
+      inputs.pre-commit-hooks.follows = "";
     };
     hyprpaper = {
       url = "github:hyprwm/hyprpaper";

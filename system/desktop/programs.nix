@@ -10,6 +10,7 @@
     seahorse.enable = true;
     thunderbird.enable = true;
     kdeconnect.enable = true;
+    obs-studio.enable = true;
 
     # Hyprland
     hyprland = {
@@ -66,7 +67,7 @@
     pkgs.grim
     pkgs.slurp
     pkgs.tesseract
-    pkgs.kdePackages.xwaylandvideobridge
+    #pkgs.kdePackages.xwaylandvideobridge
     pkgs.wl-clipboard
     # necessary for some notification stuff
     pkgs.libnotify
