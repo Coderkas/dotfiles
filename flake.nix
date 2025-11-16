@@ -3,11 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hjem.url = "github:feel-co/hjem";
+
     systems.url = "github:nix-systems/default-linux";
+
     chaotic = {
       url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
       inputs = {
@@ -126,21 +125,21 @@
   outputs =
     { nixpkgs, ... }@inputs:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      host_platform = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
       hypr-pkgs = {
-        land = inputs.hyprland.packages.${system}.hyprland;
-        portal = inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland;
-        picker = inputs.hyprpicker.packages.${system}.hyprpicker;
-        paper = inputs.hyprpaper.packages.${system}.hyprpaper;
-        lock = inputs.hyprlock.packages.${system}.hyprlock;
-        idle = inputs.hypridle.packages.${system}.hypridle;
+        land = inputs.hyprland.packages.${host_platform}.hyprland;
+        portal = inputs.hyprland.packages.${host_platform}.xdg-desktop-portal-hyprland;
+        picker = inputs.hyprpicker.packages.${host_platform}.hyprpicker;
+        paper = inputs.hyprpaper.packages.${host_platform}.hyprpaper;
+        lock = inputs.hyprlock.packages.${host_platform}.hyprlock;
+        idle = inputs.hypridle.packages.${host_platform}.hypridle;
       };
 
       nvfim = inputs.nvf.lib.neovimConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit system;
+          system = host_platform;
           myInputs = inputs;
         };
         modules = [ ./nvf ];
@@ -148,47 +147,43 @@
 
       ags = import ./ags {
         inherit pkgs;
-        inherit system;
+        system = host_platform;
         inherit inputs;
       };
     in
     {
       # for testing package without rebuilding system
-      packages.${system} = {
+      packages.${host_platform} = {
         nvfim-test = nvfim.neovim;
         ags-bundled = ags.package;
       };
 
-      devShells.${system}.ags-shell = ags.shell;
+      devShells.${host_platform}.ags-shell = ags.shell;
 
       nixosConfigurations = {
         omnissiah = nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = host_platform;
           specialArgs = {
             host_name = "omnissiah";
-            inherit system;
+            inherit host_platform;
             inherit inputs;
             inherit hypr-pkgs;
             inherit nvfim;
             inherit ags;
           };
           modules = [
-            ./hosts/omnissiah
-            ./system
-            ./system/desktop
-            ./system/gaming.nix
-            ./home
+            ./modules
+            ./hosts/omnissiah.nix
             inputs.chaotic.nixosModules.default
-            inputs.home-manager.nixosModules.home-manager
             inputs.lanzaboote.nixosModules.lanzaboote
             inputs.nix-gaming.nixosModules.pipewireLowLatency
           ];
         };
         servitor = nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = host_platform;
           specialArgs = {
             host_name = "servitor";
-            inherit system;
+            system = host_platform;
             inherit inputs;
             inherit hypr-pkgs;
             inherit nvfim;
