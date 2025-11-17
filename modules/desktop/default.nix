@@ -1,13 +1,15 @@
 {
-  ags,
   config,
+  customPkgs,
+  inputs,
   lib,
   pkgs,
   ...
 }:
 let
   cfg = config.machine;
-  inherit (cfg) owner theme;
+  inherit (cfg) owner theme platform;
+  inherit (customPkgs.packages.${platform}) ags-bundled;
 in
 {
   imports = [
@@ -24,6 +26,14 @@ in
     hjem.users.${owner}.xdg.config.files = {
       "zathura/zathurarc".text = theme.zathura;
       "mpv/mpv.conf".text = "volume=20";
+      "anyrun/config.ron".source = ./anyron-config.ron;
+      "anyrun/websearch.ron".source = ./anyrun-websearch.ron;
+      "anyrun/shell.ron".text = ''
+        Config(
+          prefix: "",
+        )
+      '';
+      "anyrun/style.css".source = ./anyrun.css;
     };
 
     programs = {
@@ -51,8 +61,8 @@ in
           ];
           path = lib.mkForce [ ];
           serviceConfig = {
-            ExecStart = "${ags.package}/bin/ags-bundled";
-            ExecStop = "${ags.package}/bin/ags-bundled";
+            ExecStart = "${ags-bundled}/bin/ags-bundled";
+            ExecStop = "${ags-bundled}/bin/ags-bundled";
             Restart = "on-failure";
           };
         };
@@ -63,6 +73,17 @@ in
           serviceConfig = {
             ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
             Restart = "on-abort";
+          };
+        };
+        anyrun-daemon = {
+          after = [ "graphical-session.target" ];
+          description = "Anyrun daemon service";
+          partOf = [ "graphical-session.target" ];
+          wantedBy = [ "graphical-session.target" ];
+          serviceConfig = {
+            ExecStart = "${lib.getExe inputs.anyrun.packages.${platform}.anyrun-with-all-plugins} daemon";
+            Restart = "on-failure";
+            KillMode = "process";
           };
         };
       };
@@ -134,7 +155,9 @@ in
       };
 
       systemPackages = [
-        ags.package
+        ags-bundled
+        inputs.anyrun.packages.${platform}.anyrun-with-all-plugins
+        inputs.anyrun.packages.${platform}.anyrun-provider
         pkgs.zathura
         (pkgs.mpv-unwrapped.wrapper {
           mpv = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };

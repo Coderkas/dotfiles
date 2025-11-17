@@ -1,0 +1,30 @@
+Config(
+  prefix: "",
+  engines: [
+    DuckDuckGo,
+    Custom(
+      name: "Youtube",
+      url: "youtube.com/results?search_query={}",
+    ),
+    Custom(
+      name: "X in Y",
+      url: "learnxinyminutes.com/{}",
+    ),
+    Custom(
+      name: "Wikipedia",
+      url: "en.wikipedia.org/w/index.php?search={}",
+    ),
+    Custom(
+      name: "Anilist",
+      url: "anilist.co/search/anime?search={}",
+    ),
+    Custom(
+      name: "Nix Options",
+      url: "search.nixos.org/options?channel=unstable&query={}",
+    ),
+    Custom(
+      name: "Nix Packages",
+      url: "search.nixos.org/packages?channel=unstable&query={}",
+    ),
+  ]
+)

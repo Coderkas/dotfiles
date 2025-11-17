@@ -1,11 +1,25 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
+  machine = {
+    enableBase = true;
+    enableDesktop = true;
+    boot.enableSecure = true;
+    ssh.enable = true;
+    themeName = "Gruvbox";
+    terminal = "ghostty";
+    owner = "lorkas";
+    platform = "x86_64-linux";
+    name = "servitor";
+    hardware = {
+      cpu = "amd";
+      hasDedicatedGpu = false;
+    };
+    hyprland.mainMonitor = "eDP-1";
+    dunst.monitor = "eDP-1";
+  };
   # Kernel stuff
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
     kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
-    kernelModules = [ "kvm-amd" ];
-
     initrd = {
       availableKernelModules = [ "thunderbolt" ];
       luks.devices."luks-7a488d44-e655-44ba-8871-241df2728fe1".device =
@@ -13,7 +27,6 @@
       luks.devices."luks-e57d3198-6f5b-42d9-a67b-a34a65b71897".device =
         "/dev/disk/by-uuid/e57d3198-6f5b-42d9-a67b-a34a65b71897";
     };
-
     extraModprobeConfig = ''
       options cfg80211 ieee80211_regdom="US"
     '';
@@ -45,7 +58,6 @@
     { device = "/dev/disk/by-uuid/adcbb887-8ee3-4b4c-a1d7-da7de86a1ebd"; }
   ];
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

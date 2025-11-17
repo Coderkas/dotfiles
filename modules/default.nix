@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -9,6 +10,10 @@ let
 in
 {
   imports = [
+    inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.chaotic.nixosModules.default
+    inputs.nix-gaming.nixosModules.pipewireLowLatency
+
     ./desktop
     ./hypr
     ./theme

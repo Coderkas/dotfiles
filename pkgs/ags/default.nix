@@ -1,27 +1,25 @@
 {
+  ags-git,
   pkgs,
-  system,
-  inputs,
   ...
 }:
 let
-  inherit (inputs) ags astal;
   pname = "ags-bundled";
   nativeBuildInputs = [
     pkgs.wrapGAppsHook3
     pkgs.gobject-introspection
-    ags.packages.${system}.default
+    ags-git.ags
   ];
   buildInputs = [
     pkgs.glib
     pkgs.gjs
-    astal.packages.${system}.io
-    astal.packages.${system}.astal3
-    astal.packages.${system}.battery
-    astal.packages.${system}.hyprland
-    astal.packages.${system}.tray
-    astal.packages.${system}.wireplumber
-    astal.packages.${system}.apps
+    ags-git.io
+    ags-git.astal3
+    ags-git.battery
+    ags-git.hyprland
+    ags-git.tray
+    ags-git.wireplumber
+    ags-git.apps
   ];
 
   extraDev = [
@@ -50,7 +48,7 @@ in
       rm -rd ~/dotfiles/ags/node_modules
       ags types -d ~/dotfiles/ags
       mkdir ~/dotfiles/ags/node_modules
-      ln -s ${ags.packages.${system}.ags.jsPackage} ~/dotfiles/ags/node_modules/ags
+      ln -s ${ags-git.ags.jsPackage} ~/dotfiles/ags/node_modules/ags
     '';
     GIO_EXTRA_MODULES = "${pkgs.glib-networking}/lib/gio/modules";
     EXTRA_GIR_DIRS = "${girDirs}";

@@ -1,9 +1,4 @@
-{
-  host_platform,
-  host_name,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 {
   machine = {
     enableBase = true;
@@ -14,8 +9,8 @@
     themeName = "Gruvbox";
     terminal = "ghostty";
     owner = "lorkas";
-    platform = host_platform;
-    name = host_name;
+    platform = "x86_64-linux";
+    name = "omnissiah";
     hardware = {
       cpu = "intel";
       hasDedicatedGpu = true;

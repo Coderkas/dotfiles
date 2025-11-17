@@ -1,13 +1,19 @@
 {
   config,
+  customPkgs,
   lib,
-  nvfim,
   pkgs,
   ...
 }:
 let
   cfg = config.machine.cli;
-  inherit (config.machine) owner theme name;
+  inherit (config.machine)
+    owner
+    theme
+    name
+    platform
+    ;
+  inherit (customPkgs.packages.${platform}) nvfim;
 in
 {
   options.machine.cli.enable = lib.mkOption {
@@ -194,7 +200,7 @@ in
         };
 
         systemPackages = [
-          nvfim.neovim # nvf neovim package
+          nvfim # nvf neovim package
           pkgs.unzip
           pkgs.curl
           pkgs.wget

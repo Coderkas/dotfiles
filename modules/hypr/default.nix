@@ -1,13 +1,20 @@
 {
   config,
+  inputs,
   lib,
-  hypr-pkgs,
   pkgs,
   ...
 }:
 let
   cfg = config.machine.hyprland;
-  inherit (config.machine) owner;
+  inherit (config.machine) owner platform;
+  hypkgs = {
+    inherit (inputs.hyprland.packages.${platform}) hyprland xdg-desktop-portal-hyprland;
+    inherit (inputs.hyprpicker.packages.${platform}) hyprpicker;
+    inherit (inputs.hyprpaper.packages.${platform}) hyprpaper;
+    inherit (inputs.hyprlock.packages.${platform}) hyprlock;
+    inherit (inputs.hypridle.packages.${platform}) hypridle;
+  };
 in
 {
   options.machine.hyprland = {
@@ -24,19 +31,19 @@ in
     programs = {
       hyprland = {
         enable = true;
-        package = hypr-pkgs.land;
-        portalPackage = hypr-pkgs.portal;
+        package = hypkgs.hyprland;
+        portalPackage = hypkgs.xdg-desktop-portal-hyprland;
       };
 
       hyprlock = {
         enable = true;
-        package = hypr-pkgs.lock;
+        package = hypkgs.hyprlock;
       };
     };
 
     services.hypridle = {
       enable = true;
-      package = hypr-pkgs.idle;
+      package = hypkgs.hypridle;
     };
 
     xdg.portal = {
@@ -47,7 +54,7 @@ in
         ];
         "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
       };
-      extraPortals = [ hypr-pkgs.portal ];
+      extraPortals = [ hypkgs.xdg-desktop-portal-hyprland ];
     };
 
     hjem.users.${owner}.xdg.config.files =
@@ -78,9 +85,12 @@ in
           }
           $mainMonitor = ${cfg.mainMonitor}
           $owner = ${owner}
-          $menu = rofi -show combi -combi-modes "window,drun,run" -modes combi
-          $cmenu = rofi -modes calc -show calc -no-show-match -no-sort
+          #$menu = rofi -show combi -combi-modes "window,drun,run" -modes combi
+          #$cmenu = rofi -modes calc -show calc -no-show-match -no-sort
           $pmenu = rofi -modes power-menu:rofi-power-menu -show power-menu 
+          $menu = anyrun --plugins libapplications.so --plugins libshell.so
+          $cmenu = anyrun --plugins librink.so
+          $bmenu = anyrun --plugins libwebsearch.so --plugins libdictionary.so
         '';
 
         "hypr/idle.conf".source = ./hypridle.conf;
@@ -102,7 +112,7 @@ in
       };
 
     systemd = {
-      packages = [ hypr-pkgs.paper ];
+      packages = [ hypkgs.hyprpaper ];
       user = {
         services = {
           hyprpaper = {
@@ -131,8 +141,8 @@ in
         XDG_SESSION_DESKTOP = "Hyprland";
       };
       systemPackages = [
-        hypr-pkgs.picker
-        hypr-pkgs.paper
+        hypkgs.hyprpicker
+        hypkgs.hyprpaper
       ];
     };
   };
