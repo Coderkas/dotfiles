@@ -1,6 +1,5 @@
 {
   config,
-  customPkgs,
   inputs,
   lib,
   pkgs,
@@ -9,7 +8,6 @@
 let
   cfg = config.machine;
   inherit (cfg) owner theme platform;
-  inherit (customPkgs.packages.${platform}) ags-bundled;
 in
 {
   imports = [
@@ -34,6 +32,7 @@ in
         )
       '';
       "anyrun/style.css".source = ./anyrun.css;
+      "quickshell".source = ./quickshell;
     };
 
     programs = {
@@ -48,9 +47,9 @@ in
 
     systemd = {
       user.services = {
-        ags-daemon = {
+        quickshell-daemon = {
           after = [ "graphical-session.target" ];
-          description = "AGS auto start service";
+          description = "Quickshell service";
           partOf = [
             "graphical-session.target"
             "tray.target"
@@ -61,8 +60,7 @@ in
           ];
           path = lib.mkForce [ ];
           serviceConfig = {
-            ExecStart = "${ags-bundled}/bin/ags-bundled";
-            ExecStop = "${ags-bundled}/bin/ags-bundled";
+            ExecStart = "${pkgs.quickshell}/bin/quickshell";
             Restart = "on-failure";
           };
         };
@@ -155,7 +153,7 @@ in
       };
 
       systemPackages = [
-        ags-bundled
+        pkgs.quickshell
         inputs.anyrun.packages.${platform}.anyrun-with-all-plugins
         inputs.anyrun.packages.${platform}.anyrun-provider
         pkgs.zathura

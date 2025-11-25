@@ -19,7 +19,7 @@
     dunst.monitor = "DP-3";
     virtualisation = {
       enableVMs = true;
-      enableWaydroid = false;
+      enableWaydroid = true;
     };
   };
 

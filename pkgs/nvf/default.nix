@@ -432,6 +432,7 @@ in
         lsp.enable = false;
       };
       python.enable = true;
+      qml.enable = true;
       rust = {
         enable = true;
         lsp.opts = ''
@@ -458,7 +459,13 @@ in
       ts = {
         enable = true;
         extensions.ts-error-translator.enable = true;
+        lsp.servers = [
+          "denols"
+          "ts_ls"
+        ];
       };
+      yaml.enable = true;
+      zig.enable = true;
     };
 
     mini = {
@@ -511,6 +518,22 @@ in
 
     treesitter = {
       autotagHtml = true;
+      grammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        cmake
+        desktop
+        fish
+        hyprlang
+        ini
+        json
+        jsonc
+        query
+        rasi
+        regex
+        ron
+        scss
+        toml
+        xml
+      ];
       context = {
         enable = true;
         setupOpts = {

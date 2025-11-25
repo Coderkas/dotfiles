@@ -28,7 +28,7 @@ in
     nvim = "gruvbox";
     bat = "gruvbox-dark";
     ttyColors = [
-      "3c3836"
+      "1d2021"
       "cc241d"
       "98971a"
       "d79921"
@@ -43,7 +43,7 @@ in
       "83a598"
       "d3869b"
       "8ec07c"
-      "fbf1c7"
+      "ebdbb2"
     ];
 
     zathura = ''

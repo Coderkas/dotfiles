@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   config = lib.mkIf config.machine.enableBase {
     networking = {
@@ -16,8 +21,8 @@
         connectionConfig."connection.mdns" = 2;
       };
       # wireless.enable = true; # Enables wireless support via wpa_supplicant.
-      useDHCP = lib.mkForce false;
-      useNetworkd = lib.mkForce true;
+      useDHCP = false;
+      useNetworkd = true;
 
       nameservers = [
         # Cloudflare
@@ -47,12 +52,72 @@
 
     systemd = {
       services.NetworkManager-wait-online.enable = false;
-      network.wait-online.enable = false;
+      network = {
+        wait-online.enable = false;
+
+        networks = {
+          "30-default-wired" = {
+            matchConfig.Type = "ether";
+            networkConfig = {
+              DHCP = "yes";
+              IPv6AcceptRA = true;
+            };
+            routes = [
+              {
+                InitialCongestionWindow = 30;
+                InitialAdvertisedReceiveWindow = 30;
+              }
+            ];
+            dhcpV4Config = {
+              RouteMetric = 100;
+            };
+            dhcpV6Config = {
+              RouteMetric = 100;
+            };
+          };
+          "30-default-wireless" = {
+            matchConfig.Type = "wlan";
+            networkConfig = {
+              DHCP = "yes";
+              IPv6AcceptRA = true;
+            };
+            routes = [
+              {
+                InitialCongestionWindow = 30;
+                InitialAdvertisedReceiveWindow = 30;
+              }
+            ];
+            dhcpV4Config = {
+              RouteMetric = 200;
+            };
+            dhcpV6Config = {
+              RouteMetric = 200;
+            };
+          };
+        };
+      };
     };
 
     hardware = {
       bluetooth.enable = true;
       wirelessRegulatoryDatabase = true;
     };
+
+    boot.kernel.sysctl = {
+      "net.ipv4.conf.all.send_redirects" = 0;
+      "net.ipv4.conf.all.secure_redirects" = 0;
+      "net.ipv4.conf.default.accept_redirects" = 0;
+      "net.ipv4.conf.default.secure_redirects" = 0;
+      "net.ipv4.conf.default.send_redirects" = 0;
+      "net.ipv6.conf.all.accept_redirects" = 0;
+      "net.ipv6.conf.default.accept_redirects" = 0;
+      "net.ipv4.tcp_slow_start_after_idle" = 0;
+    };
+
+    environment.systemPackages = [
+      pkgs.mtr
+      pkgs.traceroute
+      pkgs.bandwhich
+    ];
   };
 }

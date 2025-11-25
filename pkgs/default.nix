@@ -12,7 +12,6 @@ in
     let
       pkgs = inputs.nixpkgs.legacyPackages.${host_platform};
       nil_git = inputs.nil.packages.${host_platform}.default;
-      ags-git = inputs.ags.packages.${host_platform};
     in
     {
       nvfim =
@@ -23,24 +22,10 @@ in
           };
           modules = [ ./nvf ];
         }).neovim;
-      ags-bundled =
-        (import ./ags {
-          inherit ags-git pkgs;
-        }).package;
-    }
-  );
-
-  dvShells = eachSystem (
-    host_platform:
-    let
-      pkgs = inputs.nixpkgs.legacyPackages.${host_platform};
-      ags-git = inputs.ags.packages.${host_platform};
-    in
-    {
-      ags-shell =
-        (import ./ags {
-          inherit ags-git pkgs;
-        }).shell;
+      waydroid_script = import ./waydroid_script {
+        inherit pkgs;
+        inherit (inputs.nixpkgs) lib;
+      };
     }
   );
 }

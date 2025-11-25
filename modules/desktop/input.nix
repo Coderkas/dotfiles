@@ -4,6 +4,9 @@
   pkgs,
   ...
 }:
+let
+  inherit (config.machine) theme;
+in
 {
   config = lib.mkMerge [
     (lib.mkIf config.machine.enableBase {
@@ -26,6 +29,7 @@
             addons = [
               pkgs.fcitx5-mozc-ut
               pkgs.fcitx5-gtk
+              pkgs.kdePackages.fcitx5-qt
             ];
             ignoreUserConfig = true;
             settings = {
@@ -37,11 +41,11 @@
                 };
                 "Groups/0/Items/0" = {
                   "Name" = "keyboard-us";
-                  "Layout" = null;
+                  "Layout" = "";
                 };
                 "Groups/0/Items/1" = {
                   "Name" = "keyboard-de";
-                  "Layout" = null;
+                  "Layout" = "";
                 };
                 "Groups/0/Items/2" = {
                   "Name" = "mozc";
@@ -51,12 +55,12 @@
               };
               globalOptions = {
                 "Hotkey" = {
-                  "TriggerKeys" = null;
+                  "TriggerKeys" = "";
                   "EnumarateWithTriggerKeys" = "True";
-                  "AltTriggerKeys" = null;
+                  "AltTriggerKeys" = "";
                   "EnumerateSkipFirst" = "False";
-                  "EnumerateGroupForwardKeys" = null;
-                  "EnumerateGroupBackwardKeys" = null;
+                  "EnumerateGroupForwardKeys" = "";
+                  "EnumerateGroupBackwardKeys" = "";
                   "ModifierOnlyKeyTimeout" = 250;
                 };
                 "Hotkey/EnumerateForwardKeys"."0" = "Super+space";
@@ -69,7 +73,7 @@
                 "Hotkey/NextCandidate"."0" = "Tab";
                 "Hotkey/TogglePreedit"."0" = "Control+Alt+P";
                 "Behavior" = {
-                  "ActiveByDefault" = "False";
+                  "ActiveByDefault" = "True";
                   "resetStateWhenFocusIn" = "No";
                   "ShareInputState" = "All";
                   "PreeditEnabledByDefault" = "True";
@@ -78,10 +82,10 @@
                   "CompactInputMethodInformation" = "True";
                   "ShowFirstInputMethodInformation" = "True";
                   "DefaultPageSize" = 5;
-                  "OverrideXkbOption" = "False";
-                  "CustomXkbOption" = null;
-                  "EnabledAddons" = null;
-                  "DisabledAddons" = null;
+                  "OverrideXkbOption" = "True";
+                  "CustomXkbOption" = "";
+                  "EnabledAddons" = "";
+                  "DisabledAddons" = "";
                   "PreloadInputMethod" = "True";
                   "AllowInputMethodForPassword" = "False";
                   "ShowPreeditForPassword" = "False";
@@ -93,9 +97,9 @@
                 classicui.globalSection = {
                   "Vertical Candidate List" = "False";
                   "WheelForPaging" = "True";
-                  "Font" = "Sans 10";
-                  "MenuFont" = "Sans 10";
-                  "TrayFont" = "Sans Bold 10";
+                  "Font" = ''"${theme.font} 10"'';
+                  "MenuFont" = ''"${theme.font} 10"'';
+                  "TrayFont" = ''"${theme.font} Bold 10"'';
                   "TrayOutlineColor" = "#000000";
                   "TrayTextColor" = "#ffffff";
                   "PreferTextIcon" = "False";
@@ -103,7 +107,7 @@
                   "UseInputMethodLanguageToDisplayText" = "True";
                   "Theme" = "default-dark";
                   "DarkTheme" = "default-dark";
-                  "UseDarkTheme" = "False";
+                  "UseDarkTheme" = "True";
                   "UseAccentColor" = "True";
                   "PerScreenDPI" = "False";
                   "ForceWaylandDPI" = "0";
@@ -125,10 +129,6 @@
                     "NextCandidate"."0" = "Tab";
                     "Hint Trigger"."0" = "Control+Alt+H";
                     "One Time Hint Trigger"."0" = "Control+Alt+J";
-                    "LongPressBlocklist" = {
-                      "0" = "konsole";
-                      "1" = "org.kde.konsole";
-                    };
                   };
                 };
 
@@ -141,7 +141,7 @@
                   "ExpandKey" = "Control+Alt+H";
                 };
 
-                notifications.globalSection."HiddenNotifications" = null;
+                notifications.globalSection."HiddenNotifications" = "";
 
                 unicode = {
                   globalSection = { };
@@ -179,6 +179,8 @@
       environment.sessionVariables = {
         SDL_IM_MODULE = "fcitx";
         GLFW_IM_MODULE = "ibus";
+        GTK_IM_MODULE = "fcitx";
+        QT_IM_MODULE = "fcitx";
       };
     })
   ];

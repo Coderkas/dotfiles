@@ -19,10 +19,6 @@
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
     };
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -75,16 +71,6 @@
       };
     };
 
-    astal = {
-      url = "github:aylur/astal";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ags = {
-      url = "github:aylur/ags";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.astal.follows = "astal";
-    };
-
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -100,7 +86,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
-        flake-compat.follows = "flake-compat";
+        flake-compat.follows = "";
         rust-overlay.follows = "chaotic/rust-overlay";
         pre-commit-hooks-nix.follows = "";
       };
@@ -112,7 +98,7 @@
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
         flake-parts.follows = "flake-parts";
-        flake-compat.follows = "flake-compat";
+        flake-compat.follows = "";
       };
     };
 
@@ -121,7 +107,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    anyrun.url = "github:anyrun-org/anyrun";
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
+      inputs.flake-parts.follows = "flake-parts";
+    };
   };
 
   outputs =
@@ -131,7 +120,6 @@
     in
     {
       inherit (customPkgs) packages;
-      inherit (customPkgs) devShells;
 
       nixosConfigurations = {
         omnissiah = nixpkgs.lib.nixosSystem {

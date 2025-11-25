@@ -26,9 +26,8 @@ in
       hjem.users.${owner}.xdg.config.files = {
         "bat/config".text = "--theme ${theme.bat}";
 
-        "bottom/bottom.toml".text = ''
-          [styles]
-          theme = "${theme.bottom}"
+        "btop/btop.conf".text = ''
+          vim_keys = True
         '';
       };
 
@@ -72,6 +71,7 @@ in
           useBabelfish = true;
           interactiveShellInit = /* sh */ ''
             set fish_greeting
+            fastfetch
           '';
         };
 
@@ -209,7 +209,8 @@ in
           pkgs.jq
           pkgs.eza
 
-          pkgs.bottom
+          pkgs.systemctl-tui
+          pkgs.btop
           pkgs.babelfish
           pkgs.fishPlugins.fzf-fish
           pkgs.fishPlugins.forgit
@@ -229,6 +230,9 @@ in
         enable = config.machine.enableDesktop;
         generator = lib.generators.toJSON { };
         value = {
+          general = {
+            detectVersion = false;
+          };
           display = {
             separator = " ";
             key.width = 17;
@@ -241,7 +245,6 @@ in
             "title"
             "os"
             "kernel"
-            "packages"
             "shell"
             "terminal"
             "terminalfont"

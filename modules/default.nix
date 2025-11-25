@@ -76,7 +76,7 @@ in
         pkgs.noto-fonts-cjk-sans
         pkgs.noto-fonts-cjk-serif
         pkgs.noto-fonts-color-emoji
-        pkgs.nerd-fonts.iosevka
+        pkgs.nerd-fonts.fira-code
         pkgs.nerd-fonts.iosevka-term
         pkgs.nerd-fonts.caskaydia-cove
         pkgs.nerd-fonts.jetbrains-mono

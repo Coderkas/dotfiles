@@ -1,12 +1,13 @@
 {
   config,
+  customPkgs,
   lib,
   pkgs,
   ...
 }:
 let
   cfg = config.machine.virtualisation;
-  inherit (config.machine) owner;
+  inherit (config.machine) owner platform;
 in
 {
   options.machine.virtualisation = {
@@ -52,7 +53,9 @@ in
     })
     (lib.mkIf cfg.enableWaydroid {
       virtualisation.waydroid.enable = true;
-      environment.systemPackages = [ pkgs.waydroid-helper ];
+      environment.systemPackages = [
+        customPkgs.packages.${platform}.waydroid_script
+      ];
     })
   ];
 }

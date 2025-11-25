@@ -2,11 +2,11 @@ Config(
   // Absolute(n): The absolute value in pixels
   // Fraction(n): A fraction of the width or height of the full screen (depends on exclusive zones and the settings related to them) window respectively
   x: Fraction(0.5),
-  y: Absolute(0),
+  y: Fraction(0.4),
   width: Absolute(800),
   height: Absolute(1),
   hide_icons: false,
-  ignore_exclusive_zones: false,
+  ignore_exclusive_zones: true,
   layer: Overlay,
   hide_plugin_info: false,
   close_on_click: true,
