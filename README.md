@@ -8,9 +8,8 @@ This is the stuff I was running the last time I edited this readme file:
   [starship](https://github.com/starship/starship) as prompt
 - **Editor**: [neovim](https://github.com/neovim/neovim) with
   [nvf](https://github.com/NotAShelf/nvf)
-- **Runner:** [rofi](https://github.com/davatorium/rofi)
-- **Bar:**
-  [AGS](https://aylur.github.io/ags/)/[Astal](https://aylur.github.io/astal/)
+- **Runner:** [anyrun](https://github.com/anyrun-org/anyrun)
+- **Bar:** [Quickshell](https://git.outfoxxed.me/quickshell/quickshell)
 - **Theme:** [Gruvbox](https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme)
 
-All managed with NixOS and Home-Manager.
+All managed with NixOS and Hjem.
