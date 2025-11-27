@@ -12,8 +12,8 @@ in
     (lib.mkIf config.machine.enableBase {
       # Configure keymap in X11
       services.xserver.xkb = {
-        layout = "us,de";
-        variant = ",qwerty";
+        layout = "us,de,jp";
+        variant = ",qwerty,";
         options = "grp:win_space_toggle,ctrl:nocaps";
       };
     })
@@ -30,8 +30,9 @@ in
               pkgs.fcitx5-mozc-ut
               pkgs.fcitx5-gtk
               pkgs.kdePackages.fcitx5-qt
+              pkgs.fcitx5-material-color
             ];
-            ignoreUserConfig = true;
+            ignoreUserConfig = false;
             settings = {
               inputMethod = {
                 "Groups/0" = {
@@ -39,18 +40,9 @@ in
                   "Default Layout" = "us";
                   "DefaultIM" = "mozc";
                 };
-                "Groups/0/Items/0" = {
-                  "Name" = "keyboard-us";
-                  "Layout" = "";
-                };
-                "Groups/0/Items/1" = {
-                  "Name" = "keyboard-de";
-                  "Layout" = "";
-                };
-                "Groups/0/Items/2" = {
-                  "Name" = "mozc";
-                  "Layout" = "gb";
-                };
+                "Groups/0/Items/0".Name = "keyboard-us";
+                "Groups/0/Items/1".Name = "keyboard-de";
+                "Groups/0/Items/2".Name = "mozc";
                 "GroupOrder"."0" = "Default";
               };
               globalOptions = {
@@ -73,7 +65,7 @@ in
                 "Hotkey/NextCandidate"."0" = "Tab";
                 "Hotkey/TogglePreedit"."0" = "Control+Alt+P";
                 "Behavior" = {
-                  "ActiveByDefault" = "True";
+                  "ActiveByDefault" = "False";
                   "resetStateWhenFocusIn" = "No";
                   "ShareInputState" = "All";
                   "PreeditEnabledByDefault" = "True";
@@ -95,7 +87,7 @@ in
 
               addons = {
                 classicui.globalSection = {
-                  "Vertical Candidate List" = "False";
+                  "Vertical Candidate List" = "True";
                   "WheelForPaging" = "True";
                   "Font" = ''"${theme.font} 10"'';
                   "MenuFont" = ''"${theme.font} 10"'';
@@ -127,7 +119,6 @@ in
                   sections = {
                     "PrevCandidate"."0" = "Shift+Tab";
                     "NextCandidate"."0" = "Tab";
-                    "Hint Trigger"."0" = "Control+Alt+H";
                     "One Time Hint Trigger"."0" = "Control+Alt+J";
                   };
                 };
@@ -179,7 +170,6 @@ in
       environment.sessionVariables = {
         SDL_IM_MODULE = "fcitx";
         GLFW_IM_MODULE = "ibus";
-        GTK_IM_MODULE = "fcitx";
         QT_IM_MODULE = "fcitx";
       };
     })

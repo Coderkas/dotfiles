@@ -313,12 +313,16 @@ in
           c = lib.generators.mkLuaInline /* lua */ ''{"clang-format",lsp_format = "fallback"}'';
           cpp = lib.generators.mkLuaInline /* lua */ ''{"clang-format",lsp_format = "fallback"}'';
           odin = [ "odinfmt" ];
+          nix = [ "nixfmt" ];
         };
         formatters = {
           odinfmt = {
             command = "odinfmt";
             args = [ "-stdin" ];
             stdin = true;
+          };
+          nixfmt = {
+            command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
           };
         };
       };
@@ -389,14 +393,34 @@ in
           cmd = [ "${nil_git}/bin/nil" ];
           settings = {
             nil = {
-              formatting.command = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ];
               nix = {
                 binary = "${pkgs.nixVersions.nix_2_30}/bin/nix";
                 maxMemoryMB = 4096;
                 flake = {
                   autoArchive = true;
                   autoEvalInputs = true;
+                  nixpkgsInputName = "nixpkgs";
                 };
+              };
+            };
+          };
+          filetypes = [ "nix" ];
+          root_markers = [
+            ".git"
+            "flake.nix"
+          ];
+        };
+        nixd = {
+          enable = true;
+          cmd = [ "${lib.getExe pkgs.nixd}" ];
+          settings = {
+            nixd = {
+              nixpkgs = {
+                expr = "import (builtins.getFlake \"/home/lorkas/dotfiles\").inputs.nixpkgs { }";
+              };
+              options = {
+                nvf.expr = "((builtins.getFlake \"/home/lorkas/dotfiles\").inputs.nvf.lib.neovimConfiguration { pkgs = (import <nixpkgs>; ); }).options";
+                nixos.expr = "(builtins.getFlake \"/home/lorkas/dotfiles\").nixosConfigurations.omnissiah.options";
               };
             };
           };
@@ -421,11 +445,26 @@ in
       go.enable = true;
       html.enable = true;
       lua.enable = true;
-      markdown.enable = true;
+      markdown = {
+        enable = true;
+        extensions.markview-nvim = {
+          enable = true;
+          setupOpts = {
+            preview.icon_provider = "devicons";
+            experimental = {
+              prefer_nvim = true;
+              file_open_command = "tabnew";
+            };
+            latex.enable = true;
+            markdown.enable = true;
+            typst.enable = true;
+          };
+        };
+      };
       nix = {
         enable = true;
         lsp.enable = false;
-        format.type = [ "nixfmt" ];
+        format.enable = false;
       };
       odin = {
         enable = true;

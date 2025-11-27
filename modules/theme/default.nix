@@ -12,6 +12,7 @@ let
     gtk-font-name = cfg.theme.font;
     gtk-icon-theme-name = cfg.theme.icons;
     gtk-theme-name = cfg.theme.gtk;
+    gtk-im-module = "fcitx";
   };
 
   gtkBookmarks = ''
@@ -60,7 +61,7 @@ in
               mkKeyValue =
                 k: v:
                 let
-                  v' = if (lib.isString v) then "${v}" else toString v;
+                  v' = if (lib.isString v) then ''"${v}"'' else toString v;
                 in
                 "${k}=${v'}";
             };

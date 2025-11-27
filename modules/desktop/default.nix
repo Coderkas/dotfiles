@@ -159,7 +159,6 @@ in
         pkgs.zathura
         (pkgs.mpv-unwrapped.wrapper {
           mpv = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
-          youtubeSupport = true;
         })
         pkgs.anki
         pkgs.rofi
@@ -171,6 +170,7 @@ in
         pkgs.gnome-clocks
         pkgs.element-desktop
         pkgs.oculante # image viewer
+
         # Gnome files with plugin for previewer
         (pkgs.nautilus.overrideAttrs (oldAttrs: {
           buildInputs = oldAttrs.buildInputs ++ [

@@ -26,8 +26,8 @@ in
       value = {
         global = {
           inherit (cfg) monitor;
-          width = "(0,300)";
-          height = "(0,100)";
+          width = "(0,600)";
+          height = "(0,200)";
           origin = "top-center";
           corner_radius = 5;
           background = ''"#282828"'';
@@ -38,7 +38,8 @@ in
           gap_size = 5;
           font = "${theme.font}, Medium 10";
           progress_bar = true;
-          icon_theme = theme.icons;
+          icon_theme = ''"${theme.icons}"'';
+          enable_recursive_icon_lookup = true;
         };
         urgency_critical = {
           foreground = ''"#cc241d"'';

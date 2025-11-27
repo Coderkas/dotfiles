@@ -18,6 +18,7 @@ in
   config = lib.mkMerge [
     (lib.mkIf (cfg.enableVMs || cfg.enableWaydroid) {
       users.users.${owner}.extraGroups = [ "kvm" ];
+      networking.firewall.trustedInterfaces = [ "br0" ];
     })
     (lib.mkIf cfg.enableVMs {
       networking.firewall.trustedInterfaces = [ "virbr0" ];

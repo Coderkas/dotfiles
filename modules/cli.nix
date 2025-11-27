@@ -204,6 +204,8 @@ in
           pkgs.unzip
           pkgs.curl
           pkgs.wget
+          pkgs.inetutils
+          pkgs.bandwhich
           pkgs.ripgrep
           pkgs.fd
           pkgs.jq
@@ -291,6 +293,7 @@ in
         pkgs.dua # Disk usage analyzer
         pkgs.numbat # Calculator/math scripting
         pkgs.fastfetch
+        pkgs.termscp # terminal for ftp, scp, etc.
       ];
     })
   ];
