@@ -27,6 +27,7 @@ in
         "bat/config".text = "--theme ${theme.bat}";
 
         "btop/btop.conf".text = ''
+          color_theme = "${theme.btop}"
           vim_keys = True
         '';
       };
@@ -270,6 +271,15 @@ in
         };
       };
 
+      services.ollama = {
+        enable = true;
+        acceleration = "rocm";
+        loadModels = [
+          "mistral"
+          "deepseek-r1"
+        ];
+      };
+
       environment.systemPackages = [
         # Extracting things
         pkgs.p7zip
@@ -294,6 +304,8 @@ in
         pkgs.numbat # Calculator/math scripting
         pkgs.fastfetch
         pkgs.termscp # terminal for ftp, scp, etc.
+
+        pkgs.oterm
       ];
     })
   ];

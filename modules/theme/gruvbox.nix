@@ -24,7 +24,7 @@ in
     kvantum = "${pkgs.gruvbox-kvantum}/share/Kvantum/Gruvbox-Dark-Brown";
     kitty = "gruvbox-dark-hard";
     ghostty = "Gruvbox Dark Hard";
-    bottom = "gruvbox";
+    btop = "gruvbox_dark_v2";
     nvim = "gruvbox";
     bat = "gruvbox-dark";
     ttyColors = [

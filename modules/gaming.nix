@@ -8,7 +8,6 @@
 let
   cfg = config.machine;
   ng = inputs.nix-gaming.packages.${cfg.platform};
-  umu-launcher = inputs.umu.packages.${cfg.platform}.default;
 in
 {
   options.machine.enableGaming = lib.mkEnableOption "";
@@ -76,7 +75,7 @@ in
         })
         ng.wine-tkg
         ng.wine-cachyos
-        umu-launcher
+        pkgs.umu-launcher
         pkgs.wineWowPackages.waylandFull
         pkgs.winetricks
         pkgs.r2modman

@@ -11,6 +11,7 @@ let
 in
 {
   imports = [
+    ./anyrun.nix
     ./dunst.nix
     ./rofi.nix
     ./terminal.nix
@@ -24,14 +25,6 @@ in
     hjem.users.${owner}.xdg.config.files = {
       "zathura/zathurarc".text = theme.zathura;
       "mpv/mpv.conf".text = "volume=20";
-      "anyrun/config.ron".source = ./anyron-config.ron;
-      "anyrun/websearch.ron".source = ./anyrun-websearch.ron;
-      "anyrun/shell.ron".text = ''
-        Config(
-          prefix: "",
-        )
-      '';
-      "anyrun/style.css".source = ./anyrun.css;
       "quickshell".source = ./quickshell;
     };
 
@@ -71,17 +64,6 @@ in
           serviceConfig = {
             ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
             Restart = "on-abort";
-          };
-        };
-        anyrun-daemon = {
-          after = [ "graphical-session.target" ];
-          description = "Anyrun daemon service";
-          partOf = [ "graphical-session.target" ];
-          wantedBy = [ "graphical-session.target" ];
-          serviceConfig = {
-            ExecStart = "${lib.getExe inputs.anyrun.packages.${platform}.anyrun-with-all-plugins} daemon";
-            Restart = "on-failure";
-            KillMode = "process";
           };
         };
       };
@@ -154,8 +136,6 @@ in
 
       systemPackages = [
         pkgs.quickshell
-        inputs.anyrun.packages.${platform}.anyrun-with-all-plugins
-        inputs.anyrun.packages.${platform}.anyrun-provider
         pkgs.zathura
         (pkgs.mpv-unwrapped.wrapper {
           mpv = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
@@ -170,6 +150,7 @@ in
         pkgs.gnome-clocks
         pkgs.element-desktop
         pkgs.oculante # image viewer
+        inputs.zen-browser.packages.${platform}.default
 
         # Gnome files with plugin for previewer
         (pkgs.nautilus.overrideAttrs (oldAttrs: {

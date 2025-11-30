@@ -419,7 +419,7 @@ in
                 expr = "import (builtins.getFlake \"/home/lorkas/dotfiles\").inputs.nixpkgs { }";
               };
               options = {
-                nvf.expr = "((builtins.getFlake \"/home/lorkas/dotfiles\").inputs.nvf.lib.neovimConfiguration { pkgs = (import <nixpkgs>; ); }).options";
+                nvf.expr = "((builtins.getFlake \"/home/lorkas/dotfiles\").inputs.nvf.lib.neovimConfiguration { pkgs = (import <nixpkgs> ); }).options";
                 nixos.expr = "(builtins.getFlake \"/home/lorkas/dotfiles\").nixosConfigurations.omnissiah.options";
               };
             };
@@ -450,7 +450,15 @@ in
         extensions.markview-nvim = {
           enable = true;
           setupOpts = {
-            preview.icon_provider = "devicons";
+            preview = {
+              enable = false;
+              icon_provider = "devicons";
+              callbacks.on_attach = lib.generators.mkLuaInline /* lua */ ''
+                function(bufnr, _)
+                  vim.keymap.set("n", "<leader>lp", "<CMD>Markview splitToggle<CR>", {desc = "Toggle Markview split", noremap = true, silent = true, buffer = bufnr})
+                  end
+              '';
+            };
             experimental = {
               prefer_nvim = true;
               file_open_command = "tabnew";
@@ -474,7 +482,7 @@ in
       qml.enable = true;
       rust = {
         enable = true;
-        lsp.opts = ''
+        lsp.opts = /* lua */ ''
           ['rust-analyzer'] = {
             cargo = {
               allFeature = true,

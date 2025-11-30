@@ -12,11 +12,12 @@ in
     services.pipewire = {
       enable = true;
       alsa.enable = true;
+      alsa.support32Bit = true;
       audio.enable = true;
       jack.enable = true;
       pulse.enable = true;
       wireplumber.enable = true;
-      lowLatency.enable = config.machine.enableGaming; # Pipewire goes brr thanks to nix-gaming by fufexan
+      #lowLatency.enable = config.machine.enableGaming; # Pipewire goes brr thanks to nix-gaming by fufexan
     };
 
     environment.shellAliases = {

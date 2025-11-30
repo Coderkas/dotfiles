@@ -76,10 +76,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
-    umu = {
-      url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
@@ -110,6 +106,14 @@
     anyrun = {
       url = "github:anyrun-org/anyrun";
       inputs.flake-parts.follows = "flake-parts";
+    };
+
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "";
+      };
     };
   };
 
