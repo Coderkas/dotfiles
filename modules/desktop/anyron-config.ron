@@ -29,6 +29,14 @@ Config(
       action: Down,
     ),
     Keybind(
+      key: "Up",
+      action: Up,
+    ),
+    Keybind(
+      key: "Down",
+      action: Down,
+    ),
+    Keybind(
       key: "ISO_Left_Tab",
       action: Up,
       shift: true,
