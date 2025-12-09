@@ -59,12 +59,16 @@ in
           message = "owner is not set";
         }
         {
-          assertion = cfg.owner != null;
-          message = "name is not set";
+          assertion = cfg.name != null;
+          message = "machine name is not set";
         }
         {
-          assertion = cfg.owner != null;
+          assertion = cfg.platform != null;
           message = "platform is not set";
+        }
+        {
+          assertion = cfg.hardware.cpu != null;
+          message = "cpu is not set";
         }
       ];
     }

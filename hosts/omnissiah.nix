@@ -21,6 +21,8 @@
       enableVMs = true;
       enableWaydroid = true;
     };
+    syncthing.devices."automaton".id =
+      "JCWRIZM-P5WY42A-HFFHNRF-XEPP37R-SC5FJGC-RRMOOWA-F6J4ZS7-FLV2GQJ";
   };
 
   programs.ausweisapp = {

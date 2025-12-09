@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -9,24 +10,42 @@ let
   inherit (config.machine) owner;
 in
 {
+  imports = [
+    inputs.nixos-hardware.nixosModules.raspberry-pi-4
+  ];
+
   options.machine.hardware = {
     cpu = lib.mkOption {
       type = lib.types.enum [
         "intel"
         "amd"
+        "pi 4"
       ];
     };
     hasDedicatedGpu = lib.mkEnableOption "";
   };
 
   config = lib.mkMerge [
-    (lib.mkIf (cfg.cpu != null) {
+    (lib.mkIf config.machine.enableBase {
+      hardware.enableAllFirmware = lib.mkDefault true;
+      services.fwupd.enable = true;
+    })
+    (lib.mkIf (cfg.cpu == "pi 4") {
       hardware = {
-        enableAllFirmware = lib.mkDefault true;
-        cpu.${cfg.cpu}.updateMicrocode = lib.mkDefault true;
+        raspberry-pi-4."4".apply-overlays-dtmerge.enable = true;
+        deviceTree = {
+          enable = true;
+          filter = "*rpi-4-*.dtb";
+        };
       };
 
-      services.fwupd.enable = true;
+      environment.systemPackages = [
+        pkgs.libraspberrypi
+        pkgs.raspberrypi-eeprom
+      ];
+    })
+    (lib.mkIf (cfg.cpu != "pi 4") {
+      hardware.cpu.${cfg.cpu}.updateMicrocode = lib.mkDefault true;
       boot.kernelModules = [ "kvm-${cfg.cpu}" ];
     })
     (lib.mkIf config.machine.enableDesktop {
