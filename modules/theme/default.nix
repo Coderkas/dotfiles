@@ -100,6 +100,10 @@ in
             theme=${cfg.theme.qt}
           '';
           "Kvantum/${cfg.theme.qt}".source = cfg.theme.kvantum;
+          "kdeglobals".text = ''
+            [General]
+            theme=${cfg.theme.qt}
+          '';
         };
       };
 

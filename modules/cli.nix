@@ -60,7 +60,6 @@ in
           extraPackages = [
             pkgs.bat-extras.batdiff
             pkgs.bat-extras.batgrep
-            pkgs.bat-extras.batman
             pkgs.bat-extras.batpipe
           ];
         };
@@ -171,6 +170,8 @@ in
           MANPAGER = "nvim +Man!";
           VISUAL = "nvim";
           EDITOR = "nvim";
+          PAGER = "bat";
+          SYSTEMD_LESS = "FRSM";
 
           FZF_DEFAULT_OPTS = "--style=full";
         };
@@ -198,6 +199,7 @@ in
           ll = "eza -l";
           lla = "eza -la";
           lt = "eza --tree";
+          cat = "bat";
         };
 
         systemPackages = [

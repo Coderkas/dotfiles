@@ -85,9 +85,6 @@ in
           }
           $mainMonitor = ${cfg.mainMonitor}
           $owner = ${owner}
-          #$menu = rofi -show combi -combi-modes "window,drun,run" -modes combi
-          #$cmenu = rofi -modes calc -show calc -no-show-match -no-sort
-          $pmenu = rofi -modes power-menu:rofi-power-menu -show power-menu 
           $menu = anyrun --plugins libapplications.so --plugins libshell.so
           $cmenu = anyrun --plugins librink.so
           $bmenu = anyrun --plugins libwebsearch.so --plugins libdictionary.so
@@ -100,8 +97,12 @@ in
         '';
         "hypr/paper.conf".source = ./hyprpaper.conf;
         "hypr/hyprpaper.conf".text = ''
-          source = ${hjemConfigs."hypr/vars.conf".source}
-          source = ${hjemConfigs."hypr/paper.conf".source}
+          splash = false
+          wallpaper {
+            monitor =
+            path = /home/${owner}/Pictures/AmeIna.png
+            fit_mode =
+          }
         '';
         "hypr/hyprlock.conf".source = ./hyprlock.conf;
 
@@ -115,13 +116,9 @@ in
       packages = [ hypkgs.hyprpaper ];
       user = {
         services = {
-          hyprpaper = {
-            wantedBy = [ "graphical-session.target" ];
-            restartTriggers = [ "${./hyprpaper.conf}" ];
-          };
+          hyprpaper.wantedBy = [ "graphical-session.target" ];
           hypridle = {
             wantedBy = [ "graphical-session.target" ];
-            restartTriggers = [ "${./hypridle.conf}" ];
             path = lib.mkForce [ ];
           };
         };

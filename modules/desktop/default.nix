@@ -13,7 +13,7 @@ in
   imports = [
     ./anyrun.nix
     ./dunst.nix
-    ./rofi.nix
+    #./rofi.nix
     ./terminal.nix
     ./xdg.nix
     ./input.nix
@@ -122,7 +122,7 @@ in
 
     security = {
       pam.services.greetd.enableGnomeKeyring = true;
-      rtkit.enable = true; # Something about cpu scheduling and pipewire
+      # rtkit.enable = true; # Something about cpu scheduling and pipewire
     };
 
     environment = {
@@ -141,7 +141,6 @@ in
           mpv = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
         })
         pkgs.anki
-        pkgs.rofi
         pkgs.signal-desktop
         pkgs.keepassxc
         pkgs.discord

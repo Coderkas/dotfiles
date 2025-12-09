@@ -42,6 +42,7 @@ in
           "nix-command"
           "flakes"
           "ca-derivations"
+          "cgroups"
         ];
 
         substituters = [
@@ -65,6 +66,7 @@ in
         keep-going = true;
         warn-dirty = false;
         accept-flake-config = false;
+        use-cgroups = true;
       };
 
       optimise = {

@@ -1,13 +1,11 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
 }:
 let
   cfg = config.machine;
-  ng = inputs.nix-gaming.packages.${cfg.platform};
 in
 {
   options.machine.enableGaming = lib.mkEnableOption "";
@@ -52,7 +50,6 @@ in
     users.users.${cfg.owner}.extraGroups = [ "gamemode" ];
 
     services.udev.packages = [ pkgs.game-devices-udev-rules ];
-    hardware.steam-hardware.enable = true;
 
     environment = {
       sessionVariables = {
@@ -70,13 +67,18 @@ in
       };
 
       systemPackages = [
+        (pkgs.makeDesktopItem {
+          name = "BfME";
+          desktopName = "Battle for Middle-earth";
+          path = "$HOME/Games";
+          exec = ''PROTON_WAYLAND_ENABLE=1 WINEPREFIX="/home/lorkas/Games/bfme" PROTONPATH="/home/lorkas/.local/share/Steam/compatibilitytools.d/GE-Proton10-17" umu-run "/home/lorkas/Games/bfme/drive_c/users/steamuser/Desktop/All in One Launcher.lnk"'';
+          terminal = false;
+        })
         (pkgs.heroic.override {
           extraPkgs = pkgs: [ pkgs.gamescope ];
         })
-        ng.wine-tkg
-        ng.wine-cachyos
-        pkgs.umu-launcher
         pkgs.wineWowPackages.waylandFull
+        pkgs.umu-launcher
         pkgs.winetricks
         pkgs.r2modman
         pkgs.prismlauncher
