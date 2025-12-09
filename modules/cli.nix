@@ -275,7 +275,7 @@ in
 
       services.ollama = {
         enable = true;
-        acceleration = "rocm";
+        package = pkgs.ollama-rocm;
         loadModels = [
           "mistral"
           "deepseek-r1"

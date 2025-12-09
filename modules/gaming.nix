@@ -77,7 +77,7 @@ in
         (pkgs.heroic.override {
           extraPkgs = pkgs: [ pkgs.gamescope ];
         })
-        pkgs.wineWowPackages.waylandFull
+        pkgs.wineWowPackages.stagingFull
         pkgs.umu-launcher
         pkgs.winetricks
         pkgs.r2modman
