@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     hjem.url = "github:feel-co/hjem";
-
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     systems.url = "github:nix-systems/default-linux";
 
     chaotic = {
@@ -133,10 +133,16 @@
         servitor = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs customPkgs; };
           modules = [
-            ./hosts/servitor
-            ./system
-            ./system/desktop
-            ./home
+            ./modules
+            ./hosts/servitor.nix
+          ];
+        };
+        automaton = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs customPkgs; };
+          modules = [
+            ./modules
+            ./hosts/automaton.nix
+            inputs.nixos-hardware.nixosModules.raspberry-pi-4
           ];
         };
       };

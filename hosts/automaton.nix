@@ -10,7 +10,7 @@
     platform = "aarch64-linux";
     name = "automaton";
     hardware = {
-      cpu = "pi 4";
+      cpu = "pi";
       hasDedicatedGpu = false;
     };
     syncthing = {
@@ -23,10 +23,7 @@
     };
   };
 
-  boot.loader = {
-    grub.enable = false;
-    generic-extlinux-compatible.enable = true;
-  };
+  hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";

@@ -22,6 +22,14 @@ in
           };
           modules = [ ./nvf ];
         }).neovim;
+      nvfim-minimal =
+        (inputs.nvf.lib.neovimConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit nil_git;
+          };
+          modules = [ ./nvf/minimal.nix ];
+        }).neovim;
       waydroid_script = import ./waydroid_script {
         inherit pkgs;
         inherit (inputs.nixpkgs) lib;

@@ -30,7 +30,7 @@ in
       dataDir = "/home/${owner}";
       configDir = "/home/${owner}/.config/syncthing";
       databaseDir = "/home/${owner}/.local/state/syncthing";
-      overrideFolder = true;
+      overrideFolders = true;
       overrideDevices = true;
       settings = {
         options.urAccepted = -1;

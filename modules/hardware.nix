@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -10,16 +9,12 @@ let
   inherit (config.machine) owner;
 in
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.raspberry-pi-4
-  ];
-
   options.machine.hardware = {
     cpu = lib.mkOption {
       type = lib.types.enum [
         "intel"
         "amd"
-        "pi 4"
+        "pi"
       ];
     };
     hasDedicatedGpu = lib.mkEnableOption "";
@@ -30,13 +25,10 @@ in
       hardware.enableAllFirmware = lib.mkDefault true;
       services.fwupd.enable = true;
     })
-    (lib.mkIf (cfg.cpu == "pi 4") {
-      hardware = {
-        raspberry-pi-4."4".apply-overlays-dtmerge.enable = true;
-        deviceTree = {
-          enable = true;
-          filter = "*rpi-4-*.dtb";
-        };
+    (lib.mkIf (cfg.cpu == "pi") {
+      hardware.deviceTree = {
+        enable = true;
+        filter = "*rpi-4-*.dtb";
       };
 
       environment.systemPackages = [
@@ -44,9 +36,13 @@ in
         pkgs.raspberrypi-eeprom
       ];
     })
-    (lib.mkIf (cfg.cpu != "pi 4") {
-      hardware.cpu.${cfg.cpu}.updateMicrocode = lib.mkDefault true;
-      boot.kernelModules = [ "kvm-${cfg.cpu}" ];
+    (lib.mkIf (cfg.cpu == "intel") {
+      hardware.cpu.intel.updateMicrocode = lib.mkDefault true;
+      boot.kernelModules = [ "kvm-intel" ];
+    })
+    (lib.mkIf (cfg.cpu == "amd") {
+      hardware.cpu.amd.updateMicrocode = lib.mkDefault true;
+      boot.kernelModules = [ "kvm-amd" ];
     })
     (lib.mkIf config.machine.enableDesktop {
       hjem.users.${owner}.xdg.config.files."udiskie/config.yml".text = ''

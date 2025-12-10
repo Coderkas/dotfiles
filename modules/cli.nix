@@ -13,7 +13,7 @@ let
     name
     platform
     ;
-  inherit (customPkgs.packages.${platform}) nvfim;
+  inherit (customPkgs.packages.${platform}) nvfim nvfim-minimal;
 in
 {
   options.machine.cli.enable = lib.mkOption {
@@ -203,7 +203,6 @@ in
         };
 
         systemPackages = [
-          nvfim # nvf neovim package
           pkgs.unzip
           pkgs.curl
           pkgs.wget
@@ -227,7 +226,9 @@ in
               hash = "sha256-Ynb0Yd5EMoz7tXwqF8NNKqCGbzTZn/CwLsZRQXIAVp4=";
             };
           }))
-        ];
+        ]
+        ++ lib.optionals config.machine.enableDesktop [ nvfim ]
+        ++ lib.optionals (!config.machine.enableDesktop) [ nvfim-minimal ];
       };
     })
     (lib.mkIf config.machine.enableDesktop {
