@@ -1,6 +1,5 @@
 {
   lib,
-  nil_git,
   pkgs,
   ...
 }:
@@ -331,7 +330,7 @@
       servers = {
         nil = {
           enable = true;
-          cmd = [ "${nil_git}/bin/nil" ];
+          cmd = [ "${lib.getExe pkgs.nil}" ];
           settings = {
             nil = {
               nix = {

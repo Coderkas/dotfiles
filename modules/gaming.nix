@@ -74,6 +74,20 @@ in
           exec = ''PROTON_WAYLAND_ENABLE=1 WINEPREFIX="/home/lorkas/Games/bfme" PROTONPATH="/home/lorkas/.local/share/Steam/compatibilitytools.d/GE-Proton10-17" umu-run "/home/lorkas/Games/bfme/drive_c/users/steamuser/Desktop/All in One Launcher.lnk"'';
           terminal = false;
         })
+        (pkgs.makeDesktopItem {
+          name = "OldEdain";
+          desktopName = "Edain 3.8.1";
+          path = "$HOME/Games";
+          exec = ''PROTON_WAYLAND_ENABLE=1 WINEPREFIX="/home/lorkas/Games/old_edain" PROTONPATH="/nix/store/a3wpj2vq8fphzxvi3ri45majbbmphy3x-proton-ge-custom/bin" umu-run "/home/lorkas/Games/old_edain/drive_c/RotWK/lotrbfme2ep1.exe"'';
+          terminal = false;
+        })
+        (pkgs.makeDesktopItem {
+          name = "Aotr";
+          desktopName = "Age of the Ring";
+          path = "$HOME/Games";
+          exec = ''PROTON_WAYLAND_ENABLE=1 WINEPREFIX="/home/lorkas/Games/aotr-fix" PROTONPATH="/nix/store/a3wpj2vq8fphzxvi3ri45majbbmphy3x-proton-ge-custom/bin" umu-run "/home/lorkas/Games/aotr-fix/drive_c/AgeoftheRing/AotR_Launcher.exe"'';
+          terminal = false;
+        })
         (pkgs.heroic.override {
           extraPkgs = pkgs: [ pkgs.gamescope ];
         })

@@ -33,4 +33,6 @@
   swapDevices = [ ];
 
   networking.networkmanager.wifi.powersave = lib.mkForce false;
+
+  system.stateVersion = "25.05";
 }
