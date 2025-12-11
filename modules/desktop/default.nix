@@ -17,6 +17,8 @@ in
     ./terminal.nix
     ./xdg.nix
     ./input.nix
+    ./kitty.nix
+    ./ghostty.nix
   ];
 
   options.machine.enableDesktop = lib.mkEnableOption "";
@@ -54,7 +56,6 @@ in
           path = lib.mkForce [ ];
           serviceConfig = {
             ExecStart = "${pkgs.quickshell}/bin/quickshell";
-            Restart = "on-failure";
           };
         };
         gnome-keyring = {
@@ -120,10 +121,7 @@ in
       gvfs.enable = true;
     };
 
-    security = {
-      pam.services.greetd.enableGnomeKeyring = true;
-      # rtkit.enable = true; # Something about cpu scheduling and pipewire
-    };
+    security.pam.services.greetd.enableGnomeKeyring = true;
 
     environment = {
       sessionVariables = {
@@ -150,7 +148,6 @@ in
         pkgs.element-desktop
         pkgs.oculante # image viewer
         inputs.zen-browser.packages.${platform}.default
-
         # Gnome files with plugin for previewer
         (pkgs.nautilus.overrideAttrs (oldAttrs: {
           buildInputs = oldAttrs.buildInputs ++ [
@@ -158,7 +155,6 @@ in
             pkgs.gst_all_1.gst-plugins-bad
           ];
         }))
-
         pkgs.wayfreeze
         pkgs.grim
         pkgs.slurp
@@ -167,9 +163,6 @@ in
         # Change monitor config
         pkgs.xorg.xrandr
         pkgs.wlr-randr
-        # Event viewer
-        pkgs.wev
-        pkgs.xorg.xev
       ];
     };
   };

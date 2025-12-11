@@ -7,7 +7,11 @@
     enableGaming = true;
     ssh.enable = true;
     themeName = "Gruvbox";
-    terminal = "ghostty";
+    terminals = {
+      primary = "ghostty";
+      enableGhostty = true;
+      enableKitty = true;
+    };
     owner = "lorkas";
     platform = "x86_64-linux";
     name = "omnissiah";

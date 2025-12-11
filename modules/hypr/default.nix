@@ -78,10 +78,10 @@ in
 
         "hypr/vars.conf".text = ''
           $terminal = ${
-            if (config.machine.terminal == "ghostty") then
+            if (config.machine.terminals.primary == "ghostty") then
               "${lib.getExe pkgs.ghostty} +new-window"
             else
-              config.machine.terminal
+              "${lib.getExe pkgs.kitty}"
           }
           $mainMonitor = ${cfg.mainMonitor}
           $owner = ${owner}

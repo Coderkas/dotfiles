@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 {
   machine = {
     enableBase = true;
@@ -24,7 +29,14 @@
   };
 
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
-  users.users.${config.machine.owner}.shell = config.programs.fish.package;
+
+  programs.bash.interactiveShellInit = /* sh */ ''
+    if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+    then
+      shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+      exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+    fi
+  '';
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
@@ -33,7 +45,15 @@
 
   swapDevices = [ ];
 
-  networking.networkmanager.wifi.powersave = lib.mkForce false;
+  networking = {
+    interfaces.wlan0.ipv4.addresses = [
+      {
+        address = "192.168.0.4";
+        prefixLength = 24;
+      }
+    ];
+    networkmanager.wifi.powersave = lib.mkForce false;
+  };
 
   system.stateVersion = "25.05";
 }

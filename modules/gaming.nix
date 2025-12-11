@@ -66,6 +66,7 @@ in
         # WAYLANDDRV_PRIMARY_MONITOR = "DP-2"; # tell at least proton-ge which one is the main monitor on wayland
       };
 
+      # just symlink folder with those into XDG_DATA_HOME
       systemPackages = [
         (pkgs.makeDesktopItem {
           name = "BfME";

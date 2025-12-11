@@ -71,7 +71,7 @@ in
           useBabelfish = true;
           interactiveShellInit = /* sh */ ''
             set fish_greeting
-            fastfetch
+            ${lib.optionalString config.machine.enableDesktop "fastfetch"}
           '';
         };
 
