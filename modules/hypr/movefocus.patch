@@ -1,0 +1,27 @@
+diff --git a/src/Compositor.cpp b/src/Compositor.cpp
+index 0d9c2f8c..cc9de1ed 100644
+--- a/src/Compositor.cpp
++++ b/src/Compositor.cpp
+@@ -1380,6 +1380,9 @@ PHLWINDOW CCompositor::getWindowInDirection(PHLWINDOW pWindow, char dir) {
+     const auto WINDOWIDEALBB = pWindow->isFullscreen() ? CBox{PMONITOR->m_position, PMONITOR->m_size} : pWindow->getWindowIdealBoundingBoxIgnoreReserved();
+     const auto PWORKSPACE    = pWindow->m_workspace;
+ 
++    if (!PWORKSPACE)
++        return nullptr; // ??
++
+     return getWindowInDirection(WINDOWIDEALBB, PWORKSPACE, dir, pWindow, pWindow->m_isFloating);
+ }
+ 
+diff --git a/src/managers/KeybindManager.cpp b/src/managers/KeybindManager.cpp
+index bda1ff5a..d074a71a 100644
+--- a/src/managers/KeybindManager.cpp
++++ b/src/managers/KeybindManager.cpp
+@@ -1487,7 +1487,7 @@ SDispatchResult CKeybindManager::moveFocusTo(std::string args) {
+     }
+ 
+     const auto PLASTWINDOW = Desktop::focusState()->window();
+-    if (!PLASTWINDOW) {
++    if (!PLASTWINDOW || !PLASTWINDOW->visible()) {
+         if (*PMONITORFALLBACK)
+             tryMoveFocusToMonitor(g_pCompositor->getMonitorInDirection(arg));
+ 

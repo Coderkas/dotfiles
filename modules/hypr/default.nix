@@ -31,7 +31,9 @@ in
     programs = {
       hyprland = {
         enable = true;
-        package = hypkgs.hyprland;
+        package = hypkgs.hyprland.overrideAttrs (oldAttrs: {
+          patches = (oldAttrs.patches or [ ]) ++ [ ./movefocus.patch ];
+        });
         portalPackage = hypkgs.xdg-desktop-portal-hyprland;
       };
 
