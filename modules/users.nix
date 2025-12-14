@@ -41,5 +41,16 @@ in
         user = cfg.owner;
       };
     };
+
+    environment = {
+      # so that nix/profile stuff gets yeeted, might regret that later.
+      profiles = lib.mkForce [
+        "/etc/profiles/per-user/$USER"
+        "/run/current-system/sw"
+      ];
+      sessionVariables = {
+        XDG_DATA_HOME = "/home/${cfg.owner}/.local/share";
+      };
+    };
   };
 }

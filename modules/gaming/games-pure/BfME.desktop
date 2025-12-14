@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=PROTON_WAYLAND_ENABLE=1 WINEPREFIX="/home/lorkas/Games/bfme" PROTONPATH="/home/lorkas/.local/share/Steam/compatibilitytools.d/GE-Proton10-17" umu-run "/home/lorkas/Games/bfme/drive_c/users/steamuser/Desktop/All in One Launcher.lnk"
+Name=Battle for Middle-earth
+Path=$HOME/Games
+Terminal=false
+Type=Application
+Version=1.5

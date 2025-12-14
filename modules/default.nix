@@ -11,16 +11,15 @@ in
 {
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
-    inputs.chaotic.nixosModules.default
     inputs.nix-gaming.nixosModules.pipewireLowLatency
 
     ./desktop
     ./hypr
     ./theme
+    ./gaming
     ./audio.nix
     ./boot.nix
     ./cli.nix
-    ./gaming.nix
     ./hardware.nix
     ./locales.nix
     ./man.nix

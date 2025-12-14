@@ -7,14 +7,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     systems.url = "github:nix-systems/default-linux";
 
-    chaotic = {
-      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-      inputs = {
-        jovian.follows = "";
-        home-manager.follows = "";
-      };
-    };
-
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -80,7 +72,6 @@
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
         flake-compat.follows = "";
-        rust-overlay.follows = "chaotic/rust-overlay";
         pre-commit-hooks-nix.follows = "";
       };
     };
@@ -100,9 +91,21 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
-      inputs.flake-parts.follows = "flake-parts";
+    elephant = {
+      url = "github:abenz1267/elephant";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+      };
+    };
+
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
+        elephant.follows = "elephant";
+      };
     };
 
     zen-browser = {

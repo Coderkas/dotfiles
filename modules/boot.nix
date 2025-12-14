@@ -18,10 +18,10 @@ in
     kernel = lib.mkOption {
       type = lib.types.attrs;
       default =
-        if kernel_pkg.kernel.version != "6.15.4" then
-          pkgs.linuxPackages_cachyos
-        else
-          pkgs.linuxPackages_zen;
+        # if kernel_pkg.kernel.version != "6.15.4" then
+        #   pkgs.linuxPackages_cachyos
+        # else
+        pkgs.linuxPackages_zen;
     };
   };
 

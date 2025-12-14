@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.machine.hyprland;
-  inherit (config.machine) owner platform;
+  inherit (config.machine) owner platform runner;
   hypkgs = {
     inherit (inputs.hyprland.packages.${platform}) hyprland xdg-desktop-portal-hyprland;
     inherit (inputs.hyprpicker.packages.${platform}) hyprpicker;
@@ -48,15 +48,12 @@ in
       package = hypkgs.hypridle;
     };
 
-    xdg.portal = {
-      config.hyprland = {
-        default = [
-          "gtk"
-          "hyprland"
-        ];
-        "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-      };
-      extraPortals = [ hypkgs.xdg-desktop-portal-hyprland ];
+    xdg.portal.config.hyprland = {
+      default = [
+        "gtk"
+        "hyprland"
+      ];
+      "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
     };
 
     hjem.users.${owner}.xdg.config.files =
@@ -87,9 +84,7 @@ in
           }
           $mainMonitor = ${cfg.mainMonitor}
           $owner = ${owner}
-          $menu = anyrun --plugins libapplications.so --plugins libshell.so
-          $cmenu = anyrun --plugins librink.so
-          $bmenu = anyrun --plugins libwebsearch.so --plugins libdictionary.so
+          ${runner.commands}
         '';
 
         "hypr/idle.conf".source = ./hypridle.conf;

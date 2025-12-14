@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=PROTON_WAYLAND_ENABLE=1 WINEPREFIX="/home/lorkas/Games/old_edain" PROTONPATH="/nix/store/a3wpj2vq8fphzxvi3ri45majbbmphy3x-proton-ge-custom/bin" umu-run "/home/lorkas/Games/old_edain/drive_c/RotWK/lotrbfme2ep1.exe"
+Name=Edain 3.8.1
+Path=$HOME/Games
+Terminal=false
+Type=Application
+Version=1.5

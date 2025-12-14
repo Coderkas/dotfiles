@@ -6,11 +6,57 @@
 }:
 let
   cfg = config.machine;
+
+  desktopExec =
+    {
+      base_path,
+      exe,
+      icon_path,
+      menu_name,
+      prefix,
+      proton_path,
+      wayland ? "1",
+    }:
+    ''
+      [Desktop Entry]
+      Exec=PROTON_WAYLAND_ENABLE=${wayland} WINEPREFIX="${base_path}/${prefix}" PROTONPATH="${proton_path}" umu-run "${base_path}/${prefix}/drive_c/${exe}"
+      Name=${menu_name}
+      Path=${base_path}
+      Icon=${base_path}/${prefix}/drive_c/${icon_path}
+      Terminal=false
+      Type=Application
+      Version=1.5
+    '';
 in
 {
   options.machine.enableGaming = lib.mkEnableOption "";
 
   config = lib.mkIf cfg.enableGaming {
+    hjem.users.${cfg.owner}.xdg.data = {
+      files = {
+        "applications/aotr.desktop".text = desktopExec {
+          base_path = "/games";
+          exe = "AgeoftheRing/AotR_Launcher.exe";
+          icon_path = "AgeoftheRing/aotr/aotr.ico";
+          menu_name = "Age of the Ring";
+          prefix = "aotr-fix";
+          proton_path = "${pkgs.proton-ge-bin.steamcompattool}";
+        };
+        "applications/bfme.desktop".text = desktopExec {
+          base_path = "/games";
+          exe = "users/steamuser/Desktop/All in One Launcher.lnk";
+          icon_path = "proton_shortcuts/icons/128x128/apps/B76C_AllInOneLauncher.0.png";
+          menu_name = "Battle for Middle-earth";
+          proton_path = "${pkgs.proton-ge-bin.steamcompattool}";
+          prefix = "bfme";
+        };
+      };
+    };
+
+    systemd.user.tmpfiles.users.${cfg.owner}.rules = [
+      "L+ /home/${cfg.owner}/.local/share/applications/games-impure - - - - /home/${cfg.owner}/dotfiles/modules/gaming/games-impure"
+    ];
+
     programs = {
       gamescope = {
         enable = true;
@@ -32,9 +78,8 @@ in
         remotePlay.openFirewall = true;
         dedicatedServer.openFirewall = true;
         extraCompatPackages = [
-          pkgs.proton-ge-custom
-          pkgs.proton-cachyos
-          pkgs.steamtinkerlaunch
+          pkgs.steamtinkerlaunch.steamcompattool
+          pkgs.proton-ge-bin.steamcompattool
         ];
       };
 
@@ -53,7 +98,7 @@ in
 
     environment = {
       sessionVariables = {
-        STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\${HOME}/.steam/root/compatibilitytools.d";
+        STEAM_EXTRA_COMPAT_TOOLS_PATHS = [ "\${HOME}/.steam/root/compatibilitytools.d" ];
         MESA_SHADER_CACHE_MAX_SIZE = "12G"; # bigger shader cache size so they dont have to be processed every time
         # maybe fix for controller stuff?
         PROTON_PREFER_SDL_INPUT = "1";
@@ -68,27 +113,6 @@ in
 
       # just symlink folder with those into XDG_DATA_HOME
       systemPackages = [
-        (pkgs.makeDesktopItem {
-          name = "BfME";
-          desktopName = "Battle for Middle-earth";
-          path = "$HOME/Games";
-          exec = ''PROTON_WAYLAND_ENABLE=1 WINEPREFIX="/home/lorkas/Games/bfme" PROTONPATH="/home/lorkas/.local/share/Steam/compatibilitytools.d/GE-Proton10-17" umu-run "/home/lorkas/Games/bfme/drive_c/users/steamuser/Desktop/All in One Launcher.lnk"'';
-          terminal = false;
-        })
-        (pkgs.makeDesktopItem {
-          name = "OldEdain";
-          desktopName = "Edain 3.8.1";
-          path = "$HOME/Games";
-          exec = ''PROTON_WAYLAND_ENABLE=1 WINEPREFIX="/home/lorkas/Games/old_edain" PROTONPATH="/nix/store/a3wpj2vq8fphzxvi3ri45majbbmphy3x-proton-ge-custom/bin" umu-run "/home/lorkas/Games/old_edain/drive_c/RotWK/lotrbfme2ep1.exe"'';
-          terminal = false;
-        })
-        (pkgs.makeDesktopItem {
-          name = "Aotr";
-          desktopName = "Age of the Ring";
-          path = "$HOME/Games";
-          exec = ''PROTON_WAYLAND_ENABLE=1 WINEPREFIX="/home/lorkas/Games/aotr-fix" PROTONPATH="/nix/store/a3wpj2vq8fphzxvi3ri45majbbmphy3x-proton-ge-custom/bin" umu-run "/home/lorkas/Games/aotr-fix/drive_c/AgeoftheRing/AotR_Launcher.exe"'';
-          terminal = false;
-        })
         (pkgs.heroic.override {
           extraPkgs = pkgs: [ pkgs.gamescope ];
         })

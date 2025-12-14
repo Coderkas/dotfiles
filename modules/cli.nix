@@ -113,41 +113,37 @@ in
                 }
               ];
             };
-            keymap = {
-              mgr.prepend_keymap = [
-                {
-                  on = "<C-d>";
-                  run = "plugin diff";
-                  desc = "Diff the selected with the hovered file";
-                }
-                {
-                  on = "f";
-                  run = "plugin jump-to-char";
-                  desc = "Jump to char";
-                }
-                {
-                  on = "F";
-                  run = "filter --smart";
-                  desc = "Filter files";
-                }
-                {
-                  on = [
-                    "g"
-                    "."
-                  ];
-                  run = "cd ~/dotfiles";
-                  desc = "Go to ~/dotfiles";
-                }
-                {
-                  on = [
-                    "g"
-                    "s"
-                  ];
-                  run = "cd /nix/store";
-                  desc = "Go to nix store";
-                }
-              ];
-            };
+            keymap.mgr.prepend_keymap = [
+              {
+                on = [
+                  "f"
+                  "d"
+                ];
+                run = "plugin diff";
+                desc = "Diff the selected with the hovered file";
+              }
+              {
+                on = "F";
+                run = "filter --smart";
+                desc = "Filter files";
+              }
+              {
+                on = [
+                  "g"
+                  "."
+                ];
+                run = "cd ~/dotfiles";
+                desc = "Go to ~/dotfiles";
+              }
+              {
+                on = [
+                  "g"
+                  "s"
+                ];
+                run = "cd /nix/store";
+                desc = "Go to nix store";
+              }
+            ];
           };
           initLua = pkgs.writeText "yazi-init.lua" ''
             require("full-border"):setup()
@@ -156,7 +152,6 @@ in
             inherit (pkgs.yaziPlugins)
               diff
               full-border
-              jump-to-char
               piper
               ;
           };
@@ -166,6 +161,11 @@ in
 
       environment = {
         extraOutputsToInstall = [ "shell_integration" ];
+        variables = {
+          EDITOR = lib.mkForce "nvim";
+          PAGER = lib.mkForce "bat";
+          SYSTEMD_LESS = lib.mkForce "FRSM";
+        };
         sessionVariables = {
           MANPAGER = "nvim +Man!";
           VISUAL = "nvim";

@@ -13,15 +13,31 @@ in
   imports = [
     ./anyrun.nix
     ./dunst.nix
-    #./rofi.nix
+    ./rofi.nix
     ./terminal.nix
     ./xdg.nix
     ./input.nix
     ./kitty.nix
     ./ghostty.nix
+    ./walker.nix
+    ./browser.nix
   ];
 
-  options.machine.enableDesktop = lib.mkEnableOption "";
+  options.machine = {
+    enableDesktop = lib.mkEnableOption "";
+    runner = {
+      name = lib.mkOption {
+        type = lib.types.enum [
+          "anyrun"
+          "rofi"
+          "walker"
+        ];
+      };
+      commands = lib.mkOption {
+        type = lib.types.nonEmptyStr;
+      };
+    };
+  };
 
   config = lib.mkIf cfg.enableDesktop {
     hjem.users.${owner}.xdg.config.files = {
@@ -135,6 +151,17 @@ in
       systemPackages = [
         pkgs.quickshell
         pkgs.zathura
+        (pkgs.wrapFirefox inputs.zen-browser.packages.${platform}.twilight-unwrapped {
+          extraPolicies = {
+            BlockAboutAddons = true;
+            ExtensionSettings = {
+              "uBlock0@raymondhill.net" = {
+                installation_mode = "force_installed";
+                install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/ublock-origin/latest.xpi";
+              };
+            };
+          };
+        })
         (pkgs.mpv-unwrapped.wrapper {
           mpv = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
         })
@@ -147,7 +174,6 @@ in
         pkgs.gnome-clocks
         pkgs.element-desktop
         pkgs.oculante # image viewer
-        inputs.zen-browser.packages.${platform}.default
         # Gnome files with plugin for previewer
         (pkgs.nautilus.overrideAttrs (oldAttrs: {
           buildInputs = oldAttrs.buildInputs ++ [
