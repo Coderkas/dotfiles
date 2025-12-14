@@ -20,7 +20,7 @@
     };
     hyprland.mainMonitor = "eDP-1";
     dunst.monitor = "eDP-1";
-    runner.name = "walker";
+    runner.name = "anyrun";
   };
   # Kernel stuff
   boot = {

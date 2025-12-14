@@ -27,7 +27,7 @@
     };
     syncthing.devices."automaton".id =
       "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
-    runner.name = "walker";
+    runner.name = "anyrun";
   };
 
   programs.ausweisapp = {
