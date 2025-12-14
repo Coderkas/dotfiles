@@ -55,13 +55,13 @@ in
       "elephant/websearch.toml".text = /* toml */ ''
         engines_as_actions = false
         entries = [
-          { name = "DDG", default = false, prefix= "", url = "https://duckduckgo.com/?q=%TERM%" },
-          { name = "Youtube", default = false, prefix= "", url = "https://youtube.com/results?search_query=%TERM%" },
-          { name = "Nix Options", default = false, prefix= "", url = "https://search.nixos.org/options?channel=unstable&query=%TERM%" },
-          { name = "Nix Packages", default = false, prefix= "", url = "https://search.nixos.org/packages?channel=unstable&query=%TERM%" },
-          { name = "X in Y", default = false, prefix= "", url = "https://learnxinyminutes.com/%TERM%" },
-          { name = "Wikipedia", default = false, prefix= "", url = "https://en.wikipedia.org/w/index.php?search=%TERM%" },
-          { name = "Anilist", default = false, prefix= "", url = "https://anilist.co/search/anime?search=%TERM%" },
+          { name = "DDG", default = true, prefix= "", url = "https://duckduckgo.com/?q=%TERM%" },
+          { name = "Youtube", default = false, prefix= "yt:", url = "https://youtube.com/results?search_query=%TERM%" },
+          { name = "Nix Options", default = false, prefix= "no:", url = "https://search.nixos.org/options?channel=unstable&query=%TERM%" },
+          { name = "Nix Packages", default = false, prefix= "np:", url = "https://search.nixos.org/packages?channel=unstable&query=%TERM%" },
+          { name = "X in Y", default = false, prefix= "xy:", url = "https://learnxinyminutes.com/%TERM%" },
+          { name = "Wikipedia", default = false, prefix= "wiki:", url = "https://en.wikipedia.org/w/index.php?search=%TERM%" },
+          { name = "Anilist", default = false, prefix= "ani:", url = "https://anilist.co/search/anime?search=%TERM%" },
         ]
       '';
       "elephant/providers/desktopapplications.so".source =
