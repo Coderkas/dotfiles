@@ -4,17 +4,8 @@
   pkgs,
   ...
 }:
-let
-  theme_pkgs = [
-    pkgs.gruvbox-kvantum
-    pkgs.gruvbox-gtk-theme
-    pkgs.gruvbox-plus-icons
-    pkgs.capitaine-cursors-themed
-  ];
-  inherit (config.machine) themeName owner;
-in
 {
-  machine.theme = lib.mkIf (themeName == "Gruvbox") {
+  machine.theme = lib.mkIf (config.machine.themeName == "Gruvbox") {
     cursor = "Capitaine Cursors (Gruvbox)";
     cursor_size = 24;
     icons = "Gruvbox-Plus-Dark";
@@ -99,8 +90,12 @@ in
         urgent:         #FB4934FF;
       }
     '';
-  };
 
-  users.users.${owner}.packages = theme_pkgs;
-  environment.systemPackages = theme_pkgs;
+    pkgs = [
+      pkgs.gruvbox-kvantum
+      pkgs.gruvbox-gtk-theme
+      pkgs.gruvbox-plus-icons
+      pkgs.capitaine-cursors-themed
+    ];
+  };
 }

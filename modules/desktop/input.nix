@@ -32,7 +32,7 @@ in
               pkgs.kdePackages.fcitx5-qt
               pkgs.fcitx5-material-color
             ];
-            ignoreUserConfig = false;
+            ignoreUserConfig = true;
             settings = {
               inputMethod = {
                 "Groups/0" = {

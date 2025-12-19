@@ -2,16 +2,38 @@
   description = "Nixos config flake";
 
   inputs = {
+    # System
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    hjem.url = "github:feel-co/hjem";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     systems.url = "github:nix-systems/default-linux";
 
+    hjem = {
+      url = "github:feel-co/hjem";
+      inputs.smfh.inputs.rust-overlay.follows = "rust-overlay";
+    };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        pre-commit.follows = "";
+      };
+    };
+
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+
+    # Dependencies
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
+    rust-overlay.follows = "lanzaboote/rust-overlay";
+
+    # Applications
     hyprland = {
       url = "github:hyprwm/hyprland";
       inputs.pre-commit-hooks.follows = "";
@@ -61,28 +83,14 @@
       };
     };
 
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-      inputs.flake-parts.follows = "flake-parts";
-    };
-
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        flake-compat.follows = "";
-        pre-commit-hooks-nix.follows = "";
-      };
-    };
-
     nvf = {
-      url = "github:notashelf/nvf/v0.8";
+      url = "github:notashelf/nvf";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems";
         flake-parts.follows = "flake-parts";
         flake-compat.follows = "";
+        ndg.inputs.nixpkgs.follows = "nixpkgs";
       };
     };
 

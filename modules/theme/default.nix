@@ -113,17 +113,22 @@ in
         style = "kvantum";
       };
 
-      environment.sessionVariables = {
-        GTK2_RC_FILES = "${config.hjem.users.${owner}.directory}/.gtkrc-2.0";
-        GTK_THEME = cfg.theme.gtk;
-        GDK_BACKEND = "wayland,x11,*";
-        QT_QPA_PLATFORM = "wayland;xcb";
-        QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-        QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-        XCURSOR_THEME = cfg.theme.cursor;
-        XCURSOR_SIZE = cfg.theme.cursor_size;
-        HYPERCURSOR_THEME = cfg.theme.cursor;
-        HYPERCURSOR_SIZE = cfg.theme.cursor_size;
+      users.users.${owner}.packages = cfg.theme.pkgs;
+
+      environment = {
+        systemPackages = cfg.theme.pkgs;
+        sessionVariables = {
+          GTK2_RC_FILES = "${config.hjem.users.${owner}.directory}/.gtkrc-2.0";
+          GTK_THEME = cfg.theme.gtk;
+          GDK_BACKEND = "wayland,x11,*";
+          QT_QPA_PLATFORM = "wayland;xcb";
+          QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+          XCURSOR_THEME = cfg.theme.cursor;
+          XCURSOR_SIZE = cfg.theme.cursor_size;
+          HYPERCURSOR_THEME = cfg.theme.cursor;
+          HYPERCURSOR_SIZE = cfg.theme.cursor_size;
+        };
       };
     })
   ];

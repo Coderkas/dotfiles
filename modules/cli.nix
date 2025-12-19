@@ -278,8 +278,7 @@ in
         enable = true;
         package = pkgs.ollama-rocm;
         loadModels = [
-          "mistral"
-          "deepseek-r1"
+          "deepseek-r1:14b"
         ];
       };
 

@@ -135,6 +135,11 @@ in
         sushi.enable = true;
       };
       gvfs.enable = true;
+
+      tailscale = {
+        enable = true;
+        openFirewall = true;
+      };
     };
 
     security.pam.services.greetd.enableGnomeKeyring = true;
