@@ -6,14 +6,17 @@
 }:
 let
   cfg = config.machine;
+  anyrun-pkg = pkgs.anyrun.overrideAttrs (oldAttrs: {
+    patches = (oldAttrs.patches or [ ]) ++ [ ./anyrun.patch ];
+  });
 in
 {
   config = lib.mkIf (cfg.enableDesktop && cfg.runner.name == "anyrun") {
     hjem.users.${cfg.owner}.xdg.config.files."anyrun".source = ./anyrun;
 
     machine.runner.commands = ''
-      $menu = ${lib.getExe pkgs.anyrun} --plugins libapplications.so --plugins libshell.so --plugins librink.so
-      $bmenu = ${lib.getExe pkgs.anyrun} --plugins libwebsearch.so --plugins libdictionary.so
+      $menu = ${lib.getExe anyrun-pkg} --plugins libapplications.so --plugins libshell.so --plugins librink.so
+      $bmenu = ${lib.getExe anyrun-pkg} --plugins libwebsearch.so --plugins libdictionary.so
     '';
 
     systemd.user.services.anyrun-daemon = {
@@ -22,13 +25,13 @@ in
       partOf = [ "graphical-session.target" ];
       wantedBy = [ "graphical-session.target" ];
       serviceConfig = {
-        ExecStart = "${lib.getExe pkgs.anyrun} daemon";
+        ExecStart = "${lib.getExe anyrun-pkg} daemon";
         KillMode = "process";
       };
     };
 
     environment.systemPackages = [
-      pkgs.anyrun
+      anyrun-pkg
       pkgs.anyrun-provider
     ];
   };
