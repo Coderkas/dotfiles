@@ -3,7 +3,7 @@
   machine = {
     enableBase = true;
     enableDesktop = true;
-    boot.enableSecure = true;
+    boot.enableSecure = false;
     ssh.enable = true;
     themeName = "Gruvbox";
     terminals = {
@@ -21,6 +21,10 @@
     hyprland.mainMonitor = "eDP-1";
     dunst.monitor = "eDP-1";
     runner.name = "anyrun";
+    syncthing = {
+      enable = true;
+      devices."automaton".id = "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
+    };
   };
   # Kernel stuff
   boot = {

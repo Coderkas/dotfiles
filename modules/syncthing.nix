@@ -18,7 +18,7 @@ in
     assertions = [
       {
         assertion = cfg.devices != null;
-        message = "syncthing is enable but devices are not specified";
+        message = "syncthing is enabled but devices are not specified";
       }
     ];
 
