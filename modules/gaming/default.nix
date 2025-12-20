@@ -58,31 +58,20 @@ in
     ];
 
     networking.firewall = {
-      # allowedTCPPortRanges = [
-      #   {
-      #     from = 8088;
-      #     to = 8100;
-      #   }
-      #   {
-      #     from = 16000;
-      #     to = 16008;
-      #   }
-      # ];
-      # allowedUDPPortRanges = [
-      #   {
-      #     from = 8088;
-      #     to = 8100;
-      #   }
-      #   {
-      #     from = 16000;
-      #     to = 16008;
-      #   }
-      # ];
-
-      allowedUDPPorts = [
-        16000
-        16001
+      allowedTCPPortRanges = [
+        {
+          from = 8088;
+          to = 28088;
+        }
       ];
+      allowedUDPPortRanges = [
+        {
+          from = 8088;
+          to = 28088;
+        }
+      ];
+
+      #allowedUDPPorts = [ 16000 16001 ];
     };
 
     programs = {
