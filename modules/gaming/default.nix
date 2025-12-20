@@ -60,14 +60,22 @@ in
     networking.firewall = {
       allowedTCPPortRanges = [
         {
-          from = 8088;
+          from = 8086;
           to = 8100;
+        }
+        {
+          from = 16000;
+          to = 16008;
         }
       ];
       allowedUDPPortRanges = [
         {
-          from = 8088;
+          from = 8086;
           to = 8100;
+        }
+        {
+          from = 16000;
+          to = 16008;
         }
       ];
     };
