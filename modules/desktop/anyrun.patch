@@ -5,7 +5,7 @@
          Command::new("sh")
              .arg("-c")
 -            .arg(&entry.exec)
-+            .arg(format!("systemd-run --user {}",&entry.exec))
++            .arg(format!("systemd-run --user sh -c '{}'",&entry.exec))
              .current_dir(match &entry.path {
                  Some(path) if path.exists() => path,
                  _ => current_dir,
