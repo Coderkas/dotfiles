@@ -57,12 +57,20 @@ in
       "L+ /home/${cfg.owner}/.local/share/applications/games-impure - - - - /home/${cfg.owner}/dotfiles/modules/gaming/games-impure"
     ];
 
-    networking.firewall.allowedUDPPortRanges = [
-      {
-        from = 8088;
-        to = 8100;
-      }
-    ];
+    networking.firewall = {
+      allowedTCPPortRanges = [
+        {
+          from = 8088;
+          to = 8100;
+        }
+      ];
+      allowedUDPPortRanges = [
+        {
+          from = 8088;
+          to = 8100;
+        }
+      ];
+    };
 
     programs = {
       gamescope = {
