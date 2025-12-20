@@ -206,7 +206,11 @@ in
           pkgs.unzip
           pkgs.curl
           pkgs.wget
+
           pkgs.inetutils
+          pkgs.net-tools
+          pkgs.netsniff-ng
+
           pkgs.bandwhich
           pkgs.ripgrep
           pkgs.fd
