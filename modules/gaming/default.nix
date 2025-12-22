@@ -74,6 +74,17 @@ in
       #allowedUDPPorts = [ 16000 16001 ];
     };
 
+    security.wrapper = {
+      wine-intel = {
+        source = "${pkgs.wineWowPackages.stagingFull}/lib/wine/i386-unix/wine-preloader";
+        capabilities = "cap_net_raw+epi";
+      };
+      wine-x86 = {
+        source = "${pkgs.wineWowPackages.stagingFull}/lib/wine/x86_64-unix/wine-preloader";
+        capabilities = "cap_net_raw+epi";
+      };
+    };
+
     programs = {
       gamescope = {
         enable = true;

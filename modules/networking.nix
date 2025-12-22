@@ -3,6 +3,7 @@
   config = lib.mkIf config.machine.enableBase {
     networking = {
       hostName = config.machine.name; # Define your hostname.
+
       networkmanager = {
         enable = true;
         dns = "systemd-resolved";

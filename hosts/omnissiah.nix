@@ -35,6 +35,18 @@
     openFirewall = true;
   };
 
+  networking = {
+    interfaces.enp6s0.ipv4.addresses = {
+      address = "192.168.0.100";
+      prefixLength = 24;
+    };
+    defaultGateway = {
+      address = "192.168.0.1";
+      interface = "enp6s0";
+    };
+    hosts."192.168.0.100" = [ "omnissiah" ];
+  };
+
   services.hardware.openrgb = {
     enable = true;
     package = pkgs.openrgb-with-all-plugins;
