@@ -57,33 +57,40 @@ in
       "L+ /home/${cfg.owner}/.local/share/applications/games-impure - - - - /home/${cfg.owner}/dotfiles/modules/gaming/games-impure"
     ];
 
-    networking.firewall = {
-      allowedTCPPortRanges = [
-        {
-          from = 8088;
-          to = 28088;
-        }
-      ];
-      allowedUDPPortRanges = [
-        {
-          from = 8088;
-          to = 28088;
-        }
-      ];
-
-      #allowedUDPPorts = [ 16000 16001 ];
-    };
-
-    security.wrapper = {
-      wine-intel = {
-        source = "${pkgs.wineWowPackages.stagingFull}/lib/wine/i386-unix/wine-preloader";
-        capabilities = "cap_net_raw+epi";
+    networking.firewall.interfaces =
+      let
+        allowedTCPPortRanges = [
+          {
+            from = 8088;
+            to = 28088;
+          }
+        ];
+        allowedUDPPortRanges = [
+          {
+            from = 8088;
+            to = 28088;
+          }
+        ];
+      in
+      {
+        enp6s0 = { inherit allowedTCPPortRanges allowedUDPPortRanges; };
+        wlo1 = { inherit allowedTCPPortRanges allowedUDPPortRanges; };
       };
-      wine-x86 = {
-        source = "${pkgs.wineWowPackages.stagingFull}/lib/wine/x86_64-unix/wine-preloader";
-        capabilities = "cap_net_raw+epi";
-      };
-    };
+
+    # security.wrappers = {
+    #   wine-intel = {
+    #     source = "${pkgs.wineWowPackages.stagingFull}/lib/wine/i386-unix/wine-preloader";
+    #     capabilities = "cap_net_raw+epi";
+    #     owner = "root";
+    #     group = "root";
+    #   };
+    #   wine-x86 = {
+    #     source = "${pkgs.wineWowPackages.stagingFull}/lib/wine/x86_64-unix/wine-preloader";
+    #     capabilities = "cap_net_raw+epi";
+    #     owner = "root";
+    #     group = "root";
+    #   };
+    # };
 
     programs = {
       gamescope = {
