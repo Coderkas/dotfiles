@@ -9,7 +9,6 @@ let
 
   desktopExec =
     {
-      base_path,
       exe,
       icon_path,
       menu_name,
@@ -19,23 +18,28 @@ let
     }:
     ''
       [Desktop Entry]
-      Exec=PROTON_WAYLAND_ENABLE=${wayland} WINEPREFIX="${base_path}/${prefix}" PROTONPATH="${proton_path}" umu-run "${base_path}/${prefix}/drive_c/${exe}"
+      Exec=PROTON_WAYLAND_ENABLE=${wayland} WINEPREFIX="${cfg.extraGamesPath}/${prefix}" PROTONPATH="${proton_path}" umu-run "${cfg.extraGamesPath}/${prefix}/drive_c/${exe}"
       Name=${menu_name}
-      Path=${base_path}
-      Icon=${base_path}/${prefix}/drive_c/${icon_path}
+      Path=${cfg.extraGamesPath}
+      Icon=${cfg.extraGamesPath}/${prefix}/drive_c/${icon_path}
       Terminal=false
       Type=Application
       Version=1.5
     '';
 in
 {
-  options.machine.enableGaming = lib.mkEnableOption "";
+  options.machine = {
+    enableGaming = lib.mkEnableOption "";
+    extraGamesPath = lib.mkOption {
+      type = lib.types.nonEmptyStr;
+      default = "/home/${cfg.owner}/Games";
+    };
+  };
 
   config = lib.mkIf cfg.enableGaming {
     hjem.users.${cfg.owner}.xdg.data = {
       files = {
         "applications/aotr.desktop".text = desktopExec {
-          base_path = "/games";
           exe = "AgeoftheRing/AotR_Launcher.exe";
           icon_path = "AgeoftheRing/aotr/aotr.ico";
           menu_name = "Age of the Ring";
@@ -43,7 +47,6 @@ in
           proton_path = "${pkgs.proton-ge-bin.steamcompattool}";
         };
         "applications/bfme.desktop".text = desktopExec {
-          base_path = "/games";
           exe = "users/steamuser/Desktop/All in One Launcher.lnk";
           icon_path = "proton_shortcuts/icons/128x128/apps/B76C_AllInOneLauncher.0.png";
           menu_name = "Battle for Middle-earth";
@@ -60,7 +63,7 @@ in
     networking.firewall = {
       allowedUDPPortRanges = [
         {
-          from = 8086;
+          from = 8088;
           to = 28088;
         }
       ];
