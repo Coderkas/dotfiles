@@ -1,10 +1,12 @@
 {
+  inputs,
   lib,
   pkgs,
-  config,
   ...
 }:
 {
+  imports = [ inputs.nixos-hardware.nixosModules.raspberry-pi-4 ];
+
   machine = {
     enableBase = true;
     enableDesktop = false;

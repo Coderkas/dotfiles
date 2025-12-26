@@ -133,29 +133,15 @@
     {
       inherit (customPkgs) packages;
 
-      nixosConfigurations = {
-        omnissiah = nixpkgs.lib.nixosSystem {
+      nixosConfigurations = nixpkgs.lib.genAttrs [ "omnissiah" "servitor" "automaton" ] (
+        name:
+        nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs customPkgs; };
           modules = [
             ./modules
-            ./hosts/omnissiah.nix
+            ./hosts/${name}.nix
           ];
-        };
-        servitor = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs customPkgs; };
-          modules = [
-            ./modules
-            ./hosts/servitor.nix
-          ];
-        };
-        automaton = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs customPkgs; };
-          modules = [
-            ./modules
-            ./hosts/automaton.nix
-            inputs.nixos-hardware.nixosModules.raspberry-pi-4
-          ];
-        };
-      };
+        }
+      );
     };
 }

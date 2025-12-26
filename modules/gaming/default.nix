@@ -57,40 +57,33 @@ in
       "L+ /home/${cfg.owner}/.local/share/applications/games-impure - - - - /home/${cfg.owner}/dotfiles/modules/gaming/games-impure"
     ];
 
-    networking.firewall.interfaces =
-      let
-        allowedTCPPortRanges = [
-          {
-            from = 8088;
-            to = 28088;
-          }
-        ];
-        allowedUDPPortRanges = [
-          {
-            from = 8088;
-            to = 28088;
-          }
-        ];
-      in
-      {
-        enp6s0 = { inherit allowedTCPPortRanges allowedUDPPortRanges; };
-        wlo1 = { inherit allowedTCPPortRanges allowedUDPPortRanges; };
-      };
-
-    # security.wrappers = {
-    #   wine-intel = {
-    #     source = "${pkgs.wineWowPackages.stagingFull}/lib/wine/i386-unix/wine-preloader";
-    #     capabilities = "cap_net_raw+epi";
-    #     owner = "root";
-    #     group = "root";
-    #   };
-    #   wine-x86 = {
-    #     source = "${pkgs.wineWowPackages.stagingFull}/lib/wine/x86_64-unix/wine-preloader";
-    #     capabilities = "cap_net_raw+epi";
-    #     owner = "root";
-    #     group = "root";
-    #   };
-    # };
+    networking.firewall = {
+      allowedUDPPortRanges = [
+        {
+          from = 8086;
+          to = 28088;
+        }
+      ];
+      # interfaces =
+      #   let
+      #     allowedTCPPortRanges = [
+      #       {
+      #         from = 8086;
+      #         to = 28088;
+      #       }
+      #     ];
+      #     allowedUDPPortRanges = [
+      #       {
+      #         from = 8086;
+      #         to = 28088;
+      #       }
+      #     ];
+      #   in
+      #   {
+      #     enp6s0 = { inherit allowedTCPPortRanges allowedUDPPortRanges; };
+      #     wlo1 = { inherit allowedTCPPortRanges allowedUDPPortRanges; };
+      #   };
+    };
 
     programs = {
       gamescope = {
@@ -125,6 +118,9 @@ in
           renice = 15;
         };
       };
+
+      firejail.enable = true;
+      wireshark.enable = true;
     };
 
     users.users.${cfg.owner}.extraGroups = [ "gamemode" ];
