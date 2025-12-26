@@ -32,6 +32,11 @@ in
         description = "System Tray target";
         requires = [ "graphical-session-pre.target" ];
       };
+
+      tmpfiles.users.${owner}.rules = [
+        "r! /home/${owner}/.local/state/nvf/lsp.log"
+        "r! /home/${owner}/.local/state/nvf/luasnip.log"
+      ];
     };
   };
 }

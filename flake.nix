@@ -9,7 +9,14 @@
 
     hjem = {
       url = "github:feel-co/hjem";
-      inputs.smfh.inputs.rust-overlay.follows = "rust-overlay";
+      inputs = {
+        smfh.inputs = {
+          rust-overlay.follows = "rust-overlay";
+          nixpkgs.follows = "nixpkgs";
+          systems.follows = "systems";
+        };
+        nixpkgs.follows = "nixpkgs";
+      };
     };
 
     lanzaboote = {
@@ -22,6 +29,14 @@
 
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
       inputs.flake-parts.follows = "flake-parts";
     };
 

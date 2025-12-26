@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.machine.boot;
-  kernel_pkg = pkgs.linuxPackages_cachyos;
+  cachyos = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto;
 in
 {
   options.machine.boot = {
@@ -17,11 +17,7 @@ in
     enableSecure = lib.mkEnableOption "Activate Secure boot";
     kernel = lib.mkOption {
       type = lib.types.attrs;
-      default =
-        # if kernel_pkg.kernel.version != "6.15.4" then
-        #   pkgs.linuxPackages_cachyos
-        # else
-        pkgs.linuxPackages_zen;
+      default = if cachyos.kernel.version != "6.15.4" then cachyos else pkgs.linuxPackages_zen;
     };
   };
 
