@@ -60,32 +60,24 @@ in
       "L+ /home/${cfg.owner}/.local/share/applications/games-impure - - - - /home/${cfg.owner}/dotfiles/modules/gaming/games-impure"
     ];
 
-    networking.firewall = {
-      allowedUDPPortRanges = [
-        {
-          from = 8088;
-          to = 28088;
-        }
-      ];
-      # interfaces =
-      #   let
-      #     allowedTCPPortRanges = [
-      #       {
-      #         from = 8086;
-      #         to = 28088;
-      #       }
-      #     ];
-      #     allowedUDPPortRanges = [
-      #       {
-      #         from = 8086;
-      #         to = 28088;
-      #       }
-      #     ];
-      #   in
-      #   {
-      #     enp6s0 = { inherit allowedTCPPortRanges allowedUDPPortRanges; };
-      #     wlo1 = { inherit allowedTCPPortRanges allowedUDPPortRanges; };
-      #   };
+    networking = {
+      firewall.interfaces.enp6s0 = {
+        allowedUDPPorts = [
+          8088
+        ];
+      };
+      nat = {
+        enable = true;
+        internalInterfaces = [ "lo" ];
+        externalInterface = "enp6s0";
+        forwardPorts = [
+          {
+            sourcePort = 8088;
+            proto = "udp";
+            destination = "0.0.0.0";
+          }
+        ];
+      };
     };
 
     programs = {
@@ -140,8 +132,8 @@ in
 
         # Experimental wayland stuff
         # PROTON_ENABLE_WAYLAND = "1";
-        # PROTON_NO_WM_DECORATION = "1";
-        # WINE_NO_WM_DECORATION = "1";
+        PROTON_NO_WM_DECORATION = "1";
+        WINE_NO_WM_DECORATION = "1";
         # WAYLANDDRV_PRIMARY_MONITOR = "DP-2"; # tell at least proton-ge which one is the main monitor on wayland
       };
 
@@ -150,7 +142,7 @@ in
         (pkgs.heroic.override {
           extraPkgs = pkgs: [ pkgs.gamescope ];
         })
-        pkgs.wineWowPackages.stagingFull
+        pkgs.wineWowPackages.unstableFull
         pkgs.umu-launcher
         pkgs.winetricks
         pkgs.r2modman
