@@ -28,6 +28,8 @@
         servitor.id = "H35QFRA-DRR45Q3-7RCHTAP-AWPZKYT-DI6IJC2-OSNTZVV-PSQEUGM-2YW7NQF";
       };
     };
+    interface = "wlan0";
+    ipv4 = "192.168.0.101";
   };
 
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;

@@ -25,6 +25,8 @@
       enable = true;
       devices."automaton".id = "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
     };
+    interface = "wlo1";
+    ipv4 = "192.168.0.102";
   };
   # Kernel stuff
   boot = {

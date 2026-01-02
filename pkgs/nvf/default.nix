@@ -435,6 +435,7 @@ in
       enableExtraDiagnostics = true;
       enableFormat = true;
       enableTreesitter = true;
+      assembly.enable = true;
       bash.enable = true;
       clang = {
         enable = true;

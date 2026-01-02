@@ -195,6 +195,8 @@ in
         # Change monitor config
         pkgs.xorg.xrandr
         pkgs.wlr-randr
+
+        pkgs.mars-mips
       ];
     };
   };

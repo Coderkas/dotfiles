@@ -18,7 +18,7 @@ let
     }:
     ''
       [Desktop Entry]
-      Exec=PROTON_WAYLAND_ENABLE=${wayland} WINEPREFIX="${cfg.extraGamesPath}/${prefix}" PROTONPATH="${proton_path}" umu-run "${cfg.extraGamesPath}/${prefix}/drive_c/${exe}"
+      Exec=DISPLAY=: PROTON_WAYLAND_ENABLE=${wayland} WINEPREFIX="${cfg.extraGamesPath}/${prefix}" PROTONPATH="${proton_path}" umu-run "${cfg.extraGamesPath}/${prefix}/drive_c/${exe}"
       Name=${menu_name}
       Path=${cfg.extraGamesPath}
       Icon=${cfg.extraGamesPath}/${prefix}/drive_c/${icon_path}
@@ -47,7 +47,7 @@ in
           proton_path = "${pkgs.proton-ge-bin.steamcompattool}";
         };
         "applications/bfme.desktop".text = desktopExec {
-          exe = "users/steamuser/Desktop/All in One Launcher.lnk";
+          exe = "users/${cfg.owner}/AppData/Roaming/BFME\ All\ In\ One\ Launcher/AllInOneLauncher.exe";
           icon_path = "proton_shortcuts/icons/128x128/apps/B76C_AllInOneLauncher.0.png";
           menu_name = "Battle for Middle-earth";
           proton_path = "${pkgs.proton-ge-bin.steamcompattool}";
@@ -60,24 +60,15 @@ in
       "L+ /home/${cfg.owner}/.local/share/applications/games-impure - - - - /home/${cfg.owner}/dotfiles/modules/gaming/games-impure"
     ];
 
-    networking = {
-      firewall.interfaces.enp6s0 = {
-        allowedUDPPorts = [
-          8088
-        ];
-      };
-      nat = {
-        enable = true;
-        internalInterfaces = [ "lo" ];
-        externalInterface = "enp6s0";
-        forwardPorts = [
-          {
-            sourcePort = 8088;
-            proto = "udp";
-            destination = "0.0.0.0";
-          }
-        ];
-      };
+    networking.nftables.tables.bfme = {
+      family = "ip";
+      content = ''
+        chain bfme-in {
+          type filter hook input priority filter;
+          ip snet ${cfg.ipv4} udp sport 8086 drop
+          udp sport 8086 accept
+        }
+      '';
     };
 
     programs = {
@@ -96,10 +87,10 @@ in
       steam = {
         enable = true;
         protontricks.enable = true;
-        gamescopeSession.enable = true;
         extest.enable = true;
         remotePlay.openFirewall = true;
         dedicatedServer.openFirewall = true;
+        localNetworkGameTransfers.openFirewall = true;
         extraCompatPackages = [
           pkgs.steamtinkerlaunch.steamcompattool
           pkgs.proton-ge-bin.steamcompattool
@@ -113,9 +104,6 @@ in
           renice = 15;
         };
       };
-
-      firejail.enable = true;
-      wireshark.enable = true;
     };
 
     users.users.${cfg.owner}.extraGroups = [ "gamemode" ];
@@ -139,17 +127,13 @@ in
 
       # just symlink folder with those into XDG_DATA_HOME
       systemPackages = [
-        (pkgs.heroic.override {
-          extraPkgs = pkgs: [ pkgs.gamescope ];
-        })
-        pkgs.wineWowPackages.unstableFull
+        pkgs.heroic
+        pkgs.wineWowPackages.stagingFull
         pkgs.umu-launcher
         pkgs.winetricks
         pkgs.r2modman
         pkgs.prismlauncher
-        pkgs.linuxConsoleTools
         pkgs.vkbasalt
-        pkgs.steamtinkerlaunch
       ];
     };
   };

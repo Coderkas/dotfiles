@@ -1,8 +1,21 @@
 { config, lib, ... }:
+let
+  cfg = config.machine;
+in
 {
-  config = lib.mkIf config.machine.enableBase {
+  options.machine = {
+    interface = lib.mkOption {
+      type = lib.types.nonEmptyStr;
+    };
+    ipv4 = lib.mkOption {
+      type = lib.types.nonEmptyStr;
+    };
+
+  };
+  config = lib.mkIf cfg.enableBase {
     networking = {
-      hostName = config.machine.name; # Define your hostname.
+      hostName = cfg.name; # Define your hostname.
+      hosts.${cfg.ipv4} = [ cfg.name ];
 
       networkmanager = {
         enable = true;
@@ -16,6 +29,13 @@
 
         connectionConfig."connection.mdns" = 2;
       };
+
+      interfaces.${cfg.interface}.ipv4.addresses = [
+        {
+          address = cfg.ipv4;
+          prefixLength = 24;
+        }
+      ];
 
       nameservers = [
         # Cloudflare
@@ -31,6 +51,7 @@
         "2620:fe::9"
       ];
 
+      nftables.enable = true;
       firewall.allowPing = false;
     };
 
@@ -46,6 +67,12 @@
     systemd = {
       services.NetworkManager-wait-online.enable = false;
       network.wait-online.enable = false;
+    };
+
+    boot.kernel.sysctl = {
+      "net.ipv4.ip_forward" = 1;
+      "net.ipv4.conf.all.forwarding" = 1;
+      "net.ipv4.conf.all.route_localnet" = 1;
     };
 
     hardware = {

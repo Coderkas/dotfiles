@@ -28,25 +28,13 @@
     syncthing.devices."automaton".id =
       "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
     runner.name = "anyrun";
+    interface = "enp6s0";
+    ipv4 = "192.168.0.100";
   };
 
   programs.ausweisapp = {
     enable = true;
     openFirewall = true;
-  };
-
-  networking = {
-    interfaces.enp6s0.ipv4.addresses = [
-      {
-        address = "192.168.0.100";
-        prefixLength = 24;
-      }
-    ];
-    defaultGateway = {
-      address = "192.168.0.1";
-      interface = "enp6s0";
-    };
-    hosts."192.168.0.100" = [ "omnissiah" ];
   };
 
   services.hardware.openrgb = {
