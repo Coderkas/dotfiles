@@ -65,7 +65,7 @@ in
       content = ''
         chain bfme-in {
           type filter hook input priority filter;
-          ip snet ${cfg.ipv4} udp sport 8086 drop
+          ip saddr ${cfg.ipv4} udp sport 8086 drop
           udp sport 8086 accept
         }
       '';

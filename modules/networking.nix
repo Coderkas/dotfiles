@@ -12,6 +12,7 @@ in
     };
 
   };
+
   config = lib.mkIf cfg.enableBase {
     networking = {
       hostName = cfg.name; # Define your hostname.
@@ -36,6 +37,11 @@ in
           prefixLength = 24;
         }
       ];
+
+      defaultGateway = {
+        address = "192.168.0.1";
+        inherit (cfg) interface;
+      };
 
       nameservers = [
         # Cloudflare
