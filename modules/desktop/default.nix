@@ -83,6 +83,21 @@ in
             Restart = "on-abort";
           };
         };
+        easyeffects = {
+          description = "Easyeffects";
+          partOf = [
+            "graphical-session.target"
+            "tray.target"
+          ];
+          wantedBy = [
+            "graphical-session.target"
+            "tray.target"
+          ];
+          path = lib.mkForce [ ];
+          serviceConfig = {
+            ExecStart = "${lib.getExe pkgs.easyeffects} --service-mode -w";
+          };
+        };
       };
 
       # Make tuigreet not obscure the login screen with possible errors
@@ -155,6 +170,7 @@ in
       };
 
       systemPackages = [
+        pkgs.easyeffects
         pkgs.quickshell
         pkgs.zathura
         (pkgs.wrapFirefox inputs.zen-browser.packages.${platform}.twilight-unwrapped {

@@ -42,6 +42,8 @@
     package = pkgs.openrgb-with-all-plugins;
   };
 
+  powerManagement.cpuFreqGovernor = "performance";
+
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-uuid/e964b89f-c596-43a8-bea1-aaa7ffc8af4b";
