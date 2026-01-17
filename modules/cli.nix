@@ -311,7 +311,7 @@ in
         pkgs.fastfetch
         pkgs.termscp # terminal for ftp, scp, etc.
 
-        pkgs.oterm
+        #pkgs.oterm
       ];
     })
   ];

@@ -168,8 +168,8 @@ in
             };
           };
         })
-        (pkgs.mpv-unwrapped.wrapper {
-          mpv = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
+        (pkgs.mpv.override {
+          mpv-unwrapped = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
         })
         pkgs.anki
         pkgs.signal-desktop
@@ -179,7 +179,7 @@ in
         pkgs.gimp
         pkgs.gnome-clocks
         pkgs.element-desktop
-        pkgs.oculante # image viewer
+        #pkgs.oculante # image viewer
         # Gnome files with plugin for previewer
         (pkgs.nautilus.overrideAttrs (oldAttrs: {
           buildInputs = oldAttrs.buildInputs ++ [

@@ -30,17 +30,6 @@ in
       };
     };
 
-    pluginRC.treesitter-textobjects-ext = lib.nvim.dag.entryAfter [ "treesitter-textobjects" ] /* lua */ ''
-      local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
-
-      vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
-      vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
-      vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
-      vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
-      vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
-      vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
-    '';
-
     augroups = [ { name = "MyUtils"; } ];
     autocmds = [
       {
@@ -96,26 +85,6 @@ in
           end
         '';
       }
-      {
-        event = [ "LspAttach" ];
-        group = "MyUtils";
-        desc = "Additional rust keymaps";
-        callback = lib.generators.mkLuaInline /* lua */ ''
-          function(args)
-            local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-
-            if client.name == 'rust-analyzer' then
-              vim.keymap.set('n', '<localleader>rd', function()
-                vim.cmd.RustLsp({ 'renderDiagnostic', 'current' })
-              end, { desc = 'RustLsp diagnostics' })
-
-              vim.keymap.set('n', '<localleader>re', function()
-                vim.cmd.RustLsp({ 'explainError', 'current' })
-              end, { desc = 'RustLsp explain errors' })
-            end
-          end
-        '';
-      }
     ];
     luaConfigPost = /* lua */ ''
       vim.api.nvim_create_user_command('LspInfo', ':checkhealth vim.lsp', {desc = 'Show vim.lsp health'})
@@ -147,6 +116,7 @@ in
       inccommand = "split";
       cursorline = true;
       scrolloff = 10;
+      winborder = "rounded";
     };
     searchCase = "smart";
     syntaxHighlighting = true;
@@ -156,12 +126,6 @@ in
     bell = "visual";
 
     keymaps = [
-      {
-        key = "<leader>pv";
-        mode = "n";
-        action = /* lua */ "<cmd>:Ex<CR>";
-        desc = "Open folder in Netrw";
-      }
       {
         key = "<leader>fk";
         mode = "n";
@@ -313,7 +277,6 @@ in
           c = lib.generators.mkLuaInline /* lua */ ''{"clang-format",lsp_format = "fallback"}'';
           cpp = lib.generators.mkLuaInline /* lua */ ''{"clang-format",lsp_format = "fallback"}'';
           odin = [ "odinfmt" ];
-          nix = [ "nixfmt" ];
         };
         formatters = {
           odinfmt = {
@@ -321,28 +284,7 @@ in
             args = [ "-stdin" ];
             stdin = true;
           };
-          nixfmt = {
-            command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
-          };
         };
-      };
-    };
-    git.gitsigns = {
-      enable = true;
-      mappings = {
-        nextHunk = "<leader>ghn";
-        previousHunk = "<leader>ghp";
-        stageHunk = "<leader>ghs";
-        undoStageHunk = "<leader>ghu";
-        resetHunk = "<leader>ghr";
-        previewHunk = "<leader>ghP";
-        stageBuffer = "<leader>gBs";
-        resetBuffer = "<leader>gBr";
-        blameLine = "<leader>gb";
-        toggleBlame = "<leader>gbt";
-        diffThis = "<leader>gDt";
-        diffProject = "<leader>gDp";
-        toggleDeleted = "<leader>gd";
       };
     };
 
@@ -472,7 +414,7 @@ in
       nix = {
         enable = true;
         lsp.enable = false;
-        format.enable = false;
+        format.type = [ "nixfmt" ];
       };
       odin = {
         enable = true;
@@ -564,220 +506,29 @@ in
     };
 
     treesitter = {
+      enable = true;
+      fold = true;
       autotagHtml = true;
-      grammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+      grammars = with pkgs.vimPlugins.nvim-treesitter.grammarPlugins; [
         cmake
         desktop
         fish
+        http
         hyprlang
         ini
         json
-        jsonc
+        #jsonc
+        kitty
         query
         rasi
         regex
         ron
         scss
+        ssh_config
         toml
         xml
+        zathurarc
       ];
-      context = {
-        enable = true;
-        setupOpts = {
-          max_lines = 2;
-          separator = null;
-        };
-      };
-      mappings.incrementalSelection = {
-        decrementByNode = "-";
-        incrementByNode = "+";
-        incrementByScope = null;
-        init = "<leader>ti";
-      };
-      textobjects = {
-        enable = true;
-        setupOpts = {
-          select = {
-            enable = true;
-            lookahead = true;
-            keymaps = {
-              "<C-T>f" = {
-                query = "@function.inner";
-                desc = "Select function body";
-              };
-              "<C-T>s" = {
-                query = "@class.inner";
-                desc = "Select class/struct body";
-              };
-              "<C-T>l" = {
-                query = "@local.scope";
-                query_group = "locals";
-                desc = "Select language scope";
-              };
-              "<C-T>r" = {
-                query = "@return.inner";
-                desc = "Select return";
-              };
-              "<C-T>b" = {
-                query = "@block.inner";
-                desc = "Select inner block";
-              };
-              "<C-T>c" = {
-                query = "@call.inner";
-                desc = "Select call";
-              };
-            };
-            selection_modes = {
-              "@parameter.outer" = "v";
-              "@function.outer" = "V";
-              "@class.outer" = "<c-v>";
-            };
-            include_surrounding_whitespace = false;
-          };
-          move = {
-            enable = true;
-            set_jumps = true;
-            goto_next_start = {
-              "]f" = {
-                query = "@function.outer";
-                desc = "Next function start";
-              };
-              "]c" = {
-                query = "@class.outer";
-                desc = "Next class start";
-              };
-              "]o" = {
-                query = "@loop.outer";
-                desc = "Next loop start";
-              };
-              "]s" = {
-                query = "@local.scope";
-                query_group = "locals";
-                desc = "Next scope";
-              };
-              "]g" = {
-                query = "@block.outer";
-                desc = "Next block start";
-              };
-              "]a" = {
-                query = "@assignment.outer";
-                desc = "Next assignment";
-              };
-              "]r" = {
-                query = "@return.inner";
-                desc = "Next return";
-              };
-              "]i" = {
-                query = "@conditional.outer";
-                desc = "Next conditional";
-              };
-              "]b" = {
-                query = "@conditional.inner";
-                desc = "Next branch";
-              };
-              "]p" = {
-                query = "@parameter.inner";
-                desc = "Next parameter";
-              };
-            };
-            goto_next_end = {
-              "]C" = {
-                query = "@class.outer";
-                desc = "Next class end";
-              };
-              "]F" = {
-                query = "@function.outer";
-                desc = "Next function end";
-              };
-              "]G" = {
-                query = "@block.outer";
-                desc = "Next block end";
-              };
-            };
-            goto_previous_start = {
-              "[f" = {
-                query = "@function.outer";
-                desc = "Prev function start";
-              };
-              "[c" = {
-                query = "@class.outer";
-                desc = "Prev class start";
-              };
-              "[o" = {
-                query = "@loop.outer";
-                desc = "Prev loop start";
-              };
-              "[s" = {
-                query = "@local.scope";
-                query_group = "locals";
-                desc = "Prev scope";
-              };
-              "[g" = {
-                query = "@block.outer";
-                desc = "Prev block start";
-              };
-              "[a" = {
-                query = "@assignment.outer";
-                desc = "Prev assignment";
-              };
-              "[r" = {
-                query = "@return.inner";
-                desc = "Prev return";
-              };
-              "[i" = {
-                query = "@conditional.outer";
-                desc = "Prev conditional";
-              };
-              "[b" = {
-                query = "@conditional.inner";
-                desc = "Prev branch";
-              };
-              "[p" = {
-                query = "@parameter.inner";
-                desc = "Prev parameter";
-              };
-            };
-            goto_previous_end = {
-              "[C" = {
-                query = "@class.outer";
-                desc = "Prev class end";
-              };
-              "[F" = {
-                query = "@function.outer";
-                desc = "Prev function end";
-              };
-              "[G" = {
-                query = "@block.outer";
-                desc = "Prev block end";
-              };
-            };
-          };
-          swap = {
-            enable = true;
-            swap_next = {
-              "<leader>tp" = {
-                query = "@parameter.inner";
-                desc = "Swap with next parameter";
-              };
-              "<leader>ta" = {
-                query = "@assignment.outer";
-                desc = "Swap with next assignment";
-              };
-            };
-            swap_previous = {
-              "<leader>tP" = {
-                query = "@parameter.inner";
-                desc = "Swap with prev parameter";
-              };
-              "<leader>tA" = {
-                query = "@assignment.outer";
-                desc = "Swap with prev assignment";
-              };
-            };
-          };
-          lsp_interop.enable = false;
-        };
-      };
     };
   };
 }

@@ -34,6 +34,16 @@ in
         quit-after-last-window-closed = false;
         shell-integration = "fish";
         shell-integration-features = true;
+        keybind = [
+          "ctrl+shift+w>q=close_tab:this"
+          "ctrl+shift+w>h=goto_split:left"
+          "ctrl+shift+w>j=goto_split:down"
+          "ctrl+shift+w>k=goto_split:up"
+          "ctrl+shift+w>l=goto_split:right"
+          "ctrl+shift+w>s=new_split:down"
+          "ctrl+shift+w>v=new_split:right"
+          "ctrl+shift+w>f=toggle_split_zoom"
+        ];
       };
     };
 
