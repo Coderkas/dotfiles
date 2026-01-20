@@ -17,6 +17,7 @@ in
     enableLuaLoader = true;
     extraPackages = [
       pkgs.clippy
+      pkgs.tree-sitter
     ];
     lazy.plugins = {
       telescope.event = "VimEnter";
@@ -36,7 +37,7 @@ in
         event = [ "TextYankPost" ];
         group = "MyUtils";
         desc = "Highlight when yanking (copying) text";
-        callback = lib.generators.mkLuaInline /* lua */ "function() vim.hl.on_yank() end";
+        callback = lib.generators.mkLuaInline "vim.hl.on_yank";
       }
       {
         event = [
@@ -45,12 +46,7 @@ in
         ];
         group = "MyUtils";
         desc = "Only highlight while searching";
-        callback = lib.generators.mkLuaInline /* lua */ ''
-          function()
-            local curr = vim.o.hlsearch
-            vim.o.hlsearch = not curr
-          end
-        '';
+        callback = lib.generators.mkLuaInline /* lua */ "function() vim.o.hlsearch = not vim.o.hlsearch end";
       }
       {
         event = [ "LspAttach" ];
@@ -136,81 +132,8 @@ in
       {
         key = "<leader>fm";
         mode = "n";
-        action = /* lua */ ''
-            function()
-              require("telescope.builtin").man_pages {
-                sections = { 'ALL' };
-                attach_mappings = function(prompt_bufnr)
-                  local action_set = require 'telescope.actions.set'
-                  local action_state = require 'telescope.actions.state'
-                  local actions = require 'telescope.actions'
-                  local utils = require 'telescope.utils'
-                  action_set.select:replace(function(_, cmd)
-                    local selection = action_state.get_selected_entry()
-                    if selection == nil then
-                      utils.__warn_no_selection 'builtin.man_pages'
-                      return
-                    end
-
-                    local args = selection.section .. ' ' .. selection.value
-                    actions.close(prompt_bufnr)
-                    if cmd == 'default' then
-                      vim.cmd('hide Man ' .. args)
-                    elseif cmd == 'vertical' then
-                      local curr_win_width = vim.api.nvim_win_get_width(0) / 2 - 5
-                      vim.cmd(':let $MANWIDTH=' .. curr_win_width .. ' | :vert Man ' .. args)
-                    elseif cmd == 'horizontal' then
-                      vim.cmd('Man ' .. args)
-                    elseif cmd == 'tab' then
-                      vim.cmd('tab Man ' .. args)
-                    end
-                  end)
-
-                  return true
-                end
-              }
-          end
-        '';
+        action = /* lua */ ''require("telescope.builtin").man_pages'';
         desc = "Man pages [Telescope]";
-        lua = true;
-      }
-      {
-        key = "<leader>fh";
-        mode = "n";
-        action = /* lua */ ''
-            function()
-              require("telescope.builtin").help_tags {
-                attach_mappings = function(prompt_bufnr)
-                  local action_set = require 'telescope.actions.set'
-                  local action_state = require 'telescope.actions.state'
-                  local actions = require 'telescope.actions'
-                  local utils = require 'telescope.utils'
-                  action_set.select:replace(function(_, cmd)
-                    local selection = action_state.get_selected_entry()
-                    if selection == nil then
-                      utils.__warn_no_selection 'builtin.help_tags'
-                      return
-                    end
-
-                    actions.close(prompt_bufnr)
-                    if cmd == 'default' then
-                      local curr_buf_id = vim.api.nvim_get_current_buf()
-                      vim.cmd('help ' .. selection.value .. ' |:' .. curr_buf_id .. 'hide')
-                    elseif cmd == 'vertical' then
-                      vim.cmd('vert help ' .. selection.value)
-                    elseif cmd == 'horizontal' then
-                      vim.cmd('help ' .. selection.value)
-                    elseif cmd == 'tab' then
-                      vim.cmd('tab help ' .. selection.value)
-                    end
-                  end)
-
-                  return true
-                end
-              }
-          end
-        '';
-        desc = "Help tags [Telescope]";
         lua = true;
       }
       {
@@ -249,6 +172,10 @@ in
         };
         snippets.preset = "luasnip";
         signature.enabled = true;
+        sources.providers.path = {
+          async = true;
+          max_items = 5;
+        };
         keymap.preset = "default";
         cmdline.keymap.preset = "default";
       };
@@ -387,30 +314,7 @@ in
       go.enable = true;
       html.enable = true;
       lua.enable = true;
-      markdown = {
-        enable = true;
-        extensions.markview-nvim = {
-          enable = true;
-          setupOpts = {
-            preview = {
-              enable = false;
-              icon_provider = "devicons";
-              callbacks.on_attach = lib.generators.mkLuaInline /* lua */ ''
-                function(bufnr, _)
-                  vim.keymap.set("n", "<leader>lp", "<CMD>Markview splitToggle<CR>", {desc = "Toggle Markview split", noremap = true, silent = true, buffer = bufnr})
-                  end
-              '';
-            };
-            experimental = {
-              prefer_nvim = true;
-              file_open_command = "tabnew";
-            };
-            latex.enable = true;
-            markdown.enable = true;
-            typst.enable = true;
-          };
-        };
-      };
+      markdown.enable = true;
       nix = {
         enable = true;
         lsp.enable = false;
@@ -484,7 +388,7 @@ in
       ];
       mappings = {
         gitBranches = null;
-        gitBufferCommits = "<leader>gBc";
+        gitBufferCommits = "<leader>gb";
         gitCommits = "<leader>gc";
         gitStatus = "<leader>gs";
         gitStash = "<leader>gS";
@@ -494,7 +398,6 @@ in
         lspReferences = "<leader>lr";
         lspTypeDefinitions = "<leader>lt";
         lspWorkspaceSymbols = "<leader>lws";
-        helpTags = null;
         diagnostics = "<leader>dl";
       };
       setupOpts.defaults = {

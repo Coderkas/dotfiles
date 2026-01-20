@@ -64,8 +64,10 @@ in
     services = {
       resolved = {
         enable = true;
-        dnssec = "false";
-        dnsovertls = "true";
+        settings.Resolve = {
+          DNSSEC = "false";
+          DNSOverTLS = "true";
+        };
       };
       fail2ban.enable = true;
     };
