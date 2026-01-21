@@ -40,7 +40,6 @@ in
         plugins = [ pkgs.rofi-calc ];
       })
       pkgs.rofi-calc
-      pkgs.sqlite # To make rofi firefox bookmark script work
     ];
   };
 }

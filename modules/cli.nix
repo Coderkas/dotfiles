@@ -310,6 +310,7 @@ in
         pkgs.numbat # Calculator/math scripting
         pkgs.fastfetch
         pkgs.termscp # terminal for ftp, scp, etc.
+        pkgs.sqlite
 
         #pkgs.oterm
       ];

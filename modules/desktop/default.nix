@@ -48,7 +48,6 @@ in
 
     programs = {
       dconf.enable = true;
-      firefox.enable = true;
       kdeconnect.enable = true;
       obs-studio.enable = true;
       seahorse.enable = true;
@@ -166,24 +165,12 @@ in
         ELECTRON_OZONE_PLATFORM_HINT = "wayland";
         XDG_SESSION_TYPE = "wayland";
         SDL_VIDEODRIVER = "wayland,x11,windows"; # Not adding ",x11,windos" causes issues with easy anti cheat
-        BROWSER = "firefox";
       };
 
       systemPackages = [
         pkgs.easyeffects
         pkgs.quickshell
         pkgs.zathura
-        (pkgs.wrapFirefox inputs.zen-browser.packages.${platform}.twilight-unwrapped {
-          extraPolicies = {
-            BlockAboutAddons = true;
-            ExtensionSettings = {
-              "uBlock0@raymondhill.net" = {
-                installation_mode = "force_installed";
-                install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/ublock-origin/latest.xpi";
-              };
-            };
-          };
-        })
         (pkgs.mpv.override {
           mpv-unwrapped = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
         })

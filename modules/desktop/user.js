@@ -1,0 +1,126 @@
+user_pref("app.normandy.first_run", false);
+user_pref("browser.bookmarks.addedImportButton", true);
+user_pref("browser.bookmarks.restore_default_bookmarks", false);
+user_pref("browser.contentblocking.category", "strict");
+user_pref("browser.download.always_ask_before_handling_new_types", true);
+user_pref("browser.download.useDownloadDir", false);
+user_pref("browser.download.viewableInternally.typeWasRegistered.avif", true);
+user_pref("browser.download.viewableInternally.typeWasRegistered.jxl", true);
+user_pref("browser.download.viewableInternally.typeWasRegistered.webp", true);
+user_pref(
+  "browser.ipProtection.locationListCache",
+  '[{"name":"United States of America","code":"US","cities":[{"name":"New York","code":"Q1384","servers":[{"port":443,"hostname":"prod.browser-proxy.prod.webservices.mozgcp.net","quarantined":false,"protocols":[{"name":"connect","host":"prod.browser-proxy.prod.webservices.mozgcp.net","port":443,"scheme":"https"}]}]}]}]',
+);
+user_pref("browser.laterrun.enabled", false);
+user_pref("browser.search.region", "LU");
+user_pref("browser.search.separatePrivateDefault", false);
+user_pref(
+  "browser.search.serpEventTelemetryCategorization.regionEnabled",
+  false,
+);
+user_pref("browser.shell.checkDefaultBrowser", false);
+user_pref("browser.shell.didSkipDefaultBrowserCheckOnFirstRun", false);
+user_pref("browser.theme.toolbar-theme", 0);
+user_pref("browser.translations.neverTranslateLanguages", "de,en,ja");
+user_pref("browser.urlbar.placeholderName", "DuckDuckGo");
+user_pref("browser.urlbar.placeholderName.private", "DuckDuckGo");
+user_pref("browser.urlbar.suggest.clipboard", false);
+user_pref("browser.urlbar.suggest.engines", false);
+user_pref("browser.urlbar.suggest.addons", false);
+user_pref("browser.urlbar.suggest.amp", false);
+user_pref("browser.urlbar.suggest.importantDates", false);
+user_pref("browser.urlbar.suggest.realtimeOptIn", false);
+user_pref("browser.urlbar.suggest.remotetab", false);
+user_pref("browser.urlbar.suggest.sports", false);
+user_pref("browser.urlbar.suggest.trending", false);
+user_pref("browser.urlbar.suggest.weather", false);
+user_pref("browser.urlbar.suggest.wikipedia", false);
+user_pref("browser.urlbar.suggest.yelp", false);
+user_pref("browser.urlbar.suggest.yelpRealtime", false);
+user_pref("browser.urlbar.suggest.yelpRealtime", false);
+user_pref(
+  "browser.newtabpage.activity-stream.default.sites",
+  "https://www.youtube.com/,https://www.search.nixos.org/packages?channel=unstable,https://www.search.nixos.org/options?channel=unstable",
+);
+user_pref(
+  "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts",
+  true,
+);
+user_pref(
+  "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines",
+  "duckduckgo",
+);
+user_pref("browser.newtabpage.activity-stream.discoverystream.enabled", false);
+user_pref("browser.newtabpage.activity-stream.showSponsored", false);
+user_pref("browser.newtabpage.activity-stream.showWeather", false);
+user_pref("browser.newtabpage.pinned", "[{\"url\":\"https://search.nixos.org/packages?channel=unstable&\",\"label\":\"Nix packages\"},{\"url\":\"https://search.nixos.org/options?channel=unstable&\",\"label\":\"Nix options\"},{\"url\":\"https://www.youtube.com\",\"label\":\"YouTube\"},{\"url\":\"https://learnxinyminutes.com\",\"label\":\"Learn X in Y\"}]");
+user_pref("datareporting.usage.uploadEnabled", false);
+user_pref("doh-rollout.doneFirstRun", true);
+user_pref("doh-rollout.home-region", "LU");
+user_pref("dom.forms.autocomplete.formautofill", false);
+user_pref("dom.security.https_only_mode", true);
+user_pref("dom.security.https_only_mode_ever_enabled", true);
+user_pref("extensions.activeThemeID", "default-theme@mozilla.org");
+user_pref("extensions.formautofill.addresses.enabled", false);
+user_pref("extensions.formautofill.creditCards.enabled", false);
+user_pref(
+  "extensions.pictureinpicture.enable_picture_in_picture_overrides",
+  true,
+);
+user_pref(
+  "extensions.quarantinedDomains.list",
+  "autoatendimento.bb.com.br,ibpf.sicredi.com.br,ibpj.sicredi.com.br,internetbanking.caixa.gov.br,www.ib12.bradesco.com.br,www2.bancobrasil.com.br",
+);
+user_pref("extensions.ui.dictionary.hidden", true);
+user_pref("extensions.ui.locale.hidden", true);
+user_pref("extensions.ui.mlmodel.hidden", true);
+user_pref("extensions.ui.plugin.hidden", false);
+user_pref("extensions.ui.sitepermission.hidden", true);
+user_pref("extensions.webcompat.enable_interventions", true);
+user_pref("extensions.webcompat.enable_shims", true);
+user_pref("font.name.serif.x-western", "FiraCode Nerd Font");
+user_pref("intl.accept_languages", "en-us,de-de,ja");
+user_pref("intl.locale.requested", "en-US");
+user_pref("layout.css.always_underline_links", false);
+user_pref("layout.css.prefers-color-scheme.content-override", 0);
+user_pref("network.dns.disablePrefetch", true);
+user_pref(
+  "network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation",
+  true,
+);
+user_pref("network.http.speculative-parallel-limit", 0);
+user_pref("network.prefetch-next", false);
+user_pref("places.history.enabled", false);
+user_pref("privacy.clearHistory.formdata", true);
+user_pref("privacy.clearOnShutdown_v2.formdata", true);
+user_pref("privacy.clearOnShutdown_v2.siteSettings", true);
+user_pref("privacy.fingerprintingProtection", true);
+user_pref("privacy.globalprivacycontrol.was_ever_enabled", true);
+user_pref("privacy.query_stripping.enabled", true);
+user_pref("privacy.query_stripping.enabled.pbmode", true);
+user_pref("privacy.sanitize.clearOnShutdown.hasMigratedToNewPrefs3", true);
+user_pref("privacy.sanitize.cpd.hasMigratedToNewPrefs3", true);
+user_pref("privacy.sanitize.pending", "[]");
+user_pref("privacy.sanitize.sanitizeOnShutdown", true);
+user_pref(
+  "privacy.trackingprotection.consentmanager.skip.pbmode.enabled",
+  false,
+);
+user_pref("privacy.trackingprotection.emailtracking.enabled", true);
+user_pref("privacy.trackingprotection.enabled", true);
+user_pref("privacy.trackingprotection.socialtracking.enabled", true);
+user_pref("services.sync.clients.lastSync", "0");
+user_pref("services.sync.globalScore", 0);
+user_pref("services.sync.nextSync", 0);
+user_pref("services.sync.sendVersionInfo", false);
+user_pref("services.sync.telemetry.submissionInterval", 0);
+user_pref("services.sync.telemetry.maxPayloadCount", 0);
+user_pref("signon.rememberSignons", false);
+user_pref("toolkit.telemetry.reportingpolicy.firstRun", false);
+user_pref("zen.ui.migration.compact-mode-button-added", true);
+user_pref("zen.view.compact.enable-at-startup", false);
+user_pref("zen.welcome-screen.seen", true);
+user_pref("identity.fxaccounts.telemetry.clientAssociationPing.enabled", false);
+user_pref("network.trr.confirmation_telemetry_enabled", false);
+user_pref("nimbus.telemetry.targetingContextEnabled", false);
+user_pref("telemetry.fog.init_on_shutdown", false);

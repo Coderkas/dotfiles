@@ -103,23 +103,6 @@ in
 
       systemPackages = [
         pkgs.xdg-utils
-
-        (pkgs.makeDesktopItem {
-          name = "Immersion";
-          desktopName = "Immersion";
-          genericName = "Web Browser";
-          icon = "firefox";
-          exec = "firefox --name immersion --class immersion -P Immersion %U";
-          terminal = false;
-          mimeTypes = [
-            "text/html"
-            "text/xml"
-          ];
-          categories = [ "Network" ];
-          extraConfig = {
-            "StartupWMClass" = "immersion";
-          };
-        })
       ];
     };
   };
