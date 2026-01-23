@@ -1,13 +1,12 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
 }:
 let
   cfg = config.machine;
-  inherit (cfg) owner theme platform;
+  inherit (cfg) owner theme;
 in
 {
   imports = [
@@ -182,7 +181,7 @@ in
         pkgs.gimp
         pkgs.gnome-clocks
         pkgs.element-desktop
-        #pkgs.oculante # image viewer
+        pkgs.oculante # image viewer
         # Gnome files with plugin for previewer
         (pkgs.nautilus.overrideAttrs (oldAttrs: {
           buildInputs = oldAttrs.buildInputs ++ [
@@ -198,6 +197,8 @@ in
         # Change monitor config
         pkgs.xorg.xrandr
         pkgs.wlr-randr
+
+        pkgs.wf-recorder
       ];
     };
   };

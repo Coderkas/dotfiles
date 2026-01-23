@@ -312,7 +312,7 @@ in
         pkgs.termscp # terminal for ftp, scp, etc.
         pkgs.sqlite
 
-        #pkgs.oterm
+        pkgs.oterm
       ];
     })
   ];
