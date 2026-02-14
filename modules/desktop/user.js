@@ -7,17 +7,11 @@ user_pref("browser.download.useDownloadDir", false);
 user_pref("browser.download.viewableInternally.typeWasRegistered.avif", true);
 user_pref("browser.download.viewableInternally.typeWasRegistered.jxl", true);
 user_pref("browser.download.viewableInternally.typeWasRegistered.webp", true);
-user_pref(
-  "browser.ipProtection.locationListCache",
-  '[{"name":"United States of America","code":"US","cities":[{"name":"New York","code":"Q1384","servers":[{"port":443,"hostname":"prod.browser-proxy.prod.webservices.mozgcp.net","quarantined":false,"protocols":[{"name":"connect","host":"prod.browser-proxy.prod.webservices.mozgcp.net","port":443,"scheme":"https"}]}]}]}]',
-);
+user_pref("browser.ipProtection.locationListCache", '[{"name":"United States of America","code":"US","cities":[{"name":"New York","code":"Q1384","servers":[{"port":443,"hostname":"prod.browser-proxy.prod.webservices.mozgcp.net","quarantined":false,"protocols":[{"name":"connect","host":"prod.browser-proxy.prod.webservices.mozgcp.net","port":443,"scheme":"https"}]}]}]}]');
 user_pref("browser.laterrun.enabled", false);
 user_pref("browser.search.region", "LU");
 user_pref("browser.search.separatePrivateDefault", false);
-user_pref(
-  "browser.search.serpEventTelemetryCategorization.regionEnabled",
-  false,
-);
+user_pref("browser.search.serpEventTelemetryCategorization.regionEnabled", false);
 user_pref("browser.shell.checkDefaultBrowser", false);
 user_pref("browser.shell.didSkipDefaultBrowserCheckOnFirstRun", false);
 user_pref("browser.theme.toolbar-theme", 0);
@@ -38,18 +32,9 @@ user_pref("browser.urlbar.suggest.wikipedia", false);
 user_pref("browser.urlbar.suggest.yelp", false);
 user_pref("browser.urlbar.suggest.yelpRealtime", false);
 user_pref("browser.urlbar.suggest.yelpRealtime", false);
-user_pref(
-  "browser.newtabpage.activity-stream.default.sites",
-  "https://www.youtube.com/,https://www.search.nixos.org/packages?channel=unstable,https://www.search.nixos.org/options?channel=unstable",
-);
-user_pref(
-  "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts",
-  true,
-);
-user_pref(
-  "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines",
-  "duckduckgo",
-);
+user_pref("browser.newtabpage.activity-stream.default.sites", "https://www.youtube.com/,https://www.search.nixos.org/packages?channel=unstable,https://www.search.nixos.org/options?channel=unstable");
+user_pref("browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts", true);
+user_pref("browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines", "duckduckgo");
 user_pref("browser.newtabpage.activity-stream.discoverystream.enabled", false);
 user_pref("browser.newtabpage.activity-stream.showSponsored", false);
 user_pref("browser.newtabpage.activity-stream.showWeather", false);
@@ -63,14 +48,8 @@ user_pref("dom.security.https_only_mode_ever_enabled", true);
 user_pref("extensions.activeThemeID", "default-theme@mozilla.org");
 user_pref("extensions.formautofill.addresses.enabled", false);
 user_pref("extensions.formautofill.creditCards.enabled", false);
-user_pref(
-  "extensions.pictureinpicture.enable_picture_in_picture_overrides",
-  true,
-);
-user_pref(
-  "extensions.quarantinedDomains.list",
-  "autoatendimento.bb.com.br,ibpf.sicredi.com.br,ibpj.sicredi.com.br,internetbanking.caixa.gov.br,www.ib12.bradesco.com.br,www2.bancobrasil.com.br",
-);
+user_pref("extensions.pictureinpicture.enable_picture_in_picture_overrides", true);
+user_pref("extensions.quarantinedDomains.list", "autoatendimento.bb.com.br,ibpf.sicredi.com.br,ibpj.sicredi.com.br,internetbanking.caixa.gov.br,www.ib12.bradesco.com.br,www2.bancobrasil.com.br");
 user_pref("extensions.ui.dictionary.hidden", true);
 user_pref("extensions.ui.locale.hidden", true);
 user_pref("extensions.ui.mlmodel.hidden", true);
@@ -84,10 +63,7 @@ user_pref("intl.locale.requested", "en-US");
 user_pref("layout.css.always_underline_links", false);
 user_pref("layout.css.prefers-color-scheme.content-override", 0);
 user_pref("network.dns.disablePrefetch", true);
-user_pref(
-  "network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation",
-  true,
-);
+user_pref("network.http.referer.disallowCrossSiteRelaxingDefault.top_navigation", true);
 user_pref("network.http.speculative-parallel-limit", 0);
 user_pref("network.prefetch-next", false);
 user_pref("places.history.enabled", false);
@@ -102,10 +78,7 @@ user_pref("privacy.sanitize.clearOnShutdown.hasMigratedToNewPrefs3", true);
 user_pref("privacy.sanitize.cpd.hasMigratedToNewPrefs3", true);
 user_pref("privacy.sanitize.pending", "[]");
 user_pref("privacy.sanitize.sanitizeOnShutdown", true);
-user_pref(
-  "privacy.trackingprotection.consentmanager.skip.pbmode.enabled",
-  false,
-);
+user_pref("privacy.trackingprotection.consentmanager.skip.pbmode.enabled", false);
 user_pref("privacy.trackingprotection.emailtracking.enabled", true);
 user_pref("privacy.trackingprotection.enabled", true);
 user_pref("privacy.trackingprotection.socialtracking.enabled", true);

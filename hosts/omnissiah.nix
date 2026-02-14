@@ -29,7 +29,7 @@
       "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
     runner.name = "anyrun";
     interface = "enp6s0";
-    ipv4 = "192.168.0.100";
+    ipv4 = "192.168.0.10";
   };
 
   programs.ausweisapp = {

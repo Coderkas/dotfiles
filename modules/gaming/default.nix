@@ -65,7 +65,7 @@ in
       content = ''
         chain bfme-in {
           type filter hook input priority filter;
-          ip saddr ${cfg.ipv4} udp sport 8086 drop
+          #ip saddr ${cfg.ipv4} udp sport 8086 drop
           udp sport 8086 accept
         }
       '';
@@ -128,12 +128,13 @@ in
       # just symlink folder with those into XDG_DATA_HOME
       systemPackages = [
         pkgs.heroic
-        pkgs.wineWowPackages.stagingFull
+        pkgs.wineWow64Packages.stagingFull
         pkgs.umu-launcher
         pkgs.winetricks
         pkgs.r2modman
         pkgs.prismlauncher
         pkgs.vkbasalt
+        pkgs.pince # cheat engine replacement/reverse engineering
       ];
     };
   };

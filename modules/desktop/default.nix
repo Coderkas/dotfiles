@@ -195,10 +195,11 @@ in
         pkgs.tesseract
         pkgs.wl-clipboard
         # Change monitor config
-        pkgs.xorg.xrandr
+        pkgs.xrandr
         pkgs.wlr-randr
 
         pkgs.wf-recorder
+        pkgs.python3
       ];
     };
   };

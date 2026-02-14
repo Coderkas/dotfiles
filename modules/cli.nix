@@ -71,7 +71,7 @@ in
           useBabelfish = true;
           interactiveShellInit = /* sh */ ''
             set fish_greeting
-            ${lib.optionalString config.machine.enableDesktop "fastfetch"}
+            ${lib.getExe pkgs.tlrc} $(${lib.getExe pkgs.tlrc} -l | shuf -n 1)
           '';
         };
 
