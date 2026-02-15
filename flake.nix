@@ -98,6 +98,10 @@
         systems.follows = "hyprland/systems";
       };
     };
+    hyprgrass = {
+      url = "github:horriblename/hyprgrass";
+      inputs.hyprland.follows = "hyprland";
+    };
 
     nvf = {
       url = "github:notashelf/nvf";

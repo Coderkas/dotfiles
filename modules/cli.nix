@@ -278,14 +278,6 @@ in
         };
       };
 
-      services.ollama = {
-        enable = true;
-        package = pkgs.ollama-rocm;
-        loadModels = [
-          "deepseek-r1:14b"
-        ];
-      };
-
       environment.systemPackages = [
         # Extracting things
         pkgs.p7zip
@@ -311,8 +303,6 @@ in
         pkgs.fastfetch
         pkgs.termscp # terminal for ftp, scp, etc.
         pkgs.sqlite
-
-        pkgs.oterm
       ];
     })
   ];

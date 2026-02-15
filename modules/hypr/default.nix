@@ -14,6 +14,7 @@ let
     inherit (inputs.hyprpaper.packages.${platform}) hyprpaper;
     inherit (inputs.hyprlock.packages.${platform}) hyprlock;
     inherit (inputs.hypridle.packages.${platform}) hypridle;
+    inherit (inputs.hyprgrass.packages.${platform}) hyprgrass;
   };
 in
 {
@@ -57,6 +58,7 @@ in
     hjem.users.${owner}.xdg.config.files =
       let
         hjemConfigs = config.hjem.users.${owner}.xdg.config.files;
+        loadHyprgrass = "exec-once = hyprctl plugin load ${hypkgs.hyprgrass}/lib/libhyprgrass.so";
       in
       {
         "hypr/settings.conf".source = ./settings.conf;
@@ -65,6 +67,7 @@ in
         "hypr/${config.networking.hostName}.conf".source = ./${config.networking.hostName}.conf;
         "hypr/hyprland.conf".text = ''
           exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all && systemctl --user stop hyprland-session.target && systemctl --user start hyprland-session.target
+          ${lib.optionalString (config.machine.name == "medusa") loadHyprgrass}
 
           source = ${hjemConfigs."hypr/vars.conf".source}
           source = ${hjemConfigs."hypr/settings.conf".source}
@@ -83,6 +86,7 @@ in
           $mainMonitor = ${cfg.mainMonitor}
           $owner = ${owner}
           ${runner.commands}
+          $toggleWvkbd = ${pkgs.procps}/bin/kill --signal 34 $(${pkgs.procps}/bin/pgrep wvkbd-mobintl)
         '';
 
         "hypr/idle.conf".source = ./hypridle.conf;

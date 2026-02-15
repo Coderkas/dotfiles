@@ -17,7 +17,6 @@ in
       jack.enable = true;
       pulse.enable = true;
       wireplumber.enable = true;
-      #lowLatency.enable = config.machine.enableGaming; # Pipewire goes brr thanks to nix-gaming by fufexan
 
       extraConfig = {
         pipewire."99-default" = {

@@ -1,3 +1,4 @@
+{ lib, pkgs, ... }:
 {
   machine = {
     enableBase = true;
@@ -7,6 +8,7 @@
     terminals = {
       primary = "ghostty";
       enableGhostty = true;
+      enableKitty = true;
     };
     owner = "lorkas";
     platform = "x86_64-linux";
@@ -15,7 +17,19 @@
       cpu = "intel";
       hasDedicatedGpu = false;
     };
+    hyprland.mainMonitor = "eDP-1";
+    dunst.monitor = "eDP-1";
     runner.name = "anyrun";
+    interface = "wlp3s0";
+    ipv4 = "192.168.0.14";
+    syncthing.enable = false;
+  };
+
+  services.tlp.enable = true;
+
+  hardware.graphics = {
+    extraPackages = [ pkgs.intel-vaapi-driver ];
+    extraPackages32 = [ pkgs.intel-vaapi-driver ];
   };
 
   fileSystems = {
@@ -32,6 +46,22 @@
       ];
     };
   };
+
+  systemd.user.services = {
+    wvkbd-daemon = {
+      after = [ "graphical-session.target" ];
+      description = "wvkbd auto-start";
+      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = ''${lib.getExe pkgs.wvkbd} --hidden --alpha 200 -L 280 --fn "JetBrainsMono Nerd Font"'';
+      };
+    };
+  };
+
+  environment.systemPackages = [
+    pkgs.wvkbd
+  ];
 
   swapDevices = [
     { device = "/dev/disk/by-uuid/18e0c142-b5c5-4657-ae3b-314b3db3109c"; }

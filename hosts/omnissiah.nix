@@ -37,10 +37,23 @@
     openFirewall = true;
   };
 
-  services.hardware.openrgb = {
-    enable = true;
-    package = pkgs.openrgb-with-all-plugins;
+  services = {
+    hardware.openrgb = {
+      enable = true;
+      package = pkgs.openrgb-with-all-plugins;
+    };
+    ollama = {
+      enable = true;
+      package = pkgs.ollama-rocm;
+      loadModels = [
+        "deepseek-r1:14b"
+      ];
+    };
   };
+
+  environment.systemPackages = [
+    pkgs.oterm
+  ];
 
   powerManagement.cpuFreqGovernor = "performance";
 
