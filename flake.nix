@@ -149,7 +149,7 @@
     {
       inherit (customPkgs) packages;
 
-      nixosConfigurations = nixpkgs.lib.genAttrs [ "omnissiah" "servitor" "automaton" ] (
+      nixosConfigurations = nixpkgs.lib.genAttrs [ "omnissiah" "servitor" "automaton" "medusa" ] (
         name:
         nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs customPkgs; };
