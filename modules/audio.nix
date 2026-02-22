@@ -1,11 +1,19 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.machine.audio;
 in
 {
-  options.machine.audio.enable = lib.mkOption {
-    type = lib.types.bool;
-    default = config.machine.enableDesktop;
+  options.machine.audio = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = config.machine.enableDesktop;
+    };
+    enableEasyEffects = lib.mkEnableOption "Enable Easy Effect";
   };
 
   config = lib.mkIf cfg.enable {
@@ -60,8 +68,27 @@ in
       }
     ];
 
-    environment.shellAliases = {
-      helvum = "nix run nixpkgs#helvum";
+    systemd.user.services.easyeffects = lib.mkIf cfg.enableEasyEffects {
+      description = "Easyeffects";
+      partOf = [
+        "graphical-session.target"
+        "tray.target"
+      ];
+      wantedBy = [
+        "graphical-session.target"
+        "tray.target"
+      ];
+      path = lib.mkForce [ ];
+      serviceConfig = {
+        ExecStart = "${lib.getExe pkgs.easyeffects} --service-mode -w";
+      };
+    };
+
+    environment = {
+      systemPackages = lib.optionals cfg.enableEasyEffects [ pkgs.easyeffects ];
+      shellAliases = {
+        helvum = "nix run nixpkgs#helvum";
+      };
     };
   };
 }

@@ -36,6 +36,11 @@ ShellRoot {
 
         implicitHeight: Style.height
 
+        BatteryModule {
+            anchors.right: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+        }
+
         Workspaces {
             anchors.right: focused.left
             anchors.verticalCenter: parent.verticalCenter

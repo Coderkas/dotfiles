@@ -6,8 +6,7 @@
     ssh.enable = true;
     themeName = "Gruvbox";
     terminals = {
-      primary = "ghostty";
-      enableGhostty = true;
+      primary = "kitty";
       enableKitty = true;
     };
     owner = "lorkas";
@@ -25,7 +24,25 @@
     syncthing.enable = false;
   };
 
-  services.tlp.enable = true;
+  services = {
+    tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+
+        CPU_MIN_PERF_ON_AC = 0;
+        CPU_MAX_PERF_ON_AC = 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 20;
+      };
+    };
+    thermald.enable = true;
+    thinkfan.enable = true;
+  };
 
   hardware.graphics = {
     extraPackages = [ pkgs.intel-vaapi-driver ];
@@ -47,15 +64,13 @@
     };
   };
 
-  systemd.user.services = {
-    wvkbd-daemon = {
-      after = [ "graphical-session.target" ];
-      description = "wvkbd auto-start";
-      partOf = [ "graphical-session.target" ];
-      wantedBy = [ "graphical-session.target" ];
-      serviceConfig = {
-        ExecStart = ''${lib.getExe pkgs.wvkbd} --hidden --alpha 200 -L 280 --fn "JetBrainsMono Nerd Font"'';
-      };
+  systemd.user.services.wvkbd-daemon = {
+    after = [ "graphical-session.target" ];
+    description = "wvkbd auto-start";
+    partOf = [ "graphical-session.target" ];
+    wantedBy = [ "graphical-session.target" ];
+    serviceConfig = {
+      ExecStart = ''${lib.getExe pkgs.wvkbd} --hidden --alpha 200 -L 280 --fn "JetBrainsMono Nerd Font"'';
     };
   };
 

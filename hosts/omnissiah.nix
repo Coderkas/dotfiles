@@ -3,6 +3,7 @@
   machine = {
     enableBase = true;
     enableDesktop = true;
+    audio.enableEasyEffects = true;
     boot.enableSecure = true;
     enableGaming = true;
     ssh.enable = true;
@@ -32,9 +33,12 @@
     ipv4 = "192.168.0.10";
   };
 
-  programs.ausweisapp = {
-    enable = true;
-    openFirewall = true;
+  programs = {
+    ausweisapp = {
+      enable = true;
+      openFirewall = true;
+    };
+    obs-studio.enable = true;
   };
 
   services = {
@@ -49,10 +53,19 @@
         "deepseek-r1:14b"
       ];
     };
+
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   environment.systemPackages = [
+    pkgs.signal-desktop
     pkgs.oterm
+    pkgs.gimp
+    pkgs.element-desktop
+    pkgs.anki
   ];
 
   powerManagement.cpuFreqGovernor = "performance";

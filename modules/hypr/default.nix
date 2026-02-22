@@ -87,6 +87,8 @@ in
           $owner = ${owner}
           ${runner.commands}
           $toggleWvkbd = ${pkgs.procps}/bin/kill --signal 34 $(${pkgs.procps}/bin/pgrep wvkbd-mobintl)
+          $browser = ${inputs.zen-browser.packages.${platform}.twilight}/bin/zen-twilight
+          $fileManager = ${lib.getExe pkgs.nautilus}
         '';
 
         "hypr/idle.conf".source = ./hypridle.conf;

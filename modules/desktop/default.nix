@@ -48,7 +48,6 @@ in
     programs = {
       dconf.enable = true;
       kdeconnect.enable = true;
-      obs-studio.enable = true;
       seahorse.enable = true;
       thunderbird.enable = true;
       java.enable = true;
@@ -79,21 +78,6 @@ in
           serviceConfig = {
             ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
             Restart = "on-abort";
-          };
-        };
-        easyeffects = {
-          description = "Easyeffects";
-          partOf = [
-            "graphical-session.target"
-            "tray.target"
-          ];
-          wantedBy = [
-            "graphical-session.target"
-            "tray.target"
-          ];
-          path = lib.mkForce [ ];
-          serviceConfig = {
-            ExecStart = "${lib.getExe pkgs.easyeffects} --service-mode -w";
           };
         };
       };
@@ -149,11 +133,6 @@ in
         sushi.enable = true;
       };
       gvfs.enable = true;
-
-      tailscale = {
-        enable = true;
-        openFirewall = true;
-      };
     };
 
     security.pam.services.greetd.enableGnomeKeyring = true;
@@ -167,20 +146,15 @@ in
       };
 
       systemPackages = [
-        pkgs.easyeffects
         pkgs.quickshell
         pkgs.zathura
         (pkgs.mpv.override {
           mpv-unwrapped = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
         })
-        pkgs.anki
-        pkgs.signal-desktop
         pkgs.keepassxc
         pkgs.discord
         pkgs.obsidian
-        pkgs.gimp
         pkgs.gnome-clocks
-        pkgs.element-desktop
         pkgs.oculante # image viewer
         # Gnome files with plugin for previewer
         (pkgs.nautilus.overrideAttrs (oldAttrs: {
