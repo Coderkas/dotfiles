@@ -3,6 +3,7 @@
   machine = {
     enableBase = true;
     enableDesktop = true;
+    enableGaming = true;
     boot.enableSecure = false;
     ssh.enable = true;
     themeName = "Gruvbox";
@@ -48,7 +49,10 @@
     fprintd.enable = true;
   };
 
-  environment.systemPackages = [ pkgs.brightnessctl ];
+  environment.systemPackages = [
+    pkgs.brightnessctl
+    pkgs.qbittorrent
+  ];
 
   fileSystems = {
     "/" = {

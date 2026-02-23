@@ -21,19 +21,19 @@ let
 
   extensions = [
     (mkExtension "uBlock0@raymondhill.net" "ublock-origin"
-      "05a3f11dcbdj6s6c70x7hanqrpdv35lia4ia490qh0clljylmbsw"
+      "1kvj2kwwiih7yqiirqha7xfvip4vzrgyqr4rjjhaiyi5ibkcsnvq"
     )
     (mkExtension "firefox@betterttv.net" "betterttv"
-      "1njdg0hpw6qb1swlbi58ik8y516kw6ybh2cvdi4dv613jl0hj2l0"
+      "1f56alvrj6z5694wbj4nw16113j2b58rxba1jyncqdb230k93vkz"
     )
     (mkExtension "addon@darkreader.org" "darkreader"
-      "1gj455hd0nw2idssbs7cmpxkg1kbjafq18n718rfx0yg5wpl46i6"
+      "1p8gmypj43qzsl2daj7facqz5qqy0npf1k4fa8k65lm4wjhgass9"
     )
     (mkExtension "vpn@proton.ch" "proton-vpn-firefox-extension"
-      "0iy1m9i8dp09pm9hhf25an7bfyigr1f3spsxqc13265a36idw07k"
+      "0dz44jg7rm1xrdhngab0p8y7ac94m0pmaak1j9ichwcvyddd079q"
     )
     (mkExtension "{6b733b82-9261-47ee-a595-2dda294a4d08}" "yomitan"
-      "0ydb7mzxyxfz05788wk0pccazql5qwrpk0xwpgmpq5jwsxz5jsw4"
+      "1h6arqgyis809zxy3zxrk3xlwby0af3j5wc536f774js64fvha7h"
     )
     (mkExtension "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" "return-youtube-dislikes"
       "17m1if7lna1rhawixbj0d1ap2bv1qc2qw7qn8dsm6xijx5y9fcrd"

@@ -174,6 +174,8 @@ in
 
         pkgs.wf-recorder
         pkgs.python3
+
+        pkgs.protonvpn-gui
       ];
     };
   };
