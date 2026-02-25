@@ -49,9 +49,12 @@
     fprintd.enable = true;
   };
 
+  networking.firewall.checkReversePath = false;
+
   environment.systemPackages = [
     pkgs.brightnessctl
     pkgs.qbittorrent
+    pkgs.wireguard-tools
   ];
 
   fileSystems = {

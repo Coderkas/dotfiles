@@ -6,7 +6,19 @@
 }:
 let
   customOls = pkgs.ols.overrideAttrs (old: {
+    version = "0-unstable-2026-02-01";
+    src = pkgs.fetchFromGitHub {
+      owner = "DanielGavin";
+      repo = "ols";
+      rev = "e64cb328237427d1abbaa677afb498bee7271dbb";
+      hash = "sha256-jNUEfffwLs6QST23kBpH3G+NI0g7i8Xf1+aHiXtE6Sc=";
+    };
     nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.git ];
+    buildPhase =
+      /* sh */ ''
+        OLS_BUILTIN_FOLDER="$src/builtin"
+      ''
+      + old.buildPhase;
     installPhase = old.installPhase + /* sh */ ''
       cp -r builtin $out/bin/
     '';
@@ -237,26 +249,26 @@ in
       };
       otter-nvim.enable = true;
       servers = {
-        ols = {
-          enable = true;
-          cmd = [ (lib.meta.getExe customOls) ];
-          filetypes = [ "odin" ];
-          settings = {
-            enable_inlay_hints_params = true;
-            enable_inlay_hints_default_params = true;
-            enable_inlay_hints_implicit_return = true;
-            enable_semantic_tokens = true;
-            enable_snippets = true;
-            enable_auto_import = true;
-            checker_args = "-strict-style";
-          };
-          root_dir = lib.generators.mkLuaInline /* lua */ ''
-            function(bufnr, on_dir)
-              local fname = vim.api.nvim_buf_get_name(bufnr)
-              on_dir(util.root_pattern('ols.json', '.git', '*.odin')(fname))
-            end
-          '';
-        };
+        #ols = {
+        #  enable = true;
+        #  cmd = [ (lib.meta.getExe customOls) ];
+        #  filetypes = [ "odin" ];
+        #  settings = {
+        #    enable_inlay_hints_params = true;
+        #    enable_inlay_hints_default_params = true;
+        #    enable_inlay_hints_implicit_return = true;
+        #    enable_semantic_tokens = true;
+        #    enable_snippets = true;
+        #    enable_auto_import = true;
+        #    checker_args = "-strict-style";
+        #  };
+        #  root_dir = lib.generators.mkLuaInline /* lua */ ''
+        #    function(bufnr, on_dir)
+        #      local fname = vim.api.nvim_buf_get_name(bufnr)
+        #      on_dir(util.root_pattern('ols.json', '.git', '*.odin')(fname))
+        #    end
+        #  '';
+        #};
         nil = {
           enable = true;
           cmd = [ "${nil_git}/bin/nil" ];
@@ -320,10 +332,10 @@ in
         lsp.enable = false;
         format.type = [ "nixfmt" ];
       };
-      odin = {
-        enable = true;
-        lsp.enable = false;
-      };
+      #odin = {
+      #  enable = true;
+      #  lsp.enable = false;
+      #};
       python.enable = true;
       qml.enable = true;
       rust = {
