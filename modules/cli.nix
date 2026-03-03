@@ -230,6 +230,7 @@ in
               hash = "sha256-Ynb0Yd5EMoz7tXwqF8NNKqCGbzTZn/CwLsZRQXIAVp4=";
             };
           }))
+          pkgs.nurl
         ]
         ++ lib.optionals config.machine.enableDesktop [ nvfim ]
         ++ lib.optionals (!config.machine.enableDesktop) [ nvfim-minimal ];

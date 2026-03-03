@@ -66,6 +66,7 @@
     pkgs.gimp
     pkgs.element-desktop
     pkgs.anki
+    pkgs.gpclient
   ];
 
   powerManagement.cpuFreqGovernor = "performance";

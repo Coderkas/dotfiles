@@ -27,7 +27,7 @@ let
       "1f56alvrj6z5694wbj4nw16113j2b58rxba1jyncqdb230k93vkz"
     )
     (mkExtension "addon@darkreader.org" "darkreader"
-      "1p8gmypj43qzsl2daj7facqz5qqy0npf1k4fa8k65lm4wjhgass9"
+      "1sv3zs37kyws676qwrvs0dy4qpqafjf8fvy4vpmgn7cp9r85vv60"
     )
     (mkExtension "vpn@proton.ch" "proton-vpn-firefox-extension"
       "0dz44jg7rm1xrdhngab0p8y7ac94m0pmaak1j9ichwcvyddd079q"
@@ -80,7 +80,6 @@ in
       sessionVariables.BROWSER = "zen-twilight";
       systemPackages = [
         inputs.zen-browser.packages.${platform}.twilight
-        #pkgs.firefox
 
         (pkgs.makeDesktopItem {
           name = "Immersion";

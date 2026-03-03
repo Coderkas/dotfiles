@@ -176,6 +176,8 @@ in
         pkgs.python3
 
         pkgs.protonvpn-gui
+        pkgs.qbittorrent
+        pkgs.wireguard-tools
       ];
     };
   };

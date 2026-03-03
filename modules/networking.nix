@@ -66,7 +66,7 @@ in
         enable = true;
         settings.Resolve = {
           DNSSEC = "false";
-          DNSOverTLS = "true";
+          DNSOverTLS = "false";
         };
       };
       fail2ban.enable = true;

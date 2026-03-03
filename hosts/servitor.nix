@@ -53,8 +53,6 @@
 
   environment.systemPackages = [
     pkgs.brightnessctl
-    pkgs.qbittorrent
-    pkgs.wireguard-tools
   ];
 
   fileSystems = {
