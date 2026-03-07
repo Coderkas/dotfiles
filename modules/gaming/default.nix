@@ -72,18 +72,6 @@ in
     };
 
     programs = {
-      gamescope = {
-        enable = true;
-        capSysNice = false;
-        args = [
-          "-W 2560"
-          "-H 1440"
-          "-f"
-          "--rt"
-          "--force-grab-cursor"
-        ];
-      };
-
       steam = {
         enable = true;
         protontricks.enable = true;
@@ -134,7 +122,6 @@ in
         pkgs.r2modman
         pkgs.prismlauncher
         pkgs.vkbasalt
-        pkgs.pince # cheat engine replacement/reverse engineering
       ];
     };
   };
