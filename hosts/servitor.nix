@@ -28,6 +28,7 @@
     };
     interface = "wlo1";
     ipv4 = "192.168.0.102";
+    ironbar.enable = true;
   };
   # Kernel stuff
   boot = {

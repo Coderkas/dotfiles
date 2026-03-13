@@ -10,6 +10,8 @@ let
 in
 {
   imports = [
+    ./quickshell
+    ./ironbar
     ./anyrun.nix
     ./dunst.nix
     ./rofi.nix
@@ -42,7 +44,6 @@ in
     hjem.users.${owner}.xdg.config.files = {
       "zathura/zathurarc".text = theme.zathura;
       "mpv/mpv.conf".text = "volume=20";
-      "quickshell".source = ./quickshell;
     };
 
     programs = {
@@ -54,31 +55,13 @@ in
     };
 
     systemd = {
-      user.services = {
-        quickshell-daemon = {
-          after = [ "graphical-session.target" ];
-          description = "Quickshell service";
-          partOf = [
-            "graphical-session.target"
-            "tray.target"
-          ];
-          wantedBy = [
-            "graphical-session.target"
-            "tray.target"
-          ];
-          path = lib.mkForce [ ];
-          serviceConfig = {
-            ExecStart = "${pkgs.quickshell}/bin/quickshell";
-          };
-        };
-        gnome-keyring = {
-          description = "GNOME Keyring";
-          partOf = [ "graphical-session-pre.target" ];
-          wantedBy = [ "graphical-session-pre.target" ];
-          serviceConfig = {
-            ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
-            Restart = "on-abort";
-          };
+      user.services.gnome-keyring = {
+        description = "GNOME Keyring";
+        partOf = [ "graphical-session-pre.target" ];
+        wantedBy = [ "graphical-session-pre.target" ];
+        serviceConfig = {
+          ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
+          Restart = "on-abort";
         };
       };
 
@@ -146,7 +129,6 @@ in
       };
 
       systemPackages = [
-        pkgs.quickshell
         pkgs.zathura
         (pkgs.mpv.override {
           mpv-unwrapped = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };

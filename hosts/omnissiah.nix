@@ -31,6 +31,7 @@
     runner.name = "anyrun";
     interface = "enp6s0";
     ipv4 = "192.168.0.10";
+    ironbar.enable = true;
   };
 
   programs = {
