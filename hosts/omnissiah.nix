@@ -48,7 +48,7 @@
       package = pkgs.openrgb-with-all-plugins;
     };
     ollama = {
-      enable = false;
+      enable = true;
       package = pkgs.ollama-rocm;
       loadModels = [
         "deepseek-r1:14b"

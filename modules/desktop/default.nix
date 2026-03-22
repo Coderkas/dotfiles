@@ -44,6 +44,28 @@ in
     hjem.users.${owner}.xdg.config.files = {
       "zathura/zathurarc".text = theme.zathura;
       "mpv/mpv.conf".text = "volume=20";
+      "okularpartrc".text = ''
+        [Dlg Accessibility]
+        RecolorBackground=40,40,40
+        RecolorForeground=235,219,178
+
+        [Document]
+        ChangeColors=true
+        RenderMode=Recolor
+
+        [General]
+        ShellOpenFileInTabs=true
+        ShowSidebar=false
+
+        [Main View]
+        ShowLeftPanel=false
+
+        [PageView]
+        UseCustomBackgroundColor=true
+
+        [UiSettings]
+        ColorScheme=BreezeDark
+      '';
     };
 
     programs = {
@@ -130,6 +152,7 @@ in
 
       systemPackages = [
         pkgs.zathura
+        pkgs.kdePackages.okular
         (pkgs.mpv.override {
           mpv-unwrapped = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
         })

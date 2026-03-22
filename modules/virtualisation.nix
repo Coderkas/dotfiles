@@ -57,11 +57,6 @@ in
         };
         spiceUSBRedirection.enable = true;
       };
-
-      environment.systemPackages = [
-        pkgs.dmg2img
-        pkgs.libguestfs-with-appliance
-      ];
     })
     (lib.mkIf cfg.enableWaydroid {
       virtualisation.waydroid.enable = true;

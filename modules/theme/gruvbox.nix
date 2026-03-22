@@ -91,6 +91,78 @@
       }
     '';
 
+    kde =
+      let
+        colors = {
+          black = "40,40,40";
+          red = "204,36,29";
+          boldGreen = "184,187,38";
+          boldYellow = "250,189,47";
+          boldBlue = "131,165,152";
+          boldMagenta = "211,134,155";
+          boldCyan = "142,192,124";
+          boldWhite = "235,219,178";
+          green = "152,151,26";
+          yellow = "215,153,33";
+          blue = "69,133,136";
+          magenta = "177,98,134";
+          cyan = "104,157,106";
+          white = "168,153,132";
+          boldBlack = "146,131,116";
+          boldRed = "251,73,52";
+        };
+        appliedColors = ''
+          BackgroundAlternate=${colors.black}
+          BackgroundNormal=${colors.black}
+          DecorationFocus=${colors.boldBlue}
+          DecorationHover=${colors.boldBlue}
+          ForegroundActive=${colors.boldCyan}
+          ForegroundInactive=${colors.white}
+          ForegroundLink=${colors.boldGreen}
+          ForegroundNegative=${colors.red}
+          ForegroundNeutral=${colors.boldYellow}
+          ForegroundNormal=${colors.boldWhite}
+          ForegroundPositive=${colors.green}
+          ForegroundVisited=${colors.boldBlack}
+        '';
+      in
+      ''
+        [ColorEffects:Disabled]
+        Color=112,111,110
+        ColorAmount=0
+        ColorEffect=0
+        ContrastAmount=0.65
+        ContrastEffect=1
+        IntensityAmount=0.1
+        IntensityEffect=2
+
+        [ColorEffects:Inactive]
+        ChangeSelectionColor=false
+        Color=112,111,110
+        ColorAmount=0.025
+        ColorEffect=2
+        ContrastAmount=0.1
+        ContrastEffect=2
+        Enable=true
+        IntensityAmount=0
+        IntensityEffect=0
+
+        [Colors:Button]
+        ${appliedColors}
+
+        [Colors:Selection]
+        ${appliedColors}
+
+        [Colors:Tooltip]
+        ${appliedColors}
+
+        [Colors:View]
+        ${appliedColors}
+
+        [Colors:Window]
+        ${appliedColors}
+      '';
+
     pkgs = [
       pkgs.gruvbox-kvantum
       pkgs.gruvbox-gtk-theme

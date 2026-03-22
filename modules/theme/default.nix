@@ -23,6 +23,14 @@ let
     file:///home/${owner}/Videos Videos
   '';
 
+  qtct = ''
+    [Appearance]
+    custom_palette=false
+    icon_theme=${cfg.theme.icons}
+    standard_dialogs=xdgdesktopportal
+    style=kvantum
+  '';
+
   inherit (cfg) owner;
 in
 {
@@ -76,34 +84,47 @@ in
           '';
         };
 
-        xdg.config.files = {
-          "gtk-3.0/settings.ini" = {
-            generator = lib.generators.toINI { };
-            value = {
-              Settings = gtkConf // {
-                gtk-application-prefer-dark-theme = true;
+        xdg = {
+          config.files = {
+            "gtk-3.0/settings.ini" = {
+              generator = lib.generators.toINI { };
+              value = {
+                Settings = gtkConf // {
+                  gtk-application-prefer-dark-theme = true;
+                };
               };
             };
-          };
 
-          "gtk-4.0/settings.ini" = {
-            generator = lib.generators.toINI { };
-            value = {
-              Settings = gtkConf;
+            "gtk-4.0/settings.ini" = {
+              generator = lib.generators.toINI { };
+              value = {
+                Settings = gtkConf;
+              };
             };
+
+            "gtk-3.0/bookmarks".text = gtkBookmarks;
+
+            "Kvantum/kvantum.kvconfig".text = ''
+              [General]
+              theme=${cfg.theme.qt}
+            '';
+            "Kvantum/${cfg.theme.qt}".source = cfg.theme.kvantum;
+            "kdeglobals".text = ''
+              ${cfg.theme.kde}
+
+              [General]
+              theme=${cfg.theme.qt}
+
+              [Icons]
+              Theme=${cfg.theme.icons}
+
+              [KDE]
+              widgetStyle=Breeze
+            '';
+
+            "qt5ct/qt5ct.conf".text = qtct;
+            "qt6ct/qt6ct.conf".text = qtct;
           };
-
-          "gtk-3.0/bookmarks".text = gtkBookmarks;
-
-          "Kvantum/kvantum.kvconfig".text = ''
-            [General]
-            theme=${cfg.theme.qt}
-          '';
-          "Kvantum/${cfg.theme.qt}".source = cfg.theme.kvantum;
-          "kdeglobals".text = ''
-            [General]
-            theme=${cfg.theme.qt}
-          '';
         };
       };
 
