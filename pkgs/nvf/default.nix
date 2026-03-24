@@ -125,6 +125,7 @@ in
       cursorline = true;
       scrolloff = 10;
       winborder = "rounded";
+      foldenable = lib.mkForce false; # making sure that this is never enabled ever again
     };
     searchCase = "smart";
     syntaxHighlighting = true;
