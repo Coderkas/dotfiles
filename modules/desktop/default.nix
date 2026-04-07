@@ -108,6 +108,7 @@ in
             switch = false;
           };
           default_session = {
+            #command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'systemctl --user --wait start hyprland.service'";
             command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
             user = "greeter";
           };
@@ -160,7 +161,7 @@ in
         pkgs.discord
         pkgs.obsidian
         pkgs.gnome-clocks
-        pkgs.oculante # image viewer
+        #pkgs.oculante # image viewer
         # Gnome files with plugin for previewer
         (pkgs.nautilus.overrideAttrs (oldAttrs: {
           buildInputs = oldAttrs.buildInputs ++ [
@@ -180,7 +181,7 @@ in
         pkgs.wf-recorder
         pkgs.python3
 
-        pkgs.protonvpn-gui
+        pkgs.proton-vpn
         pkgs.qbittorrent
         pkgs.wireguard-tools
       ];

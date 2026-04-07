@@ -105,12 +105,6 @@ in
         # maybe fix for controller stuff?
         PROTON_PREFER_SDL_INPUT = "1";
         WINE_PREFER_SDL_INPUT = "1";
-
-        # Experimental wayland stuff
-        # PROTON_ENABLE_WAYLAND = "1";
-        PROTON_NO_WM_DECORATION = "1";
-        WINE_NO_WM_DECORATION = "1";
-        # WAYLANDDRV_PRIMARY_MONITOR = "DP-2"; # tell at least proton-ge which one is the main monitor on wayland
       };
 
       # just symlink folder with those into XDG_DATA_HOME

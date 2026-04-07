@@ -13,7 +13,7 @@ let
     name
     platform
     ;
-  inherit (customPkgs.packages.${platform}) nvfim nvfim-minimal;
+  inherit (customPkgs.packages.${platform}) nvfim;
 in
 {
   options.machine.cli.enable = lib.mkOption {
@@ -231,9 +231,8 @@ in
             };
           }))
           pkgs.nurl
-        ]
-        ++ lib.optionals config.machine.enableDesktop [ nvfim ]
-        ++ lib.optionals (!config.machine.enableDesktop) [ nvfim-minimal ];
+          nvfim
+        ];
       };
     })
     (lib.mkIf config.machine.enableDesktop {

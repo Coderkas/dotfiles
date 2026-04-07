@@ -4,26 +4,6 @@
   pkgs,
   ...
 }:
-let
-  customOls = pkgs.ols.overrideAttrs (old: {
-    version = "0-unstable-2026-02-01";
-    src = pkgs.fetchFromGitHub {
-      owner = "DanielGavin";
-      repo = "ols";
-      rev = "92b8c767d233c6556ebf46072f32a02d06277363";
-      hash = "sha256-3UoVMQuUol7vfSM57mj644XZ1CKmTz7+VuDSETT9NSE=";
-    };
-    nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.git ];
-    buildPhase =
-      /* sh */ ''
-        OLS_BUILTIN_FOLDER="$src/builtin"
-      ''
-      + old.buildPhase;
-    installPhase = old.installPhase + /* sh */ ''
-      cp -r builtin $out/bin/
-    '';
-  });
-in
 {
   vim = {
     enableLuaLoader = true;
@@ -46,12 +26,6 @@ in
     augroups = [ { name = "MyUtils"; } ];
     autocmds = [
       {
-        event = [ "TextYankPost" ];
-        group = "MyUtils";
-        desc = "Highlight when yanking (copying) text";
-        callback = lib.generators.mkLuaInline "vim.hl.on_yank";
-      }
-      {
         event = [
           "CmdlineEnter"
           "CmdlineLeave"
@@ -59,39 +33,6 @@ in
         group = "MyUtils";
         desc = "Only highlight while searching";
         callback = lib.generators.mkLuaInline /* lua */ "function() vim.o.hlsearch = not vim.o.hlsearch end";
-      }
-      {
-        event = [ "LspAttach" ];
-        group = "MyUtils";
-        desc = "Highlighting of same document symbols after some delay";
-        callback = lib.generators.mkLuaInline /* lua */ ''
-          function(args)
-            local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-
-            if client:supports_method 'textDocument/documentHighlight' then
-              local highlight_augroup = vim.api.nvim_create_augroup('MyHighlighting', { clear = false })
-              vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-                buffer = args.buf,
-                group = highlight_augroup,
-                callback = vim.lsp.buf.document_highlight,
-              })
-
-              vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-                buffer = args.buf,
-                group = highlight_augroup,
-                callback = vim.lsp.buf.clear_references,
-              })
-
-              vim.api.nvim_create_autocmd('LspDetach', {
-                group = vim.api.nvim_create_augroup('MyDetach', { clear = true }),
-                callback = function(args2)
-                  vim.lsp.buf.clear_references()
-                  vim.api.nvim_clear_autocmds { group = 'MyHighlighting', buffer = args2.buf }
-                end,
-              })
-            end
-          end
-        '';
       }
     ];
     luaConfigPost = /* lua */ ''
@@ -102,7 +43,6 @@ in
 
       vim.lsp.log.set_level('ERROR')
     '';
-    hideSearchHighlight = true;
     clipboard = {
       enable = true;
       providers.wl-copy = {
@@ -122,13 +62,14 @@ in
       list = true;
       listchars = "tab:» ,trail:·,nbsp:␣";
       inccommand = "split";
+      incsearch = true;
       cursorline = true;
       scrolloff = 10;
       winborder = "rounded";
       foldenable = lib.mkForce false; # making sure that this is never enabled ever again
+      smartcase = true;
+      ignorecase = true;
     };
-    searchCase = "smart";
-    syntaxHighlighting = true;
     undoFile.enable = true;
     diagnostics.enable = true;
     ui.borders.enable = true;
@@ -171,41 +112,41 @@ in
       fidget-nvim.enable = true;
     };
 
-    autocomplete.blink-cmp = {
-      enable = true;
-      friendly-snippets.enable = true;
-      setupOpts = {
-        completion = {
-          keyword.range = "full";
-          ghost_text.enabled = true;
-          list.selection = {
-            preselect = false;
-            auto_insert = false;
+    autocomplete = {
+      enableSharedCmpSources = true;
+      blink-cmp = {
+        enable = true;
+        friendly-snippets.enable = true;
+        setupOpts = {
+          completion = {
+            keyword.range = "full";
+            ghost_text.enabled = true;
+            list.selection = {
+              preselect = false;
+              auto_insert = false;
+            };
           };
+          snippets.preset = "luasnip";
+          signature.enabled = true;
+          sources.providers.path = {
+            async = true;
+            max_items = 5;
+          };
+          keymap.preset = "default";
+          cmdline.keymap.preset = "default";
         };
-        snippets.preset = "luasnip";
-        signature.enabled = true;
-        sources.providers.path = {
-          async = true;
-          max_items = 5;
-        };
-        keymap.preset = "default";
-        cmdline.keymap.preset = "default";
+        sourcePlugins.ripgrep.enable = true;
       };
-      sourcePlugins.ripgrep.enable = true;
     };
 
     snippets.luasnip.enable = true;
     binds.whichKey = {
       enable = true;
-      register = {
-        "<leader>fl" = null;
-        "<leader>fm" = null;
+      register = lib.mkForce {
+        "<leader>f" = "+Telescope";
         "<leader>d" = "+Diagnostics";
         "<leader>l" = "+Lsp";
         "<leader>lw" = "+Workspace";
-        "<leader>fv" = null;
-        "<leader>h" = null;
         "<leader>g" = "+Git";
       };
     };
@@ -252,7 +193,7 @@ in
       servers = {
         ols = {
           enable = true;
-          cmd = [ (lib.meta.getExe customOls) ];
+          cmd = [ (lib.meta.getExe pkgs.ols) ];
           filetypes = [ "odin" ];
           settings = {
             enable_inlay_hints_params = true;
@@ -333,12 +274,7 @@ in
         lsp.enable = false;
         format.type = [ "nixfmt" ];
       };
-      odin = {
-        enable = true;
-        lsp.enable = false;
-      };
       python.enable = true;
-      qml.enable = true;
       rust = {
         enable = true;
         lsp.opts = /* lua */ ''
@@ -370,7 +306,6 @@ in
           "ts_ls"
         ];
       };
-      yaml.enable = true;
       zig.enable = true;
     };
 
@@ -400,7 +335,8 @@ in
         }
       ];
       mappings = {
-        gitBranches = null;
+        gitFiles = "<leader>gf";
+        gitBranches = "<leader>gB";
         gitBufferCommits = "<leader>gb";
         gitCommits = "<leader>gc";
         gitStatus = "<leader>gs";
@@ -434,6 +370,7 @@ in
         ini
         json
         kitty
+        odin
         query
         rasi
         regex

@@ -122,13 +122,40 @@ in
             wantedBy = [ "graphical-session.target" ];
             path = lib.mkForce [ ];
           };
+          # hyprland = {
+          #   description = "Hyprland compositor service";
+          #   bindsTo = [ "graphical-session.target" ];
+          #   before = [ "graphical-session.target" ];
+          #   wants = [ "graphical-session-pre.target" ];
+          #   after = [ "graphical-session-pre.target" ];
+          #   path = lib.mkForce [ ];
+          #   environment = lib.mkForce { };
+          #   serviceConfig = {
+          #     Slice = "session.slice";
+          #     Type = "notify";
+          #     ExecStart = "${hypkgs.hyprland}/bin/start-hyprland";
+          #   };
+          # };
         };
 
-        targets.hyprland-session = {
-          after = [ "graphical-session-pre.target" ];
-          bindsTo = [ "graphical-session.target" ];
-          description = "Hyprland compositor session";
-          wants = [ "graphical-session-pre.target" ];
+        targets = {
+          hyprland-session = {
+            after = [ "graphical-session-pre.target" ];
+            bindsTo = [ "graphical-session.target" ];
+            description = "Hyprland compositor session";
+            wants = [ "graphical-session-pre.target" ];
+          };
+          # hyprland-shutdown = {
+          #   description = "Shutdown running hyprland session";
+          #   conflicts = [
+          #     "graphical-session.target"
+          #     "graphical-session-pre.target"
+          #   ];
+          #   after = [
+          #     "graphical-session.target"
+          #     "graphical-session-pre.target"
+          #   ];
+          # };
         };
       };
     };
