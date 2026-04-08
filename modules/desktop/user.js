@@ -58,7 +58,7 @@ user_pref("extensions.ui.sitepermission.hidden", true);
 user_pref("extensions.webcompat.enable_interventions", true);
 user_pref("extensions.webcompat.enable_shims", true);
 user_pref("font.name.serif.x-western", "FiraCode Nerd Font");
-user_pref("intl.accept_languages", "en-us,de-de,ja");
+user_pref("intl.accept_languages", "en,de,ja");
 user_pref("intl.locale.requested", "en-US");
 user_pref("layout.css.always_underline_links", false);
 user_pref("layout.css.prefers-color-scheme.content-override", 0);
