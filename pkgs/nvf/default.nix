@@ -4,6 +4,45 @@
   pkgs,
   ...
 }:
+let
+  odin-git = pkgs.odin.overrideAttrs (
+    final: _: {
+      version = "dev-2026-03";
+      src = pkgs.fetchFromGitHub {
+        owner = "odin-lang";
+        repo = "Odin";
+        tag = final.version;
+        hash = "sha256-y9pMArcBlhgEIECqk7I3QsyANUi+XwwFaUvdEG/brWI=";
+      };
+
+      patches = [ ];
+      postPatch = "patchShebangs --build build_odin.sh";
+    }
+  );
+
+  ols-git = pkgs.ols.overrideAttrs (
+    final: _: {
+      version = "dev-2026-03";
+      src = pkgs.fetchFromGitHub {
+        owner = "DanielGavin";
+        repo = "ols";
+        tag = final.version;
+        hash = "sha256-QjkzR9Wnc+Poq7dxDlik9k1maEs8xiFuNbwRdv8nqyo=";
+      };
+
+      buildInputs = [ odin-git ];
+
+      installPhase = ''
+        runHook preInstall
+
+        install -Dm755 ols odinfmt -t $out/bin/
+        wrapProgram $out/bin/ols --set-default ODIN_ROOT ${odin-git}/share
+
+        runHook postInstall
+      '';
+    }
+  );
+in
 {
   vim = {
     enableLuaLoader = true;
@@ -161,7 +200,7 @@
         };
         formatters = {
           odinfmt = {
-            command = "odinfmt";
+            command = "${ols-git}/bin/odinfmt";
             args = [ "-stdin" ];
             stdin = true;
           };
@@ -193,7 +232,7 @@
       servers = {
         ols = {
           enable = true;
-          cmd = [ (lib.meta.getExe pkgs.ols) ];
+          cmd = [ (lib.meta.getExe ols-git) ];
           filetypes = [ "odin" ];
           settings = {
             enable_inlay_hints_params = true;
