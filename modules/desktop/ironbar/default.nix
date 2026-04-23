@@ -74,7 +74,34 @@ in
     };
 
     environment.systemPackages = [
-      pkgs.ironbar
+      (pkgs.ironbar.override {
+        features = [
+          "cli"
+          "ipc"
+          "config+toml"
+          "battery"
+          "bindmode+all"
+          "bluetooth"
+          "cairo"
+          "clipboard"
+          "clock"
+          "custom"
+          "focused"
+          "keyboard"
+          "label"
+          "launcher"
+          "menu"
+          "music+all"
+          "network_manager"
+          "notifications"
+          "script"
+          "sys_info"
+          "tray"
+          "workspaces+all"
+          "volume"
+          "extras"
+        ];
+      })
     ];
   };
 }
