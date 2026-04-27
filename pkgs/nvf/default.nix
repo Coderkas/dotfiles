@@ -337,12 +337,12 @@ in
         '';
         extensions.crates-nvim.enable = false;
       };
-      ts = {
+      typescript = {
         enable = true;
         extensions.ts-error-translator.enable = true;
         lsp.servers = [
-          "denols"
-          "ts_ls"
+          "deno"
+          "typescript-language-server"
         ];
       };
       zig.enable = true;
