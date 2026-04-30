@@ -63,7 +63,7 @@
 
   environment.systemPackages = [
     pkgs.signal-desktop
-    pkgs.oterm
+    #pkgs.oterm
     pkgs.gimp
     pkgs.element-desktop
     pkgs.anki
