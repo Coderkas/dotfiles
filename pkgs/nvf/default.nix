@@ -193,6 +193,12 @@ in
     formatter.conform-nvim = {
       enable = true;
       setupOpts = {
+        format_on_save = lib.generators.mkLuaInline /* lua */ ''
+          function(bufnr)
+            return {bufnr = bufnr}
+          end
+        '';
+        format_after_save = lib.generators.mkLuaInline /* lua */ "nil";
         formatters_by_ft = {
           c = lib.generators.mkLuaInline /* lua */ ''{"clang-format",lsp_format = "fallback"}'';
           cpp = lib.generators.mkLuaInline /* lua */ ''{"clang-format",lsp_format = "fallback"}'';
@@ -291,6 +297,30 @@ in
             "flake.nix"
           ];
         };
+        lua-language-server = {
+          enable = true;
+          cmd = [ (lib.getExe pkgs.lua-language-server) ];
+          settings = {
+            Lua = {
+              codeLens.enable = true;
+              hint = {
+                enable = true;
+                semicolon = "Disable";
+              };
+            };
+          };
+          filetypes = [ "lua" ];
+          root_markers = [
+            ".luarc.json"
+            ".luarc.jsonc"
+            ".luacheckrc"
+            ".stylua.toml"
+            "stylua.toml"
+            "selene.toml"
+            "selene.yml"
+            ".git"
+          ];
+        };
       };
     };
     languages = {
@@ -306,7 +336,11 @@ in
       css.enable = true;
       go.enable = true;
       html.enable = true;
-      lua.enable = true;
+      lua = {
+        enable = true;
+        lsp.enable = lib.mkForce false;
+        format.enable = lib.mkForce false;
+      };
       markdown.enable = true;
       nix = {
         enable = true;

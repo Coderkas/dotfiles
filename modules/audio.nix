@@ -70,14 +70,9 @@ in
 
     systemd.user.services.easyeffects = lib.mkIf cfg.enableEasyEffects {
       description = "Easyeffects";
-      partOf = [
-        "graphical-session.target"
-        "tray.target"
-      ];
-      wantedBy = [
-        "graphical-session.target"
-        "tray.target"
-      ];
+      after = [ "tray.target" ];
+      partOf = [ "tray.target" ];
+      wantedBy = [ "tray.target" ];
       path = lib.mkForce [ ];
       serviceConfig = {
         ExecStart = "${lib.getExe pkgs.easyeffects} --service-mode -w";

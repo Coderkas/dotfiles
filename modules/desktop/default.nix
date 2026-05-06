@@ -107,11 +107,19 @@ in
             vt = 1;
             switch = false;
           };
-          default_session = {
-            #command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'systemctl --user --wait start hyprland.service'";
-            command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd start-hyprland";
-            user = "greeter";
-          };
+          default_session =
+            let
+              start_hyprsession = pkgs.writeShellScript "start_hyprsession" ''
+                systemctl --user reset-failed
+                systemctl --user import-environment
+                systemctl start hyprland.service --user --wait
+                systemctl --user unset-environment WAYLAND_DISPLAY DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
+              '';
+            in
+            {
+              command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${start_hyprsession}";
+              user = "greeter";
+            };
         };
       };
 
@@ -161,7 +169,7 @@ in
         pkgs.discord
         pkgs.obsidian
         pkgs.gnome-clocks
-        #pkgs.oculante # image viewer
+        pkgs.oculante # image viewer
         # Gnome files with plugin for previewer
         (pkgs.nautilus.overrideAttrs (oldAttrs: {
           buildInputs = oldAttrs.buildInputs ++ [

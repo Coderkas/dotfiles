@@ -57,46 +57,57 @@ in
 
     hjem.users.${owner}.xdg.config.files =
       let
-        hjemConfigs = config.hjem.users.${owner}.xdg.config.files;
-        loadHyprgrass = "exec-once = hyprctl plugin load ${hypkgs.hyprgrass}/lib/libhyprgrass.so";
+        terminalCommand =
+          if (config.machine.terminals.primary == "ghostty") then
+            "${lib.getExe pkgs.ghostty} +new-window"
+          else
+            lib.getExe pkgs.kitty;
       in
       {
-        "hypr/settings.conf".source = ./settings.conf;
-        "hypr/bindings.conf".source = ./bindings.conf;
-        "hypr/misc.conf".source = ./misc.conf;
-        "hypr/${config.networking.hostName}.conf".source = ./${config.networking.hostName}.conf;
-        "hypr/hyprland.conf".text = ''
-          exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all && systemctl --user stop hyprland-session.target && systemctl --user start hyprland-session.target
-          ${lib.optionalString (config.machine.name == "medusa") loadHyprgrass}
+        "hypr/settings.lua".source = ./settings.lua;
+        "hypr/binds.lua".source = ./binds.lua;
+        "hypr/rules.lua".source = ./rules.lua;
+        "hypr/hyprland.lua".source = ./hyprland.lua;
+        "hypr/logger.lua".source = ./logger.lua;
 
-          source = ${hjemConfigs."hypr/vars.conf".source}
-          source = ${hjemConfigs."hypr/settings.conf".source}
-          source = ${hjemConfigs."hypr/bindings.conf".source}
-          source = ${hjemConfigs."hypr/misc.conf".source}
-          source = ${hjemConfigs."hypr/${config.networking.hostName}.conf".source}
-        '';
+        "hypr/vars.lua".text = /* lua */ ''
+          -- hl.on("hyprland.start", function()
+          --   hl.exec_cmd("${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all")
+          -- end)
 
-        "hypr/vars.conf".text = ''
-          $terminal = ${
-            if (config.machine.terminals.primary == "ghostty") then
-              "${lib.getExe pkgs.ghostty} +new-window"
-            else
-              "${lib.getExe pkgs.kitty}"
+          return {
+            terminal = "${terminalCommand}",
+            mainMonitor = "${cfg.mainMonitor}",
+            owner = "${owner}",
+            browser = "${inputs.zen-browser.packages.${platform}.twilight}/bin/zen-twilight",
+            fileManager = "${lib.getExe pkgs.nautilus}",
+            ${runner.commands},
+            cmenu = "",
+            toggleWvkbd = "${pkgs.procps}/bin/kill --signal 34 $(${pkgs.procps}/bin/pgrep wvkbd-mobintl)",
+            host = "${config.machine.name}",
+            hyprgrassPath = "${hypkgs.hyprgrass}/lib/libhyprgrass.so"
           }
-          $mainMonitor = ${cfg.mainMonitor}
-          $owner = ${owner}
-          ${runner.commands}
-          $toggleWvkbd = ${pkgs.procps}/bin/kill --signal 34 $(${pkgs.procps}/bin/pgrep wvkbd-mobintl)
-          $browser = ${inputs.zen-browser.packages.${platform}.twilight}/bin/zen-twilight
-          $fileManager = ${lib.getExe pkgs.nautilus}
         '';
 
-        "hypr/idle.conf".source = ./hypridle.conf;
         "hypr/hypridle.conf".text = ''
-          source = ${hjemConfigs."hypr/vars.conf".source}
-          source = ${hjemConfigs."hypr/idle.conf".source}
+          general {
+            after_sleep_cmd=hyprctl dispatch dpms on
+            lock_cmd=(pidof hyprlock || hyprlock)
+            on_unlock_cmd=xrandr --output ${cfg.mainMonitor} --primary
+          }
+
+          listener {
+            on-timeout=loginctl lock-session
+            timeout=900
+          }
+
+          listener {
+            on-resume=hyprctl dispatch dpms on
+            on-timeout=hyprctl dispatch dpms off
+            timeout=1200
+          }
         '';
-        "hypr/paper.conf".source = ./hyprpaper.conf;
+
         "hypr/hyprpaper.conf".text = ''
           splash = false
           wallpaper {
@@ -105,10 +116,34 @@ in
             fit_mode =
           }
         '';
-        "hypr/hyprlock.conf".source = ./hyprlock.conf;
 
-        "hypr/browser.sh" = {
-          source = ./browser.sh;
+        "hypr/hyprlock.conf".text = ''
+          background {
+            blur_passes=3
+            blur_size=8
+            path=screenshot
+          }
+
+          general {
+            hide_cursor=true
+          }
+
+          input-field {
+            monitor=${cfg.mainMonitor}
+            size=300, 50
+            fade_on_empty=false
+            font_color=rgb(202, 211, 245)
+            inner_color=rgb(91, 96, 120)
+            outer_color=rgb(24, 25, 38)
+            outline_thickness=5
+            placeholder_text=<span foreground="##cad3f5">Password...</span>
+            position=0, -80
+            shadow_passes=2
+          }
+        '';
+
+        "hypr/screenshot.sh" = {
+          source = ./screenshot.sh;
           executable = true;
         };
       };
@@ -117,52 +152,30 @@ in
       packages = [ hypkgs.hyprpaper ];
       user = {
         services = {
-          hyprpaper.wantedBy = [ "graphical-session.target" ];
-          hypridle = {
-            wantedBy = [ "graphical-session.target" ];
-            path = lib.mkForce [ ];
-          };
-          # hyprland = {
-          #   description = "Hyprland compositor service";
-          #   bindsTo = [ "graphical-session.target" ];
-          #   before = [ "graphical-session.target" ];
-          #   wants = [ "graphical-session-pre.target" ];
-          #   after = [ "graphical-session-pre.target" ];
-          #   path = lib.mkForce [ ];
-          #   environment = lib.mkForce { };
-          #   serviceConfig = {
-          #     Slice = "session.slice";
-          #     Type = "notify";
-          #     ExecStart = "${hypkgs.hyprland}/bin/start-hyprland";
-          #   };
-          # };
-        };
-
-        targets = {
-          hyprland-session = {
-            after = [ "graphical-session-pre.target" ];
+          hypridle.path = lib.mkForce [ ];
+          hyprland = {
+            description = "Hyprland compositor service";
             bindsTo = [ "graphical-session.target" ];
-            description = "Hyprland compositor session";
+            before = [
+              "graphical-session.target"
+              "tray.target"
+            ];
             wants = [ "graphical-session-pre.target" ];
+            after = [ "graphical-session-pre.target" ];
+            path = lib.mkForce [ ];
+            serviceConfig = {
+              Slice = "session.slice";
+              Type = "notify";
+              ExecStart = "${hypkgs.hyprland}/bin/Hyprland";
+            };
           };
-          # hyprland-shutdown = {
-          #   description = "Shutdown running hyprland session";
-          #   conflicts = [
-          #     "graphical-session.target"
-          #     "graphical-session-pre.target"
-          #   ];
-          #   after = [
-          #     "graphical-session.target"
-          #     "graphical-session-pre.target"
-          #   ];
-          # };
         };
       };
     };
 
     environment = {
       sessionVariables = {
-        XDG_CURRENT_DESKTOP = "Hyprland";
+        #  XDG_CURRENT_DESKTOP = "Hyprland";
         XDG_SESSION_DESKTOP = "Hyprland";
       };
       systemPackages = [

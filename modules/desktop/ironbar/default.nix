@@ -53,20 +53,14 @@ in
     };
 
     systemd.user.services.ironbar-daemon = {
-      after = [ "graphical-session.target" ];
       description = "Ironbar service";
       environment = {
         IRONBAR_LOG = "error";
         IRONBAR_FILE_LOG = "error";
       };
-      partOf = [
-        "graphical-session.target"
-        "tray.target"
-      ];
-      wantedBy = [
-        "graphical-session.target"
-        "tray.target"
-      ];
+      after = [ "tray.target" ];
+      partOf = [ "tray.target" ];
+      wantedBy = [ "tray.target" ];
       path = lib.mkForce [ ];
       serviceConfig = {
         ExecStart = "${lib.getExe pkgs.ironbar}";

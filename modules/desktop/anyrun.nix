@@ -15,8 +15,8 @@ in
     hjem.users.${cfg.owner}.xdg.config.files."anyrun".source = ./anyrun;
 
     machine.runner.commands = ''
-      $menu = ${lib.getExe anyrun-pkg} --plugins libapplications.so --plugins libshell.so --plugins librink.so
-      $bmenu = ${lib.getExe anyrun-pkg} --plugins libwebsearch.so --plugins libdictionary.so
+      menu = "${lib.getExe anyrun-pkg} --plugins libapplications.so --plugins libshell.so --plugins librink.so",
+      bmenu = "${lib.getExe anyrun-pkg} --plugins libwebsearch.so --plugins libdictionary.so"
     '';
 
     systemd.user.services.anyrun-daemon = {
@@ -24,7 +24,9 @@ in
       description = "Anyrun daemon service";
       partOf = [ "graphical-session.target" ];
       wantedBy = [ "graphical-session.target" ];
+      path = lib.mkForce [ ];
       serviceConfig = {
+        ExecStartPre = pkgs.writeShellScript "logienv" "env > /tmp/env69.log";
         ExecStart = "${lib.getExe anyrun-pkg} daemon";
         KillMode = "process";
       };

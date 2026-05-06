@@ -19,14 +19,12 @@ in
     };
 
     systemd.user.services.quickshell-daemon = {
-      after = [ "graphical-session.target" ];
+      after = [ "tray.target" ];
       description = "Quickshell service";
       partOf = [
-        "graphical-session.target"
         "tray.target"
       ];
       wantedBy = [
-        "graphical-session.target"
         "tray.target"
       ];
       path = lib.mkForce [ ];

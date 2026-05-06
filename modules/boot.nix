@@ -50,6 +50,10 @@ in
               "ehci_pci"
             ];
           };
+
+          blacklistedKernelModules = [
+            "algif_aead"
+          ];
         };
       }
       (lib.mkIf (!cfg.enableSecure) {
