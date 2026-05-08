@@ -19,16 +19,15 @@ in
     };
 
     systemd.user.services.quickshell-daemon = {
-      after = [ "tray.target" ];
       description = "Quickshell service";
-      partOf = [
-        "tray.target"
-      ];
-      wantedBy = [
-        "tray.target"
-      ];
+      after = [ "graphical-session.target" ];
+      before = [ "tray.target" ];
+      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
       path = lib.mkForce [ ];
       serviceConfig = {
+        Type = "exec";
+        Slice = "session.slice";
         ExecStart = "${pkgs.quickshell}/bin/quickshell";
       };
     };

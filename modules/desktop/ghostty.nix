@@ -49,11 +49,22 @@ in
 
     services.dbus.packages = [ pkgs.ghostty ];
 
-    systemd = {
-      packages = [ pkgs.ghostty ];
-      user.services."app-com.mitchellh.ghostty" = {
-        path = lib.mkForce [ ];
-        wantedBy = [ "graphical-session.target" ];
+    systemd.user.services."app-com.mitchellh.ghostty" = {
+      description = "Ghostty";
+      after = [
+        "graphical-session.target"
+        "dbus.socket"
+      ];
+      requires = [ "dbus.socket" ];
+      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
+      path = lib.mkForce [ ];
+      serviceConfig = {
+        Type = "notify-reload";
+        ReloadSignal = "SIGUSR2";
+        BusName = "com.mitchellh.ghostty";
+        Slice = "session.slice";
+        ExecStart = "${lib.getExe pkgs.ghostty} --gtk-single-instance=true --initial-window=false";
       };
     };
 

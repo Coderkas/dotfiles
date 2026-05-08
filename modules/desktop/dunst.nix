@@ -51,13 +51,21 @@ in
     services.dbus.packages = [ pkgs.dunst ];
 
     systemd = {
-      packages = [ pkgs.dunst ];
       user.services.dunst = {
-        wantedBy = [ "graphical-session.target" ];
+        description = "Dunst notification daemon";
+        documentation = [ "man:dunst(1)" ];
         after = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
         restartTriggers = [ config.hjem.users.${owner}.xdg.config.files."dunst/dunstrc".source ];
-        serviceConfig.ExecReload = "${pkgs.dunst}/bin/dunstctl reload";
         path = lib.mkForce [ ];
+        serviceConfig = {
+          Type = "dbus";
+          BusName = "org.freedesktop.Notifications";
+          Slice = "session.slice";
+          ExecStart = "${lib.getExe pkgs.dunst}";
+          ExecReload = "${pkgs.dunst}/bin/dunstctl reload";
+        };
       };
     };
 

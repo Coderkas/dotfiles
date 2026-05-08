@@ -75,6 +75,8 @@ in
       wantedBy = [ "tray.target" ];
       path = lib.mkForce [ ];
       serviceConfig = {
+        Type = "exec";
+        Slice = "session.slice";
         ExecStart = "${lib.getExe pkgs.easyeffects} --service-mode -w";
       };
     };

@@ -35,16 +35,6 @@ in
         package = hypkgs.hyprland;
         portalPackage = hypkgs.xdg-desktop-portal-hyprland;
       };
-
-      hyprlock = {
-        enable = true;
-        package = hypkgs.hyprlock;
-      };
-    };
-
-    services.hypridle = {
-      enable = true;
-      package = hypkgs.hypridle;
     };
 
     xdg.portal.config.hyprland = {
@@ -149,29 +139,56 @@ in
       };
 
     systemd = {
-      packages = [ hypkgs.hyprpaper ];
       user = {
         services = {
-          hypridle.path = lib.mkForce [ ];
           hyprland = {
             description = "Hyprland compositor service";
-            bindsTo = [ "graphical-session.target" ];
-            before = [
-              "graphical-session.target"
-              "tray.target"
-            ];
-            wants = [ "graphical-session-pre.target" ];
             after = [ "graphical-session-pre.target" ];
+            before = [ "graphical-session.target" ];
+            wants = [
+              "graphical-session-pre.target"
+              "graphical-session.target"
+            ];
+            partOf = [ "graphical-session.target" ];
+            #wantedBy = [ "graphical-session.target" ];
             path = lib.mkForce [ ];
             serviceConfig = {
-              Slice = "session.slice";
               Type = "notify";
+              Slice = "session.slice";
               ExecStart = "${hypkgs.hyprland}/bin/Hyprland";
+            };
+          };
+          hypridle = {
+            description = "Hypridle service";
+            after = [ "graphical-session.target" ];
+            partOf = [ "graphical-session.target" ];
+            wantedBy = [ "graphical-session.target" ];
+            path = lib.mkForce [ ];
+            unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
+            serviceConfig = {
+              Type = "exec";
+              Slice = "session.slice";
+              ExecStart = "${hypkgs.hypridle}/bin/hypridle";
+            };
+          };
+          hyprpaper = {
+            description = "Hyprpaper service";
+            after = [ "graphical-session.target" ];
+            partOf = [ "graphical-session.target" ];
+            wantedBy = [ "graphical-session.target" ];
+            path = lib.mkForce [ ];
+            unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
+            serviceConfig = {
+              Type = "exec";
+              Slice = "session.slice";
+              ExecStart = "${hypkgs.hyprpaper}/bin/hyprpaper";
             };
           };
         };
       };
     };
+
+    security.pam.services.hyprlock = { };
 
     environment = {
       sessionVariables = {
@@ -179,6 +196,8 @@ in
         XDG_SESSION_DESKTOP = "Hyprland";
       };
       systemPackages = [
+        hypkgs.hyprlock
+        hypkgs.hypridle
         hypkgs.hyprpicker
         hypkgs.hyprpaper
       ];

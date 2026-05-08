@@ -20,13 +20,14 @@ in
     '';
 
     systemd.user.services.anyrun-daemon = {
-      after = [ "graphical-session.target" ];
       description = "Anyrun daemon service";
+      after = [ "graphical-session.target" ];
       partOf = [ "graphical-session.target" ];
       wantedBy = [ "graphical-session.target" ];
       path = lib.mkForce [ ];
       serviceConfig = {
-        ExecStartPre = pkgs.writeShellScript "logienv" "env > /tmp/env69.log";
+        Type = "exec";
+        Slice = "session.slice";
         ExecStart = "${lib.getExe anyrun-pkg} daemon";
         KillMode = "process";
       };

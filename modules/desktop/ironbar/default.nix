@@ -58,11 +58,14 @@ in
         IRONBAR_LOG = "error";
         IRONBAR_FILE_LOG = "error";
       };
-      after = [ "tray.target" ];
-      partOf = [ "tray.target" ];
-      wantedBy = [ "tray.target" ];
+      after = [ "graphical-session.target" ];
+      before = [ "tray.target" ];
+      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
       path = lib.mkForce [ ];
       serviceConfig = {
+        Type = "exec";
+        Slice = "session.slice";
         ExecStart = "${lib.getExe pkgs.ironbar}";
       };
     };

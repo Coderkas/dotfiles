@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ customPkgs, pkgs, ... }:
 {
   machine = {
     enableBase = true;
@@ -22,10 +22,7 @@
     };
     hyprland.mainMonitor = "DP-2";
     dunst.monitor = "DP-3";
-    virtualisation = {
-      enableVMs = true;
-      enableWaydroid = true;
-    };
+    enableVirtualisation = false;
     syncthing.devices."automaton".id =
       "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
     runner.name = "anyrun";
@@ -61,6 +58,8 @@
     };
   };
 
+  virtualisation.waydroid.enable = true;
+
   environment.systemPackages = [
     pkgs.signal-desktop
     #pkgs.oterm
@@ -68,6 +67,7 @@
     pkgs.element-desktop
     pkgs.anki
     pkgs.gpclient
+    customPkgs.packages."x86_64-linux".waydroid_script
   ];
 
   powerManagement.cpuFreqGovernor = "performance";

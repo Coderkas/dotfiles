@@ -42,7 +42,7 @@ hl.config {
 	input      = {
 		kb_layout    = "us,de",
 		kb_variant   = ",qwerty",
-		kb_options   = "grp:super_space_toggle,ctrl:nocaps",
+		kb_options   = "grp:win_space_toggle,ctrl:nocaps",
 		follow_mouse = 1,
 		repeat_delay = 180,
 		sensitivity  = 0, -- -1.0 - 1.0, 0 means no modification.
@@ -60,6 +60,7 @@ hl.config {
 		anr_missed_pings         = 15,
 		enable_swallow           = true,
 		swallow_regex            = "^(kitty|com.mitchellh.ghostty|yazi)$",
+		disable_watchdog_warning = true,
 	},
 
 	binds      = {

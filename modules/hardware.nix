@@ -54,14 +54,14 @@ in
 
       systemd.user.services.udiskie = {
         description = "udiskie mount daemon";
-        after = [
-          "graphical-session.target"
-          "tray.target"
-        ];
-        requires = [ "tray.target" ];
-        partOf = [ "graphical-session.target" ];
-        serviceConfig.ExecStart = "${pkgs.udiskie}/bin/udiskie --appindicator";
-        wantedBy = [ "graphical-session.target" ];
+        after = [ "tray.target" ];
+        partOf = [ "tray.target" ];
+        wantedBy = [ "tray.target" ];
+        serviceConfig = {
+          Type = "exec";
+          Slice = "session.slice";
+          ExecStart = "${pkgs.udiskie}/bin/udiskie --appindicator";
+        };
       };
 
       hardware = {

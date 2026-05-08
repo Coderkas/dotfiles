@@ -30,8 +30,9 @@ in
 
       targets.tray = {
         description = "System Tray target";
-        bindsTo = [ "graphical-session.target" ];
-        before = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+        partOf = [ "graphical-session.target" ];
+        wantedBy = [ "graphical-session.target" ];
       };
 
       tmpfiles.users.${owner}.rules = [

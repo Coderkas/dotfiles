@@ -77,14 +77,39 @@ in
     };
 
     systemd = {
-      user.services.gnome-keyring = {
-        description = "GNOME Keyring";
-        partOf = [ "graphical-session-pre.target" ];
-        wantedBy = [ "graphical-session-pre.target" ];
-        serviceConfig = {
-          ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
-          Restart = "on-abort";
+      user = {
+        services.gnome-keyring = {
+          description = "GNOME Keyring";
+          partOf = [ "graphical-session-pre.target" ];
+          wantedBy = [ "graphical-session-pre.target" ];
+          serviceConfig = {
+            ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
+            Restart = "on-abort";
+          };
         };
+
+        # services.gnome-keyring-daemon = {
+        #   description = "GNOME Keyring";
+        #   requires = [ "gnome-keyring-daemon.socket" ];
+        #   wantedBy = [ "default.target" ];
+        #   serviceConfig = {
+        #     Type = "simple";
+        #     ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --foreground";
+        #     Restart = "on-failure";
+        #     StandardError = "journal";
+        #   };
+        # };
+        #
+        # sockets.gnome-keyring-daemon = {
+        #   description = "Gnome Keyring Socket";
+        #   wantedBy = [ "sockets.target" ];
+        #   socketConfig = {
+        #     Priority = 6;
+        #     Backlog = 5;
+        #     ListenStream = "/run/keyring/control";
+        #     DirectoryMode = "0700";
+        #   };
+        # };
       };
 
       # Make tuigreet not obscure the login screen with possible errors
@@ -110,10 +135,10 @@ in
           default_session =
             let
               start_hyprsession = pkgs.writeShellScript "start_hyprsession" ''
-                systemctl --user reset-failed
-                systemctl --user import-environment
+                systemctl reset-failed --user
+                systemctl import-environment --user PATH
                 systemctl start hyprland.service --user --wait
-                systemctl --user unset-environment WAYLAND_DISPLAY DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
+                systemctl unset-environment --user WAYLAND_DISPLAY DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
               '';
             in
             {
@@ -148,8 +173,6 @@ in
       };
       gvfs.enable = true;
     };
-
-    security.pam.services.greetd.enableGnomeKeyring = true;
 
     environment = {
       sessionVariables = {

@@ -1,68 +1,46 @@
 {
   config,
-  customPkgs,
   lib,
   pkgs,
   ...
 }:
 let
-  cfg = config.machine.virtualisation;
-  inherit (config.machine) owner platform;
+  cfg = config.machine;
 in
 {
-  options.machine.virtualisation = {
-    enableVMs = lib.mkEnableOption "";
-    enableWaydroid = lib.mkEnableOption "";
-  };
+  options.machine.enableVirtualisation = lib.mkEnableOption "";
 
-  config = lib.mkMerge [
-    (lib.mkIf (cfg.enableVMs || cfg.enableWaydroid) {
-      users.users.${owner}.extraGroups = [ "kvm" ];
-      networking.firewall.trustedInterfaces = [ "br0" ];
-    })
-    (lib.mkIf cfg.enableVMs {
-      networking.firewall.trustedInterfaces = [ "virbr0" ];
-      programs = {
-        virt-manager.enable = true;
-        dconf.profiles.user.databases = [
-          {
-            settings."org/virt-manager/virt-manager/connections" = {
-              autoconnect = [ "qemu:///system" ];
-              uris = [ "qemu:///system" ];
-            };
-          }
-        ];
-      };
+  config = lib.mkIf cfg.enableVirtualisation {
+    networking.firewall.trustedInterfaces = [
+      "br0"
+      "virbr0"
+    ];
 
-      users = {
-        users.${owner}.extraGroups = [ "libvirtd" ];
-        groups.libvirtd.members = [ owner ];
-      };
+    programs.virt-manager.enable = true;
 
-      boot.extraModprobeConfig = ''
-        options kvm_intel nested=1
-        options kvm_intel emulate_invalid_guest_state=0
-        options ignore_msrs=1 report_ignored_msrs=0
-      '';
+    users.users.${cfg.owner}.extraGroups = [
+      "libvirtd"
+      "kvm"
+    ];
 
-      virtualisation = {
-        libvirtd = {
-          enable = true;
-          onBoot = "ignore";
-          onShutdown = "shutdown";
-          qemu = {
-            package = pkgs.qemu_kvm;
-            runAsRoot = false;
-          };
+    boot.extraModprobeConfig = ''
+      options kvm_intel nested=1
+      options kvm_intel emulate_invalid_guest_state=0
+      options ignore_msrs=1 report_ignored_msrs=0
+    '';
+
+    virtualisation = {
+      libvirtd = {
+        enable = true;
+        onBoot = "ignore";
+        onShutdown = "shutdown";
+        qemu = {
+          package = pkgs.qemu_kvm;
+          runAsRoot = false;
         };
-        spiceUSBRedirection.enable = true;
       };
-    })
-    (lib.mkIf cfg.enableWaydroid {
-      virtualisation.waydroid.enable = true;
-      environment.systemPackages = [
-        customPkgs.packages.${platform}.waydroid_script
-      ];
-    })
-  ];
+
+      spiceUSBRedirection.enable = true;
+    };
+  };
 }
