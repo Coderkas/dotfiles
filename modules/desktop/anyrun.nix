@@ -29,7 +29,7 @@ in
         Type = "exec";
         Slice = "session.slice";
         ExecStart = "${lib.getExe anyrun-pkg} daemon";
-        KillMode = "process";
+        NotifyAccess = "all";
       };
     };
 

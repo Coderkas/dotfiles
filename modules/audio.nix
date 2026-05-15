@@ -82,10 +82,10 @@ in
     };
 
     environment = {
-      systemPackages = lib.optionals cfg.enableEasyEffects [ pkgs.easyeffects ];
-      shellAliases = {
-        helvum = "nix run nixpkgs#helvum";
-      };
+      systemPackages = lib.optionals cfg.enableEasyEffects [
+        pkgs.easyeffects
+        pkgs.crosspipe
+      ];
     };
   };
 }

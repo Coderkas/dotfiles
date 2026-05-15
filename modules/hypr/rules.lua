@@ -41,6 +41,21 @@ hl.window_rule {
 }
 
 hl.window_rule {
+	name             = "nte",
+	match            = {
+		class = "^(steam_app_default)$",
+		title = "^(NTE)$",
+	},
+	float            = false,
+	idle_inhibit     = "always",
+	content          = "game",
+	immediate        = true,
+	render_unfocused = true,
+	fullscreen_state = "2 0",
+	suppress_event   = "fullscreen",
+}
+
+hl.window_rule {
 	name             = "minecraft",
 	match            = { initial_title = "^(Minecraft.*)$" },
 	float            = false,

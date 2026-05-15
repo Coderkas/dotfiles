@@ -50,7 +50,6 @@
 
     # Applications
     hyprland = {
-      #url = "github:hyprwm/hyprland?rev=c99eb23869da2b80e3613a886aa1b99851367a3c";
       url = "github:hyprwm/hyprland";
       inputs.pre-commit-hooks.follows = "";
     };
@@ -143,6 +142,8 @@
         home-manager.follows = "";
       };
     };
+
+    mnw.url = "github:Gerg-L/mnw";
   };
 
   outputs =

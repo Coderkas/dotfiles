@@ -60,8 +60,6 @@ in
         }
       ];
 
-      services.dbus.packages = [ pkgs.gnome-settings-daemon ];
-
       hjem.users.${owner} = {
         files = {
           ".gtkrc-2.0" = {

@@ -38,6 +38,7 @@ in
               "ahci"
               "nvme"
               "sd_mod"
+              "ntsync"
             ];
             availableKernelModules = [
               "usbhid"

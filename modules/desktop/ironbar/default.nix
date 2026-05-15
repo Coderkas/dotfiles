@@ -66,7 +66,7 @@ in
       serviceConfig = {
         Type = "exec";
         Slice = "session.slice";
-        ExecStart = "${lib.getExe pkgs.ironbar}";
+        ExecStart = lib.getExe pkgs.ironbar;
       };
     };
 

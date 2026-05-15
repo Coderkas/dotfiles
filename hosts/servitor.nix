@@ -1,5 +1,7 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 {
+  imports = [ inputs.nixos-hardware.nixosModules.framework-16-7040-amd ];
+
   machine = {
     enableBase = true;
     enableDesktop = true;

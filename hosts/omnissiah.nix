@@ -44,25 +44,12 @@
       enable = true;
       package = pkgs.openrgb-with-all-plugins;
     };
-    ollama = {
-      enable = true;
-      package = pkgs.ollama-rocm;
-      loadModels = [
-        "deepseek-r1:14b"
-      ];
-    };
-
-    tailscale = {
-      enable = true;
-      openFirewall = true;
-    };
   };
 
   virtualisation.waydroid.enable = true;
 
   environment.systemPackages = [
     pkgs.signal-desktop
-    #pkgs.oterm
     pkgs.gimp
     pkgs.element-desktop
     pkgs.anki

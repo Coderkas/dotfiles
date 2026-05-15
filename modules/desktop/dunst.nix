@@ -25,7 +25,7 @@ in
       generator = lib.generators.toINI { };
       value = {
         global = {
-          inherit (cfg) monitor;
+          monitor = ''"${cfg.monitor}"'';
           width = "(0,600)";
           height = "(0,200)";
           origin = "top-center";
@@ -36,7 +36,7 @@ in
           frame_color = ''"#ebdbb2"'';
           frame_width = 1;
           gap_size = 5;
-          font = "${theme.font}, Medium 10";
+          font = ''"${theme.font}, Medium 10"'';
           progress_bar = true;
           icon_theme = ''"${theme.icons}"'';
           enable_recursive_icon_lookup = true;
@@ -47,8 +47,6 @@ in
         };
       };
     };
-
-    services.dbus.packages = [ pkgs.dunst ];
 
     systemd = {
       user.services.dunst = {

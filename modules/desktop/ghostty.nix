@@ -47,8 +47,6 @@ in
       };
     };
 
-    services.dbus.packages = [ pkgs.ghostty ];
-
     systemd.user.services."app-com.mitchellh.ghostty" = {
       description = "Ghostty";
       after = [

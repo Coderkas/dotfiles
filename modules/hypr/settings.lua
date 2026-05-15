@@ -40,9 +40,7 @@ hl.config {
 	},
 
 	input      = {
-		kb_layout    = "us,de",
-		kb_variant   = ",qwerty",
-		kb_options   = "grp:win_space_toggle,ctrl:nocaps",
+		kb_options   = "ctrl:nocaps",
 		follow_mouse = 1,
 		repeat_delay = 180,
 		sensitivity  = 0, -- -1.0 - 1.0, 0 means no modification.

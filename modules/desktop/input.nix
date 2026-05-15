@@ -160,10 +160,14 @@ in
 
       systemd.user.services.fcitx5-daemon = {
         description = "Fcitx5 input method editor";
-        partOf = [ "graphical-session.target" ];
-        after = [ "graphical-session.target" ];
-        serviceConfig.ExecStart = "${lib.getExe config.i18n.inputMethod.package}";
-        wantedBy = [ "graphical-session.target" ];
+        after = [ "tray.target" ];
+        partOf = [ "tray.target" ];
+        wantedBy = [ "tray.target" ];
+        serviceConfig = {
+          Type = "exec";
+          Slice = "session.slice";
+          ExecStart = lib.getExe config.i18n.inputMethod.package;
+        };
         path = lib.mkForce [ ];
       };
 

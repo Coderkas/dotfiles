@@ -76,52 +76,39 @@ in
       java.enable = true;
     };
 
-    systemd = {
-      user = {
-        services.gnome-keyring = {
-          description = "GNOME Keyring";
-          partOf = [ "graphical-session-pre.target" ];
-          wantedBy = [ "graphical-session-pre.target" ];
-          serviceConfig = {
-            ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
-            Restart = "on-abort";
-          };
+    systemd.user = {
+      services.gnome-keyring = {
+        description = "GNOME Keyring";
+        partOf = [ "graphical-session-pre.target" ];
+        wantedBy = [ "graphical-session-pre.target" ];
+        serviceConfig = {
+          ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
+          Restart = "on-abort";
         };
-
-        # services.gnome-keyring-daemon = {
-        #   description = "GNOME Keyring";
-        #   requires = [ "gnome-keyring-daemon.socket" ];
-        #   wantedBy = [ "default.target" ];
-        #   serviceConfig = {
-        #     Type = "simple";
-        #     ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --foreground";
-        #     Restart = "on-failure";
-        #     StandardError = "journal";
-        #   };
-        # };
-        #
-        # sockets.gnome-keyring-daemon = {
-        #   description = "Gnome Keyring Socket";
-        #   wantedBy = [ "sockets.target" ];
-        #   socketConfig = {
-        #     Priority = 6;
-        #     Backlog = 5;
-        #     ListenStream = "/run/keyring/control";
-        #     DirectoryMode = "0700";
-        #   };
-        # };
       };
 
-      # Make tuigreet not obscure the login screen with possible errors
-      services.greetd.serviceConfig = {
-        Type = "idle";
-        StandardInput = "tty";
-        StandardOutput = "tty";
-        StandardError = "journal";
-        TTYReset = true;
-        TTYVHangup = true;
-        TTYVTDisallocate = true;
-      };
+      # services.gnome-keyring-daemon = {
+      #   description = "GNOME Keyring";
+      #   requires = [ "gnome-keyring-daemon.socket" ];
+      #   wantedBy = [ "default.target" ];
+      #   serviceConfig = {
+      #     Type = "simple";
+      #     ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --foreground";
+      #     Restart = "on-failure";
+      #     StandardError = "journal";
+      #   };
+      # };
+      #
+      # sockets.gnome-keyring-daemon = {
+      #   description = "Gnome Keyring Socket";
+      #   wantedBy = [ "sockets.target" ];
+      #   socketConfig = {
+      #     Priority = 6;
+      #     Backlog = 5;
+      #     ListenStream = "/run/keyring/control";
+      #     DirectoryMode = "0700";
+      #   };
+      # };
     };
 
     services = {
@@ -136,7 +123,7 @@ in
             let
               start_hyprsession = pkgs.writeShellScript "start_hyprsession" ''
                 systemctl reset-failed --user
-                systemctl import-environment --user PATH
+                dbus-update-activation-environment --systemd --all
                 systemctl start hyprland.service --user --wait
                 systemctl unset-environment --user WAYLAND_DISPLAY DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
               '';
@@ -146,6 +133,7 @@ in
               user = "greeter";
             };
         };
+        useTextGreeter = true;
       };
 
       printing = {
@@ -165,7 +153,10 @@ in
         scheduler = "scx_bpfland";
       };
 
-      dbus.implementation = "broker";
+      dbus = {
+        implementation = "broker";
+        packages = lib.mkForce (lib.unique config.environment.systemPackages);
+      };
       devmon.enable = true;
       gnome = {
         gnome-keyring.enable = true;

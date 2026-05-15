@@ -26,6 +26,7 @@ in
         inherit pkgs;
         inherit (inputs.nixpkgs) lib;
       };
+      my-mnw = inputs.mnw.lib.wrap { inherit inputs pkgs; } ./mnw;
     }
   );
 }
