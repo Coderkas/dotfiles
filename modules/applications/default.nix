@@ -1,0 +1,26 @@
+{
+  imports = [
+    ./anyrun
+    ./fastfetch
+    ./hyprland
+    ./ironbar
+    ./nvim
+    ./quickshell
+    ./rofi
+    ./walker
+    ./zen-browser
+    ./dunst.nix
+    ./easyeffects.nix
+    ./ghostty.nix
+    ./gnome-keyring.nix
+    ./greetd.nix
+    ./hypridle.nix
+    ./hyprlock.nix
+    ./hyprpaper.nix
+    ./kitty.nix
+    ./okular.nix
+    ./syncthing.nix
+    ./udiskie.nix
+    ./yazi.nix
+  ];
+}

@@ -45,110 +45,102 @@ in
     };
   };
 
-  config = lib.mkMerge [
-    (lib.mkIf cfg.enableBase {
-      console.colors = cfg.theme.ttyColors; # Colors for tty
-    })
-    (lib.mkIf cfg.enableDesktop {
-      programs.dconf.profiles.user.databases = [
-        {
-          settings."org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
-            gtk-theme = cfg.theme.gtk;
-            icon-theme = cfg.theme.icons;
-          };
-        }
-      ];
+  config = lib.mkIf cfg.desktop.enable {
+    programs.dconf.profiles.user.databases = [
+      {
+        settings."org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          gtk-theme = cfg.theme.gtk;
+          icon-theme = cfg.theme.icons;
+        };
+      }
+    ];
 
-      hjem.users.${owner} = {
-        files = {
-          ".gtkrc-2.0" = {
-            generator = lib.generators.toKeyValue {
-              mkKeyValue =
-                k: v:
-                let
-                  v' = if (lib.isString v) then ''"${v}"'' else toString v;
-                in
-                "${k}=${v'}";
+    hjem.users.${owner} = {
+      files = {
+        ".gtkrc-2.0" = {
+          generator = lib.generators.toKeyValue {
+            mkKeyValue =
+              k: v:
+              let
+                v' = if (lib.isString v) then ''"${v}"'' else toString v;
+              in
+              "${k}=${v'}";
+          };
+          value = gtkConf;
+        };
+
+        ".gtk-bookmarks".text = gtkBookmarks;
+
+        ".Xresources".text = ''
+          Xcursor.size: ${toString cfg.theme.cursor_size}
+          Xcursor.theme: ${cfg.theme.cursor}
+        '';
+      };
+
+      xdg = {
+        config.files = {
+          "gtk-3.0/settings.ini" = {
+            generator = lib.generators.toINI { };
+            value = {
+              Settings = gtkConf // {
+                gtk-application-prefer-dark-theme = true;
+              };
             };
-            value = gtkConf;
           };
 
-          ".gtk-bookmarks".text = gtkBookmarks;
+          "gtk-4.0/settings.ini" = {
+            generator = lib.generators.toINI { };
+            value = {
+              Settings = gtkConf;
+            };
+          };
 
-          ".Xresources".text = ''
-            Xcursor.size: ${toString cfg.theme.cursor_size}
-            Xcursor.theme: ${cfg.theme.cursor}
+          "gtk-3.0/bookmarks".text = gtkBookmarks;
+
+          "Kvantum/kvantum.kvconfig".text = ''
+            [General]
+            theme=${cfg.theme.qt}
           '';
-        };
+          "Kvantum/${cfg.theme.qt}".source = cfg.theme.kvantum;
+          "kdeglobals".text = ''
+            ${cfg.theme.kde}
 
-        xdg = {
-          config.files = {
-            "gtk-3.0/settings.ini" = {
-              generator = lib.generators.toINI { };
-              value = {
-                Settings = gtkConf // {
-                  gtk-application-prefer-dark-theme = true;
-                };
-              };
-            };
+            [General]
+            theme=${cfg.theme.qt}
 
-            "gtk-4.0/settings.ini" = {
-              generator = lib.generators.toINI { };
-              value = {
-                Settings = gtkConf;
-              };
-            };
+            [Icons]
+            Theme=${cfg.theme.icons}
 
-            "gtk-3.0/bookmarks".text = gtkBookmarks;
+            [KDE]
+            widgetStyle=Breeze
+          '';
 
-            "Kvantum/kvantum.kvconfig".text = ''
-              [General]
-              theme=${cfg.theme.qt}
-            '';
-            "Kvantum/${cfg.theme.qt}".source = cfg.theme.kvantum;
-            "kdeglobals".text = ''
-              ${cfg.theme.kde}
-
-              [General]
-              theme=${cfg.theme.qt}
-
-              [Icons]
-              Theme=${cfg.theme.icons}
-
-              [KDE]
-              widgetStyle=Breeze
-            '';
-
-            "qt5ct/qt5ct.conf".text = qtct;
-            "qt6ct/qt6ct.conf".text = qtct;
-          };
+          "qt5ct/qt5ct.conf".text = qtct;
+          "qt6ct/qt6ct.conf".text = qtct;
         };
       };
+    };
 
-      qt = {
-        enable = true;
-        platformTheme = "qt5ct";
-        style = "kvantum";
+    qt = {
+      enable = true;
+      platformTheme = "qt5ct";
+      style = "kvantum";
+    };
+
+    users.users.${owner}.packages = cfg.theme.pkgs;
+
+    environment = {
+      systemPackages = cfg.theme.pkgs;
+      sessionVariables = {
+        GTK2_RC_FILES = "${config.hjem.users.${owner}.directory}/.gtkrc-2.0";
+        GTK_THEME = cfg.theme.gtk;
+        QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+        XCURSOR_THEME = cfg.theme.cursor;
+        XCURSOR_SIZE = cfg.theme.cursor_size;
+        HYPERCURSOR_THEME = cfg.theme.cursor;
+        HYPERCURSOR_SIZE = cfg.theme.cursor_size;
       };
-
-      users.users.${owner}.packages = cfg.theme.pkgs;
-
-      environment = {
-        systemPackages = cfg.theme.pkgs;
-        sessionVariables = {
-          GTK2_RC_FILES = "${config.hjem.users.${owner}.directory}/.gtkrc-2.0";
-          GTK_THEME = cfg.theme.gtk;
-          GDK_BACKEND = "wayland,x11,*";
-          QT_QPA_PLATFORM = "wayland;xcb";
-          QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-          XCURSOR_THEME = cfg.theme.cursor;
-          XCURSOR_SIZE = cfg.theme.cursor_size;
-          HYPERCURSOR_THEME = cfg.theme.cursor;
-          HYPERCURSOR_SIZE = cfg.theme.cursor_size;
-        };
-      };
-    })
-  ];
+    };
+  };
 }

@@ -102,17 +102,6 @@
       inputs.hyprland.follows = "hyprland";
     };
 
-    nvf = {
-      url = "github:notashelf/nvf";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems";
-        flake-parts.follows = "flake-parts";
-        flake-compat.follows = "";
-        ndg.inputs.nixpkgs.follows = "nixpkgs";
-      };
-    };
-
     nil = {
       url = "github:oxalica/nil";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -142,8 +131,6 @@
         home-manager.follows = "";
       };
     };
-
-    mnw.url = "github:Gerg-L/mnw";
   };
 
   outputs =

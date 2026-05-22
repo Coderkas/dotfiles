@@ -2,7 +2,6 @@
   config,
   inputs,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -10,83 +9,124 @@ let
 in
 {
   imports = [
-    inputs.lanzaboote.nixosModules.lanzaboote
     inputs.nix-gaming.nixosModules.pipewireLowLatency
 
+    ./applications
+    ./base
     ./desktop
-    ./hypr
     ./theme
-    ./gaming
-    ./audio.nix
-    ./boot.nix
-    ./cli.nix
-    ./hardware.nix
-    ./locales.nix
-    ./man.nix
-    ./networking.nix
-    ./nix.nix
-    ./ssh.nix
-    ./syncthing.nix
-    ./systemd.nix
-    ./users.nix
-    ./virtualisation.nix
   ];
 
   options.machine = {
-    enableBase = lib.mkEnableOption "";
+    desktop = {
+      enable = lib.mkEnableOption "Enable desktop preset";
+      bar = lib.mkOption {
+        type = lib.types.enum [
+          "quickshell"
+          "ironbar"
+        ];
+      };
+      browser = {
+        name = lib.mkOption {
+          type = lib.types.enum [
+            "zen-browser"
+          ];
+        };
+        command = lib.mkOption {
+          type = lib.types.nonEmptyStr;
+        };
+      };
+      runner = {
+        name = lib.mkOption {
+          type = lib.types.enum [
+            "anyrun"
+            "rofi"
+            "walker"
+          ];
+        };
+        commands = {
+          menu = lib.mkOption {
+            type = lib.types.nonEmptyStr;
+          };
+          web = lib.mkOption {
+            type = lib.types.nonEmptyStr;
+          };
+        };
+      };
+      terminal = {
+        name = lib.mkOption {
+          type = lib.types.enum [
+            "ghostty"
+            "kitty"
+          ];
+        };
+        command = lib.mkOption {
+          type = lib.types.nonEmptyStr;
+        };
+      };
+
+      primaryMonitor = lib.mkOption {
+        type = lib.types.nonEmptyStr;
+      };
+    };
+
+    sessionWrapper = lib.mkOption {
+      type = lib.types.package;
+    };
+
     name = lib.mkOption {
       type = lib.types.nonEmptyStr;
     };
+
     platform = lib.mkOption {
       type = lib.types.nonEmptyStr;
     };
+
+    cpu = lib.mkOption {
+      type = lib.types.enum [
+        "intel"
+        "amd"
+        "pi"
+      ];
+    };
+
+    hasDedicatedGpu = lib.mkEnableOption "Enable gpu stuff";
   };
 
-  config = lib.mkMerge [
-    {
-      assertions = [
-        {
-          assertion = cfg.enableBase != null;
-          message = "enableBase is not set";
-        }
-        {
-          assertion = cfg.enableDesktop != null;
-          message = "enableDesktop is not set";
-        }
-        {
-          assertion = cfg.owner != null;
-          message = "owner is not set";
-        }
-        {
-          assertion = cfg.name != null;
-          message = "machine name is not set";
-        }
-        {
-          assertion = cfg.platform != null;
-          message = "platform is not set";
-        }
-        {
-          assertion = cfg.hardware.cpu != null;
-          message = "cpu is not set";
-        }
-      ];
-    }
-    (lib.mkIf cfg.enableBase {
-      security.polkit.enable = true;
-
-      fonts.packages = [
-        pkgs.noto-fonts
-        pkgs.noto-fonts-cjk-sans
-        pkgs.noto-fonts-cjk-serif
-        pkgs.noto-fonts-color-emoji
-        pkgs.nerd-fonts.fira-code
-        pkgs.nerd-fonts.iosevka-term
-        pkgs.nerd-fonts.caskaydia-cove
-        pkgs.nerd-fonts.jetbrains-mono
-        pkgs.nerd-fonts.symbols-only
-        pkgs.ipaexfont
-        pkgs.jigmo
-      ];
-    })
-  ];
+  config = {
+    assertions = [
+      {
+        assertion = cfg.owner != null;
+        message = "owner is not set";
+      }
+      {
+        assertion = cfg.name != null;
+        message = "machine name is not set";
+      }
+      {
+        assertion = cfg.platform != null;
+        message = "platform is not set";
+      }
+      {
+        assertion = cfg.cpu != null;
+        message = "cpu is not set";
+      }
+      {
+        assertion = cfg.desktop.enable == true && cfg.desktop.bar != null;
+        message = "A bar should be set when running a desktop";
+      }
+      {
+        assertion = cfg.desktop.enable == true && cfg.desktop.browser != null;
+        message = "A browser should be set when running a desktop";
+      }
+      {
+        assertion = cfg.desktop.enable == true && cfg.desktop.runner != null;
+        message = "A runner should be set when running a desktop";
+      }
+      {
+        assertion = cfg.desktop.enable == true && cfg.desktop.terminal != null;
+        message = "A terminal should be set when running a desktop";
+      }
+    ];
+  };
 }

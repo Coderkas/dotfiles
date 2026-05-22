@@ -1,0 +1,33 @@
+{
+  "display": {
+    "key": {
+      "width": 17
+    },
+    "separator": " "
+  },
+  "general": {
+    "detectVersion": false
+  },
+  "logo": {
+    "padding": {
+      "top": 1
+    },
+    "source": "linux"
+  },
+  "modules": [
+    "title",
+    "os",
+    "kernel",
+    "shell",
+    "terminal",
+    "terminalfont",
+    "theme",
+    "wm",
+    "cpu",
+    "gpu",
+    "memory",
+    "board",
+    "break",
+    "colors"
+  ]
+}

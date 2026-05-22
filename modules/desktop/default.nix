@@ -1,141 +1,48 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
 }:
 let
   cfg = config.machine;
-  inherit (cfg) owner theme;
+  hyprpicker-git = inputs.hyprpicker.packages.${cfg.platform}.hyprpicker;
 in
 {
   imports = [
-    ./quickshell
-    ./ironbar
-    ./anyrun.nix
-    ./dunst.nix
-    ./rofi.nix
-    ./terminal.nix
-    ./xdg.nix
+    ./audio.nix
+    ./gaming.nix
+    ./hardware.nix
     ./input.nix
-    ./kitty.nix
-    ./ghostty.nix
-    ./walker.nix
-    ./browser.nix
+    ./systemd.nix
+    ./virtualisation.nix
+    ./wayland.nix
+    ./xdg.nix
   ];
 
-  options.machine = {
-    enableDesktop = lib.mkEnableOption "";
-    runner = {
-      name = lib.mkOption {
-        type = lib.types.enum [
-          "anyrun"
-          "rofi"
-          "walker"
-        ];
-      };
-      commands = lib.mkOption {
-        type = lib.types.nonEmptyStr;
-      };
-    };
-  };
-
-  config = lib.mkIf cfg.enableDesktop {
-    hjem.users.${owner}.xdg.config.files = {
-      "zathura/zathurarc".text = theme.zathura;
+  config = lib.mkIf cfg.desktop.enable {
+    hjem.users.${cfg.owner}.xdg.config.files = {
+      "zathura/zathurarc".text = cfg.theme.zathura;
       "mpv/mpv.conf".text = "volume=20";
-      "okularpartrc".text = ''
-        [Dlg Accessibility]
-        RecolorBackground=40,40,40
-        RecolorForeground=235,219,178
-
-        [Document]
-        ChangeColors=true
-        RenderMode=Recolor
-
-        [General]
-        ShellOpenFileInTabs=true
-        ShowSidebar=false
-
-        [Main View]
-        ShowLeftPanel=false
-
-        [PageView]
-        UseCustomBackgroundColor=true
-
-        [UiSettings]
-        ColorScheme=BreezeDark
-      '';
     };
 
     programs = {
       dconf.enable = true;
       kdeconnect.enable = true;
-      seahorse.enable = true;
       thunderbird.enable = true;
       java.enable = true;
-    };
 
-    systemd.user = {
-      services.gnome-keyring = {
-        description = "GNOME Keyring";
-        partOf = [ "graphical-session-pre.target" ];
-        wantedBy = [ "graphical-session-pre.target" ];
-        serviceConfig = {
-          ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --start --foreground";
-          Restart = "on-abort";
+      direnv = {
+        enable = true;
+        settings.global = {
+          warn_timeout = "15s";
+          hide_env_diff = true;
         };
       };
-
-      # services.gnome-keyring-daemon = {
-      #   description = "GNOME Keyring";
-      #   requires = [ "gnome-keyring-daemon.socket" ];
-      #   wantedBy = [ "default.target" ];
-      #   serviceConfig = {
-      #     Type = "simple";
-      #     ExecStart = "${lib.getExe' pkgs.gnome-keyring "gnome-keyring-daemon"} --foreground";
-      #     Restart = "on-failure";
-      #     StandardError = "journal";
-      #   };
-      # };
-      #
-      # sockets.gnome-keyring-daemon = {
-      #   description = "Gnome Keyring Socket";
-      #   wantedBy = [ "sockets.target" ];
-      #   socketConfig = {
-      #     Priority = 6;
-      #     Backlog = 5;
-      #     ListenStream = "/run/keyring/control";
-      #     DirectoryMode = "0700";
-      #   };
-      # };
     };
 
     services = {
-      greetd = {
-        enable = true;
-        settings = {
-          terminal = {
-            vt = 1;
-            switch = false;
-          };
-          default_session =
-            let
-              start_hyprsession = pkgs.writeShellScript "start_hyprsession" ''
-                systemctl reset-failed --user
-                dbus-update-activation-environment --systemd --all
-                systemctl start hyprland.service --user --wait
-                systemctl unset-environment --user WAYLAND_DISPLAY DISPLAY XDG_SESSION_TYPE XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE
-              '';
-            in
-            {
-              command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd ${start_hyprsession}";
-              user = "greeter";
-            };
-        };
-        useTextGreeter = true;
-      };
-
       printing = {
         enable = true;
         drivers = [
@@ -146,36 +53,47 @@ in
         ];
       };
 
-      # More scheduling stuff
-      scx = {
-        enable = true;
-        package = pkgs.scx.rustscheds;
-        scheduler = "scx_bpfland";
-      };
-
-      dbus = {
-        implementation = "broker";
-        packages = lib.mkForce (lib.unique config.environment.systemPackages);
-      };
       devmon.enable = true;
-      gnome = {
-        gnome-keyring.enable = true;
-        sushi.enable = true;
-      };
+      gnome.sushi.enable = true;
       gvfs.enable = true;
     };
 
     environment = {
-      sessionVariables = {
-        NIXOS_OZONE_WL = "1";
-        ELECTRON_OZONE_PLATFORM_HINT = "wayland";
-        XDG_SESSION_TYPE = "wayland";
-        SDL_VIDEODRIVER = "wayland,x11,windows"; # Not adding ",x11,windos" causes issues with easy anti cheat
+      shellAliases = {
+        dd = ''echo -e "\033[0;95mReminder:\033[0m caligula is also installed"; ${pkgs.coreutils-full}/bin/dd'';
+        df = ''echo -e "\033[0;95mReminder:\033[0m dua is also installed"; ${pkgs.coreutils-full}/bin/df'';
+        du = ''echo -e "\033[0;95mReminder:\033[0m dua is also installed"; ${pkgs.coreutils-full}/bin/du'';
       };
 
       systemPackages = [
+        # Extracting things
+        pkgs.p7zip
+        pkgs.unrar
+        pkgs.cabextract
+        # Multimedia
+        pkgs.ffmpeg
+        pkgs.viu
+        pkgs.yt-dlp
+        # Latex/Markdown
+        pkgs.glow
+        pkgs.tectonic-unwrapped
+        pkgs.biber
+        pkgs.texliveBasic
+        # File type detection and pdf rendering for i.e. yazi
+        pkgs.file
+        pkgs.poppler-utils
+
+        pkgs.tlrc # Official rust tldr client
+        pkgs.caligula # Better dd in rust
+        pkgs.dua # Disk usage analyzer
+        pkgs.numbat # Calculator/math scripting
+        pkgs.termscp # terminal for ftp, scp, etc.
+        pkgs.sqlite
+        pkgs.nurl # Nix url resolver
+        pkgs.bandwhich # top for sockets/connections
+        pkgs.systemctl-tui
+
         pkgs.zathura
-        pkgs.kdePackages.okular
         (pkgs.mpv.override {
           mpv-unwrapped = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
         })
@@ -191,21 +109,10 @@ in
             pkgs.gst_all_1.gst-plugins-bad
           ];
         }))
-        pkgs.wayfreeze
-        pkgs.grim
-        pkgs.slurp
-        pkgs.tesseract
-        pkgs.wl-clipboard
-        # Change monitor config
-        pkgs.xrandr
-        pkgs.wlr-randr
-
-        pkgs.wf-recorder
-        pkgs.python3
-
         pkgs.proton-vpn
         pkgs.qbittorrent
         pkgs.wireguard-tools
+        hyprpicker-git
       ];
     };
   };

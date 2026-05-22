@@ -54,7 +54,8 @@
   "workspace": {
     "library": [
       "/nix/store/57nzjjzg1pvjp61zc793r5n2c5f5qhs2-source/meta",
-      "/nix/store/9q96ip9wganm6ib4bcny3z0c7rx30lvy-mnw-0.12.2/share/nvim/runtime"
+      "/nix/store/1f2ks80840fn326szvmxxqrspgjk2cyy-mnw-0.12.2/share/nvim/runtime",
+      "/nix/store/x0fngx6pjlk35qdry00dbj430kfzv4aj-mnw-configDir/pack/mnw"
     ]
   },
   "runtime.version": "LuaJIT",

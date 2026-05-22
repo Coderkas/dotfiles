@@ -1,0 +1,7 @@
+launch_prefix = "systemd-run --user"
+window_integration = true
+single_instance_apps = [
+  "discord",
+  "steam"
+]
+blacklist = [ "firefox" ]

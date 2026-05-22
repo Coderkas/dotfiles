@@ -1,34 +1,29 @@
 { customPkgs, pkgs, ... }:
 {
   machine = {
-    enableBase = true;
-    enableDesktop = true;
-    audio.enableEasyEffects = true;
-    boot.enableSecure = true;
-    enableGaming = true;
-    ssh.enable = true;
-    themeName = "Gruvbox";
-    terminals = {
-      primary = "ghostty";
-      enableGhostty = true;
-      enableKitty = true;
+    desktop = {
+      enable = true;
+      bar = "ironbar";
+      browser.name = "zen-browser";
+      runner.name = "anyrun";
+      terminal.name = "ghostty";
+
+      primaryMonitor = "DP-2";
     };
+    secureBoot.enable = true;
+    gaming.enable = true;
+    themeName = "Gruvbox";
     owner = "lorkas";
     platform = "x86_64-linux";
     name = "omnissiah";
-    hardware = {
-      cpu = "intel";
-      hasDedicatedGpu = true;
-    };
-    hyprland.mainMonitor = "DP-2";
+    cpu = "intel";
+    hasDedicatedGpu = true;
     dunst.monitor = "DP-3";
-    enableVirtualisation = false;
+    vms.enable = false;
     syncthing.devices."automaton".id =
       "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
-    runner.name = "anyrun";
     interface = "enp6s0";
     ipv4 = "192.168.0.10";
-    ironbar.enable = true;
   };
 
   programs = {

@@ -3,34 +3,27 @@
   imports = [ inputs.nixos-hardware.nixosModules.framework-16-7040-amd ];
 
   machine = {
-    enableBase = true;
-    enableDesktop = true;
-    enableGaming = true;
-    boot.enableSecure = false;
-    ssh.enable = true;
-    themeName = "Gruvbox";
-    terminals = {
-      primary = "ghostty";
-      enableGhostty = true;
-      enableKitty = true;
+    desktop = {
+      enable = true;
+      bar = "ironbar";
+      browser.name = "zen-browser";
+      runner.name = "anyrun";
+      terminal.name = "ghostty";
+
+      primaryMonitor = "eDP-1";
     };
+    gaming.enable = true;
+    themeName = "Gruvbox";
     owner = "lorkas";
     platform = "x86_64-linux";
     name = "servitor";
-    hardware = {
-      cpu = "amd";
-      hasDedicatedGpu = false;
-    };
-    hyprland.mainMonitor = "eDP-1";
-    dunst.monitor = "eDP-1";
-    runner.name = "anyrun";
+    cpu = "amd";
     syncthing = {
       enable = true;
       devices."automaton".id = "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
     };
     interface = "wlo1";
     ipv4 = "192.168.0.102";
-    ironbar.enable = true;
   };
   # Kernel stuff
   boot = {

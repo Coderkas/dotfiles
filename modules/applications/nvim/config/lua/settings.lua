@@ -1,0 +1,27 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+
+vim.o.clipboard = "unnamedplus"
+vim.o.confirm = true
+vim.o.cursorline = true
+vim.o.foldenable = false
+vim.o.hlsearch = false
+vim.o.ignorecase = true
+vim.o.inccommand = "split"
+vim.o.incsearch = true
+vim.o.list = true
+vim.o.listchars = "tab:» ,trail:·,nbsp:␣"
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.scrolloff = 10
+vim.o.showmode = true
+vim.o.shiftwidth = 2
+vim.o.tabstop = 2
+vim.o.smartcase = true
+vim.o.smartindent = true
+vim.o.splitright = true
+vim.o.splitbelow = true
+vim.o.tm = 300
+vim.o.updatetime = 250
+vim.o.winborder = "rounded"
+vim.o.wrap = false

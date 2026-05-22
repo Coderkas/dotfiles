@@ -1,0 +1,27 @@
+selection_wrap = true
+[keybinds]
+close = [ "Escape", "ctrl c" ]
+next = [ "Down", "ctrl n" ]
+previous = [ "Up", "ctrl p" ]
+left = [ "Left" ]
+right = [ "Right" ]
+down = [ "Down", "ctrl n" ]
+up = ["Up", "ctrl p" ]
+toggle_exact = [ "ctrl e" ]
+resume_last_query = [ "ctrl r" ]
+page_down = [ "Page_Down", "ctrl d" ]
+page_up = [ "Page_Up", "ctrl u" ]
+show_actions = [ "alt j" ]
+
+[providers]
+default = [
+  "desktopapplications",
+  "runner",
+]
+
+[[providers.prefixes]]
+prefix = "?"
+provider = "providerlist"
+[[providers.prefixes]]
+prefix = "="
+provider = "calc"

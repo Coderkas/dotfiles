@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.machine;
-  inherit (cfg) owner;
 
   mimeapps = {
     addedAssociations = {
@@ -65,7 +64,7 @@ let
   };
 in
 {
-  config = lib.mkIf config.machine.enableDesktop {
+  config = lib.mkIf cfg.desktop.enable {
     xdg = {
       mime = {
         enable = true;
@@ -85,7 +84,7 @@ in
       };
     };
 
-    hjem.users.${owner}.xdg.config.files = {
+    hjem.users.${cfg.owner}.xdg.config.files = {
       "mimeapps.list" = {
         generator = lib.generators.toINI { };
         value = {
@@ -103,6 +102,7 @@ in
 
       systemPackages = [
         pkgs.xdg-utils
+        pkgs.xdg-terminal-exec
       ];
     };
   };

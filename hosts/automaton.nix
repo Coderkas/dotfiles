@@ -8,18 +8,11 @@
   imports = [ inputs.nixos-hardware.nixosModules.raspberry-pi-4 ];
 
   machine = {
-    enableBase = true;
-    enableDesktop = false;
-    boot.enable = false;
-    ssh.enable = true;
     themeName = "Gruvbox";
     owner = "lorkas";
     platform = "aarch64-linux";
     name = "automaton";
-    hardware = {
-      cpu = "pi";
-      hasDedicatedGpu = false;
-    };
+    cpu = "pi";
     syncthing = {
       enable = true;
       devices = {

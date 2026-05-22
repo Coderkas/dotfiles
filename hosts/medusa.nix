@@ -1,27 +1,23 @@
 { lib, pkgs, ... }:
 {
   machine = {
-    enableBase = true;
-    enableDesktop = true;
-    ssh.enable = true;
-    themeName = "Gruvbox";
-    terminals = {
-      primary = "kitty";
-      enableKitty = true;
+    desktop = {
+      enable = true;
+      bar = "ironbar";
+      browser.name = "zen-browser";
+      runner.name = "anyrun";
+      terminal.name = "ghostty";
+
+      primaryMonitor = "eDP-1";
     };
+    themeName = "Gruvbox";
     owner = "lorkas";
     platform = "x86_64-linux";
     name = "medusa";
-    hardware = {
-      cpu = "intel";
-      hasDedicatedGpu = false;
-    };
-    hyprland.mainMonitor = "eDP-1";
-    dunst.monitor = "eDP-1";
-    runner.name = "anyrun";
+    cpu = "intel";
+    syncthing.enable = false;
     interface = "wlp3s0";
     ipv4 = "192.168.0.14";
-    syncthing.enable = false;
   };
 
   services = {
