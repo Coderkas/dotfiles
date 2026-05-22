@@ -67,7 +67,7 @@ in
 
       systemPackages = [
         # Extracting things
-        pkgs.p7zip
+        pkgs._7zip-zstd-rar
         pkgs.unrar
         pkgs.cabextract
         # Multimedia

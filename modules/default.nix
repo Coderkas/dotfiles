@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   ...
 }:
@@ -9,8 +8,6 @@ let
 in
 {
   imports = [
-    inputs.nix-gaming.nixosModules.pipewireLowLatency
-
     ./applications
     ./base
     ./desktop
