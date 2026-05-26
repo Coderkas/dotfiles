@@ -18,16 +18,20 @@ in
           mgr.show_hidden = true;
           plugin.prepend_previewers = [
             {
-              name = "*.tar*";
+              url = "*.tar*";
               run = "piper --format=url -- ${lib.getExe pkgs.gnutar} tf \"$1\"";
             }
             {
-              name = "*.csv";
+              url = "*.csv";
               run = "piper -- ${lib.getExe pkgs.bat} -p --color=always \"$1\"";
             }
             {
-              name = "*.md";
+              url = "*.md";
               run = "piper -- CLICOLOR_FORCE=1 ${lib.getExe pkgs.glow} -w=$w -s=dark \"$1\"";
+            }
+            {
+              mime = "application/sqlite3";
+              run = ''piper -- ${lib.getExe pkgs.sqlite} "$1" ".schema --indent"'';
             }
           ];
         };
