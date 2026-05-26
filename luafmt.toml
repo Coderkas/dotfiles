@@ -1,0 +1,16 @@
+[syntax]
+level = "LuaJIT"
+
+[layout]
+prefer_table_layout_from_source = true
+
+[output]
+trailing_comma = "Multiline"
+trailing_table_seperator = "Multiline"
+
+[spacing]
+space_before_lambda_func_paren = false
+
+[align]
+continuous_assign_statement = true
+table_field = true

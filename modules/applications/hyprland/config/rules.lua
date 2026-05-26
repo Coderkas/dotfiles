@@ -29,14 +29,13 @@ hl.window_rule {
 	name             = "gayming",
 	match            = {
 		class =
-		"^(hunt.exe|Overwatch.exe|nightreign.exe|chaosgate.exe|Warhammer 40000 Space Marine 2.exe|ReadyOrNot.exe|steam_app_\\d+)$",
+		"^(hunt.exe|Overwatch.exe|nightreign.exe|chaosgate.exe|Warhammer 40000 Space Marine 2.exe|ReadyOrNot.exe|warhammer3.exe|steam_app_\\d+)$",
 	},
 	float            = false,
 	idle_inhibit     = "fullscreen",
 	content          = "game",
 	immediate        = true,
 	render_unfocused = true,
-	fullscreen_state = "2 0",
 	suppress_event   = "fullscreen fullscreenoutput",
 }
 
@@ -46,13 +45,10 @@ hl.window_rule {
 		class = "^(steam_app_default)$",
 		title = "^(NTE)$",
 	},
-	float            = false,
-	idle_inhibit     = "always",
+	idle_inhibit     = "fullscreen",
 	content          = "game",
 	immediate        = true,
 	render_unfocused = true,
-	fullscreen_state = "2 0",
-	suppress_event   = "fullscreen",
 }
 
 hl.window_rule {

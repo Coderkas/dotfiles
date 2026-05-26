@@ -100,6 +100,7 @@ in
         # LSPs
         pkgs.bash-language-server
         pkgs.clang-tools
+        pkgs.emmylua-ls
         pkgs.gopls
         pkgs.lua-language-server
         inputs.nil.packages.${platform}.default
@@ -110,16 +111,17 @@ in
 
         # Linter
         pkgs.clippy
+        pkgs.luaPackages.luacheck
         pkgs.eslint_d
         pkgs.ruff
         pkgs.shellcheck
         pkgs.statix
         pkgs.deadnix
-        pkgs.luaPackages.luacheck
 
         # Formatter
         pkgs.rustfmt
         pkgs.deno
+        pkgs.emmylua-formatter
         pkgs.shfmt
         pkgs.nixfmt
       ];

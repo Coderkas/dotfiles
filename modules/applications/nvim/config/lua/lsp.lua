@@ -58,6 +58,6 @@ vim.api.nvim_create_user_command(
 
 vim.lsp.config('*', default_config)
 
-vim.lsp.enable { 'bashls', 'clangd', 'gopls', 'lua_ls', 'nil', 'nixd', 'ols', 'rust_analyzer', 'zuban' }
+vim.lsp.enable { 'bashls', 'clangd', 'gopls', 'emmylua_ls', 'nil', 'nixd', 'ols', 'rust_analyzer', 'zuban' }
 
 vim.lsp.log.set_level 'ERROR'

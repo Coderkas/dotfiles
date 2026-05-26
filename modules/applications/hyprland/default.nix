@@ -83,13 +83,15 @@ in
       serviceConfig = {
         Type = "notify";
         Slice = "session.slice";
-        ExecStart = "${hyprland-git}/bin/Hyprland";
+        ExecStart = "${config.programs.hyprland.package}/bin/Hyprland";
       };
     };
 
-    environment.sessionVariables = {
-      # XDG_CURRENT_DESKTOP = "Hyprland";
-      XDG_SESSION_DESKTOP = "Hyprland";
+    environment = {
+      sessionVariables = {
+        # XDG_CURRENT_DESKTOP = "Hyprland";
+        XDG_SESSION_DESKTOP = "Hyprland";
+      };
     };
   };
 }
