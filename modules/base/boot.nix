@@ -51,6 +51,8 @@ in
           "xhci_hcd"
           "xhci_pci"
         ];
+
+        systemd.dmVerity.enable = true;
       };
 
       blacklistedKernelModules = [
@@ -83,6 +85,9 @@ in
         enable = cfg.secureBoot.enable;
         pkiBundle = "/var/lib/sbctl";
         configurationLimit = 3;
+        settings = {
+          timeout = 0;
+        };
       };
 
       tmp.cleanOnBoot = true;

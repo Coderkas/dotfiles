@@ -22,12 +22,6 @@ in
         enable = true;
         dns = "systemd-resolved";
 
-        wifi = {
-          macAddress = "random";
-          powersave = true;
-          scanRandMacAddress = true;
-        };
-
         connectionConfig."connection.mdns" = 2;
       };
 
@@ -75,12 +69,6 @@ in
     systemd = {
       services.NetworkManager-wait-online.enable = false;
       network.wait-online.enable = false;
-    };
-
-    boot.kernel.sysctl = {
-      "net.ipv4.ip_forward" = 1;
-      "net.ipv4.conf.all.forwarding" = 1;
-      "net.ipv4.conf.all.route_localnet" = 1;
     };
 
     hardware = {
