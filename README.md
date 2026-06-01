@@ -6,10 +6,9 @@ This is the stuff I was running the last time I edited this readme file:
 - **Terminal:** [ghostty](https://ghostty.org/)
 - **Shell:** [fish](https://github.com/fish-shell/fish-shell) with
   [starship](https://github.com/starship/starship) as prompt
-- **Editor**: [neovim](https://github.com/neovim/neovim) with
-  [nvf](https://github.com/NotAShelf/nvf)
+- **Editor**: [neovim](https://github.com/neovim/neovim)
 - **Runner:** [anyrun](https://github.com/anyrun-org/anyrun)
-- **Bar:** [Quickshell](https://git.outfoxxed.me/quickshell/quickshell)
+- **Bar:** [Ironbar](https://github.com/JakeStanger/ironbar)
 - **Theme:** [Gruvbox](https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme)
 
 All managed with NixOS and Hjem.
