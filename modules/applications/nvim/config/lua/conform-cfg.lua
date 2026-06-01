@@ -32,7 +32,7 @@ local conform_cfg = {
         return nil
     end,
     format_after_save = nil,
-    log_level = vim.log.levels.DEBUG,
+    log_level = vim.log.levels.ERROR,
 }
 
 vim.api.nvim_create_autocmd("VimEnter", {

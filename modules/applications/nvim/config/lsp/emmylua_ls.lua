@@ -5,7 +5,7 @@ return {
     root_makers = {
         { '.emmyrc.json', '.emmyrc.lua', '.luarc.json', '.luarc.jsonc' },
         { '.stylua.toml', 'stylua.toml' },
-        '.git'
+        '.git',
     },
     workspace_required = false,
     settings = {
@@ -19,19 +19,20 @@ return {
             workspace = {
                 library = {
                     vim.env.VIMRUNTIME,
-                    vim.env.XDG_DATA_HOME .. "/nvim/site/pack/" .. vim.env.USER
-                }
-            }
-        }
+                    "/run/current-system/sw/share/hypr/stubs",
+                    vim.env.XDG_DATA_HOME .. "/nvim/site/pack/" .. vim.env.USER,
+                },
+            },
+        },
     },
-    on_init = function (client)
+    on_init = function(client)
         -- If the workspace has its own emmylua_ls/lua_ls config file, defer to it.
         if client.workspace_folders then
             local path = client.workspace_folders[1].name
             if path ~= vim.fn.stdpath 'config'
-                and ( vim.uv.fs_stat(path .. '/.emmyrc.json') or vim.uv.fs_stat(path .. '/.luarc.json') ) then
+                and (vim.uv.fs_stat(path .. '/.emmyrc.json') or vim.uv.fs_stat(path .. '/.luarc.json')) then
                 client.config.settings = {}
             end
         end
-    end
+    end,
 }

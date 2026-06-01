@@ -65,6 +65,22 @@ in
             run = "cd /nix/store";
             desc = "Go to nix store";
           }
+          {
+            on = [
+              "g"
+              "e"
+            ];
+            run = "cd /etc";
+            desc = "Go to /etc";
+          }
+          {
+            on = [
+              "g"
+              "r"
+            ];
+            run = "cd /run";
+            desc = "Go to /run";
+          }
         ];
       };
       initLua = pkgs.writeText "yazi-init.lua" ''

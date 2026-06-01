@@ -109,7 +109,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
+    { self, nixpkgs, ... }@inputs:
     let
       customPkgs = import ./pkgs { inherit inputs; };
     in
@@ -119,7 +119,7 @@
       nixosConfigurations = nixpkgs.lib.genAttrs [ "omnissiah" "servitor" "automaton" "medusa" ] (
         name:
         nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs customPkgs; };
+          specialArgs = { inherit inputs customPkgs self; };
           modules = [
             ./modules
             ./hosts/${name}.nix
