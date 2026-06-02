@@ -26,39 +26,39 @@ hl.window_rule { match = { float = false, workspace = "f[1]", focus = false }, b
 
 -- game rules
 hl.window_rule {
-	name             = "gayming",
-	match            = {
-		class =
-		"^(hunt.exe|Overwatch.exe|nightreign.exe|chaosgate.exe|Warhammer 40000 Space Marine 2.exe|ReadyOrNot.exe|warhammer3.exe|steam_app_\\d+)$",
-	},
-	float            = false,
-	idle_inhibit     = "fullscreen",
-	content          = "game",
-	immediate        = true,
-	render_unfocused = true,
-	suppress_event   = "fullscreen fullscreenoutput",
+    name = "gayming",
+    match = {
+        class = "^(hunt.exe|Overwatch.exe|nightreign.exe|chaosgate.exe|Warhammer 40000 Space Marine 2.exe|ReadyOrNot.exe|warhammer3.exe)$",
+    },
+    float = false,
+    fullscreen = true,
+    idle_inhibit = "fullscreen",
+    content = "game",
+    immediate = true,
+    render_unfocused = true,
+    suppress_event = "fullscreen fullscreenoutput",
 }
 
 hl.window_rule {
-	name             = "nte",
-	match            = {
-		class = "^(steam_app_default)$",
-		title = "^(NTE)$",
-	},
-	idle_inhibit     = "fullscreen",
-	content          = "game",
-	immediate        = true,
-	render_unfocused = true,
+    name = "nte",
+    match = {
+        class = "^(steam_app_default)$",
+        title = "^(NTE)$",
+    },
+    idle_inhibit = "fullscreen",
+    content = "game",
+    immediate = true,
+    render_unfocused = true,
 }
 
 hl.window_rule {
-	name             = "minecraft",
-	match            = { initial_title = "^(Minecraft.*)$" },
-	float            = false,
-	idle_inhibit     = "fullscreen",
-	content          = "game",
-	immediate        = true,
-	render_unfocused = true,
-	fullscreen_state = "2 2",
-	suppress_event   = "fullscreen fullscreenoutput",
+    name = "minecraft",
+    match = { initial_title = "^(Minecraft.*)$" },
+    float = false,
+    idle_inhibit = "fullscreen",
+    content = "game",
+    immediate = true,
+    render_unfocused = true,
+    fullscreen_state = "2 2",
+    suppress_event = "fullscreen fullscreenoutput",
 }

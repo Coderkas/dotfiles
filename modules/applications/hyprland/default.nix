@@ -11,7 +11,6 @@ let
 
   hyprland-git = inputs.hyprland.packages.${platform}.hyprland;
   xdg-desktop-portal-hyprland-git = inputs.hyprland.packages.${platform}.xdg-desktop-portal-hyprland;
-  hyprgrass-git = inputs.hyprgrass.packages.${platform}.hyprgrass;
 in
 {
   options.machine.hyprland.enable = lib.mkOption {
@@ -60,9 +59,6 @@ in
           cmenu = "",
           toggleWvkbd = "${pkgs.procps}/bin/kill --signal 34 $(${pkgs.procps}/bin/pgrep wvkbd-mobintl)",
           host = "${config.machine.name}",
-          -- Dont actually need to interpolate the path.
-          -- Just add the package to systemPackages and it will be linked to /run/current-system/sw/lib/libhyprgrass.so
-          hyprgrassPath = "${hyprgrass-git}/lib/libhyprgrass.so"
         }
       '';
 
@@ -85,7 +81,7 @@ in
       serviceConfig = {
         Type = "notify";
         Slice = "session.slice";
-        ExecStart = "${config.programs.hyprland.package}/bin/Hyprland";
+        ExecStart = "/run/wrappers/bin/Hyprland";
       };
     };
 

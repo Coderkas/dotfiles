@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 {
   machine = {
     desktop = {
@@ -72,6 +77,7 @@
 
   environment.systemPackages = [
     pkgs.wvkbd
+    inputs.hyprgrass.packages."x86_64-linux".hyprgrass
   ];
 
   swapDevices = [
