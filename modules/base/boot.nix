@@ -85,9 +85,6 @@ in
         enable = cfg.secureBoot.enable;
         pkiBundle = "/var/lib/sbctl";
         configurationLimit = 3;
-        settings = {
-          timeout = 0;
-        };
       };
 
       tmp.cleanOnBoot = true;

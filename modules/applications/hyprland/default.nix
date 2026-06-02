@@ -60,6 +60,8 @@ in
           cmenu = "",
           toggleWvkbd = "${pkgs.procps}/bin/kill --signal 34 $(${pkgs.procps}/bin/pgrep wvkbd-mobintl)",
           host = "${config.machine.name}",
+          -- Dont actually need to interpolate the path.
+          -- Just add the package to systemPackages and it will be linked to /run/current-system/sw/lib/libhyprgrass.so
           hyprgrassPath = "${hyprgrass-git}/lib/libhyprgrass.so"
         }
       '';
