@@ -28,6 +28,7 @@ in
     };
 
     programs = {
+      bandwhich.enable = true; # top for sockets/connections
       dconf.enable = true;
       kdeconnect.enable = true;
       thunderbird.enable = true;
@@ -90,7 +91,6 @@ in
         pkgs.termscp # terminal for ftp, scp, etc.
         pkgs.sqlite
         pkgs.nurl # Nix url resolver
-        pkgs.bandwhich # top for sockets/connections
         pkgs.systemctl-tui
 
         pkgs.zathura
