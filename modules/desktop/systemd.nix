@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  self,
+  pkgs,
   ...
 }:
 let
@@ -15,15 +15,33 @@ in
       services = {
         hydrate-reminder = {
           path = lib.mkForce [ ];
-          serviceConfig.ExecStart = "notify-send -i ${self}/assets/chug.png 'Reminder' 'Stay hydrated!'; mpv ${self}/assets/poi.mp3 --volume=100";
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = [
+              "${pkgs.libnotify}/bin/notify-send -i /home/${cfg.owner}/dotfiles/assets/chug.png 'Reminder' 'Stay hydrated!'"
+              "${pkgs.ffmpeg}/bin/ffplay -loglevel warning -nodisp -autoexit /home/${cfg.owner}/dotfiles/assets/poi.mp3"
+            ];
+          };
         };
         rsi-reminder = {
           path = lib.mkForce [ ];
-          serviceConfig.ExecStart = "notify-send -i ${self}/assets/peek.png 'Reminder' 'Posture check!'; mpv ${self}/assets/poi.mp3 --volume=100";
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = [
+              "${pkgs.libnotify}/bin/notify-send -i /home/${cfg.owner}/dotfiles/assets/peek.png 'Reminder' 'Posture check!'"
+              "${pkgs.ffmpeg}/bin/ffplay -loglevel warning -nodisp -autoexit /home/${cfg.owner}/dotfiles/assets/poi.mp3"
+            ];
+          };
         };
         shutdown-reminder = {
           path = lib.mkForce [ ];
-          serviceConfig.ExecStart = "notify-send -i /home/${cfg.owner}/dotfiles/assets/stare.png -u critical 'Attention' 'If you dont shutdown now you are gonna regret it in 9 hours!'; mpv /home/${cfg.owner}/dotfiles/assets/panic.ogg --volume=100";
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = [
+              "${pkgs.libnotify}/bin/notify-send -i /home/${cfg.owner}/dotfiles/assets/stare.png -u critical 'Attention' 'If you dont shutdown now you are gonna regret it in 9 hours!'"
+              "${pkgs.ffmpeg}/bin/ffplay -loglevel warning -nodisp -autoexit /home/${cfg.owner}/dotfiles/assets/panic.ogg"
+            ];
+          };
         };
       };
 

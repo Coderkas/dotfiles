@@ -113,6 +113,8 @@ in
         pkgs.qbittorrent
         pkgs.wireguard-tools
         hyprpicker-git
+
+        pkgs.man-pages # add some extra man pages
       ];
     };
   };
