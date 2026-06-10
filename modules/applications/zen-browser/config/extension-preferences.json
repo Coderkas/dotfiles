@@ -1,0 +1,50 @@
+{
+  "firefox@betterttv.net": {
+    "permissions": [],
+    "origins": [],
+    "data_collection": []
+  },
+  "uBlock0@raymondhill.net": {
+    "permissions": [
+      "internal:privateBrowsingAllowed"
+    ],
+    "origins": [],
+    "data_collection": []
+  },
+  "vpn@proton.ch": {
+    "permissions": [
+      "internal:privateBrowsingAllowed"
+    ],
+    "origins": [
+      "https://*/*",
+      "http://*/*",
+      "ftp://*/*",
+      "wss://*/*",
+      "ws://*/*",
+      "https://account.protonvpn.com/*",
+      "https://account.proton.me/*"
+    ],
+    "data_collection": []
+  },
+  "{d7742d87-e61d-4b78-b8a1-b469842139fa}": {
+    "permissions": [
+      "<all_urls>"
+    ],
+    "origins": [
+      "<all_urls>"
+    ],
+    "data_collection": []
+  },
+  "{6b733b82-9261-47ee-a595-2dda294a4d08}": {
+    "permissions": [
+      "<all_urls>"
+    ],
+    "origins": [
+      "<all_urls>",
+      "http://*/*",
+      "https://*/*",
+      "file://*/*"
+    ],
+    "data_collection": []
+  }
+}

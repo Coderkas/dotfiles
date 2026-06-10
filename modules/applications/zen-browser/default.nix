@@ -18,7 +18,7 @@ let
   extensionsMapped =
     profile:
     (map (ext: {
-      name = ".zen/${profile}/extensions/${ext.name}.xpi";
+      name = "zen/${profile}/extensions/${ext.name}.xpi";
       value.source = builtins.fetchurl { inherit (ext) url sha256; };
     }) extensionsList);
 in
@@ -29,12 +29,108 @@ in
 
     hjem.users.${owner}.xdg.config.files = {
       "zen/profiles.ini".source = ./config/profiles.ini;
-
       "zen/ImmersionProfile/user.js".source = ./config/user.js;
-      "zen/ImmersionProfile/search.json.mozlz4".source = ./config/search.json.mozlz4;
+      "zen/ImmersionProfile/search.json.mozlz4" = {
+        source = ./config/search.json.mozlz4;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/ImmersionProfile/prefs.js" = {
+        source = ./config/user.js;
+        type = "copy";
+        permissions = "644";
+      };
+      "zen/ImmersionProfile/extensions.json" = {
+        source = ./config/extensions.json;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/ImmersionProfile/extension-preferences.json" = {
+        source = ./config/extension-preferences.json;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/ImmersionProfile/storage/default/moz-extension+++0a5c1077-6284-4a92-8c3f-03a448e29516" = {
+        source = ./config/yomitan;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/ImmersionProfile/storage/default/moz-extension+++0a5c1077-6284-4a92-8c3f-03a448e29516^userContextId=4294967295" =
+        {
+          source = ./config/yomitan-conf;
+          type = "copy";
+          clobber = true;
+          permissions = "644";
+        };
+      "zen/ImmersionProfile/storage/default/moz-extension+++3b79b31b-3a1e-4175-a558-ebd5f7b633dc" = {
+        source = ./config/ublock;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/ImmersionProfile/storage/default/moz-extension+++3b79b31b-3a1e-4175-a558-ebd5f7b633dc^userContextId=4294967295" =
+        {
+          source = ./config/ublock-conf;
+          type = "copy";
+          clobber = true;
+          permissions = "644";
+        };
 
       "zen/PrimaryProfile/user.js".source = ./config/user.js;
-      "zen/PrimaryProfile/search.json.mozlz4".source = ./config/search.json.mozlz4;
+      "zen/PrimaryProfile/search.json.mozlz4" = {
+        source = ./config/search.json.mozlz4;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/PrimaryProfile/prefs.js" = {
+        source = ./config/user.js;
+        type = "copy";
+        clobber = false;
+        permissions = "644";
+      };
+      "zen/PrimaryProfile/extensions.json" = {
+        source = ./config/extensions.json;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/PrimaryProfile/extension-preferences.json" = {
+        source = ./config/extension-preferences.json;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/PrimaryProfile/storage/default/moz-extension+++0a5c1077-6284-4a92-8c3f-03a448e29516" = {
+        source = ./config/yomitan;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/PrimaryProfile/storage/default/moz-extension+++0a5c1077-6284-4a92-8c3f-03a448e29516^userContextId=4294967295" =
+        {
+          source = ./config/yomitan-conf;
+          type = "copy";
+          clobber = true;
+          permissions = "644";
+        };
+      "zen/PrimaryProfile/storage/default/moz-extension+++3b79b31b-3a1e-4175-a558-ebd5f7b633dc" = {
+        source = ./config/ublock;
+        type = "copy";
+        clobber = true;
+        permissions = "644";
+      };
+      "zen/PrimaryProfile/storage/default/moz-extension+++3b79b31b-3a1e-4175-a558-ebd5f7b633dc^userContextId=4294967295" =
+        {
+          source = ./config/ublock-conf;
+          type = "copy";
+          clobber = true;
+          permissions = "644";
+        };
     }
     // lib.listToAttrs ((extensionsMapped "PrimaryProfile") ++ (extensionsMapped "ImmersionProfile"));
 

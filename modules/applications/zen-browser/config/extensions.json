@@ -1,0 +1,899 @@
+{
+  "schemaVersion": 37,
+  "addons": [
+    {
+      "id": "{d7742d87-e61d-4b78-b8a1-b469842139fa}",
+      "syncGUID": "{255764d1-696d-459e-9b20-57fdf761673d}",
+      "version": "2.4.2",
+      "type": "extension",
+      "loader": null,
+      "updateURL": null,
+      "installOrigins": null,
+      "manifestVersion": 3,
+      "optionsURL": "pages/options.html",
+      "optionsType": 3,
+      "optionsBrowserStyle": false,
+      "aboutURL": null,
+      "defaultLocale": {
+        "name": "Vimium",
+        "description": "The Hacker's Browser. Vimium provides keyboard shortcuts for navigation and control in the spirit of Vim.",
+        "creator": null,
+        "developers": null,
+        "translators": null,
+        "contributors": null
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "embedderDisabled": false,
+      "installDate": 1780777210799,
+      "updateDate": 1780777210799,
+      "applyBackgroundUpdates": 1,
+      "path": "/home/lorkas/.config/zen/PrimaryProfile/extensions/{d7742d87-e61d-4b78-b8a1-b469842139fa}.xpi",
+      "skinnable": false,
+      "sourceURI": null,
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": true,
+      "strictCompatibility": true,
+      "locales": [],
+      "targetApplications": [
+        {
+          "id": "toolkit@mozilla.org",
+          "minVersion": "112.0",
+          "maxVersion": null
+        }
+      ],
+      "targetPlatforms": [],
+      "signedState": 2,
+      "signedTypes": [
+        2,
+        1
+      ],
+      "signedDate": 1774429952000,
+      "seen": true,
+      "dependencies": [],
+      "incognito": "spanning",
+      "userPermissions": {
+        "permissions": [
+          "tabs",
+          "bookmarks",
+          "history",
+          "storage",
+          "sessions",
+          "notifications",
+          "scripting",
+          "webNavigation",
+          "search",
+          "clipboardRead",
+          "clipboardWrite"
+        ],
+        "origins": [],
+        "data_collection": [
+          "none"
+        ]
+      },
+      "optionalPermissions": {
+        "permissions": [],
+        "origins": [
+          "<all_urls>",
+          "file:///",
+          "file:///*/"
+        ],
+        "data_collection": []
+      },
+      "requestedPermissions": {
+        "permissions": [],
+        "origins": [
+          "<all_urls>",
+          "file:///",
+          "file:///*/"
+        ],
+        "data_collection": []
+      },
+      "icons": {
+        "16": "icons/icon.svg",
+        "32": "icons/icon.svg",
+        "48": "icons/icon.svg",
+        "64": "icons/icon.svg",
+        "96": "icons/icon.svg",
+        "128": "icons/icon.svg"
+      },
+      "iconURL": null,
+      "blocklistAttentionDismissed": false,
+      "blocklistState": 0,
+      "blocklistURL": null,
+      "startupData": null,
+      "hidden": false,
+      "installTelemetryInfo": {
+        "source": "app-profile",
+        "method": "sideload"
+      },
+      "recommendationState": null,
+      "rootURI": "jar:file:///home/lorkas/.config/zen/PrimaryProfile/extensions/%7Bd7742d87-e61d-4b78-b8a1-b469842139fa%7D.xpi!/",
+      "location": "app-profile"
+    },
+    {
+      "id": "addon@darkreader.org",
+      "syncGUID": "{258b1e84-2805-4ef5-a6d6-fde606b20780}",
+      "version": "4.9.126",
+      "type": "extension",
+      "loader": null,
+      "updateURL": null,
+      "installOrigins": null,
+      "manifestVersion": 2,
+      "optionsURL": null,
+      "optionsType": null,
+      "optionsBrowserStyle": true,
+      "aboutURL": null,
+      "defaultLocale": {
+        "name": "Dark Reader",
+        "description": "Dark mode for every website. Take care of your eyes, use dark theme for night and daily browsing.",
+        "creator": "Alexander Shutau",
+        "developers": null,
+        "translators": null,
+        "contributors": null
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "embedderDisabled": false,
+      "installDate": 1780777210799,
+      "updateDate": 1780777210799,
+      "applyBackgroundUpdates": 1,
+      "path": "/home/lorkas/.config/zen/PrimaryProfile/extensions/addon@darkreader.org.xpi",
+      "skinnable": false,
+      "sourceURI": null,
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": true,
+      "strictCompatibility": true,
+      "locales": [],
+      "targetApplications": [
+        {
+          "id": "toolkit@mozilla.org",
+          "minVersion": "78.0",
+          "maxVersion": null
+        }
+      ],
+      "targetPlatforms": [],
+      "signedState": 2,
+      "signedTypes": [
+        2,
+        1
+      ],
+      "signedDate": 1780563448000,
+      "seen": true,
+      "dependencies": [],
+      "incognito": "spanning",
+      "userPermissions": {
+        "permissions": [
+          "alarms",
+          "contextMenus",
+          "storage",
+          "tabs",
+          "theme"
+        ],
+        "origins": [
+          "<all_urls>"
+        ],
+        "data_collection": []
+      },
+      "optionalPermissions": {
+        "permissions": [],
+        "origins": [],
+        "data_collection": []
+      },
+      "requestedPermissions": {
+        "permissions": [],
+        "origins": [],
+        "data_collection": []
+      },
+      "icons": {
+        "16": "icons/dr_16.png",
+        "48": "icons/dr_48.png",
+        "128": "icons/dr_128.png"
+      },
+      "iconURL": null,
+      "blocklistAttentionDismissed": false,
+      "blocklistState": 0,
+      "blocklistURL": null,
+      "startupData": null,
+      "hidden": false,
+      "installTelemetryInfo": {
+        "source": "app-profile",
+        "method": "sideload"
+      },
+      "recommendationState": {
+        "validNotAfter": 1938351447000,
+        "validNotBefore": 1780563447000,
+        "states": [
+          "recommended-android",
+          "recommended"
+        ]
+      },
+      "rootURI": "jar:file:///home/lorkas/.config/zen/PrimaryProfile/extensions/addon@darkreader.org.xpi!/",
+      "location": "app-profile"
+    },
+    {
+      "id": "{762f9885-5a13-4abd-9c77-433dcd38b8fd}",
+      "syncGUID": "{8b1d6036-a33e-445f-9542-d682cd3eeed0}",
+      "version": "3.0.0.18",
+      "type": "extension",
+      "loader": null,
+      "updateURL": null,
+      "installOrigins": null,
+      "manifestVersion": 2,
+      "optionsURL": "popup.html",
+      "optionsType": 5,
+      "optionsBrowserStyle": true,
+      "aboutURL": null,
+      "defaultLocale": {
+        "name": "Return YouTube Dislike",
+        "description": "Returns ability to see dislikes",
+        "creator": null,
+        "developers": null,
+        "translators": null,
+        "contributors": null
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "embedderDisabled": false,
+      "installDate": 1780777210799,
+      "updateDate": 1780777210799,
+      "applyBackgroundUpdates": 1,
+      "path": "/home/lorkas/.config/zen/PrimaryProfile/extensions/{762f9885-5a13-4abd-9c77-433dcd38b8fd}.xpi",
+      "skinnable": false,
+      "sourceURI": null,
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": true,
+      "strictCompatibility": true,
+      "locales": [],
+      "targetApplications": [
+        {
+          "id": "toolkit@mozilla.org",
+          "minVersion": null,
+          "maxVersion": null
+        }
+      ],
+      "targetPlatforms": [],
+      "signedState": 2,
+      "signedTypes": [
+        2,
+        1
+      ],
+      "signedDate": 1730108715000,
+      "seen": true,
+      "dependencies": [],
+      "incognito": "spanning",
+      "userPermissions": {
+        "permissions": [
+          "activeTab",
+          "storage"
+        ],
+        "origins": [
+          "*://*.youtube.com/*",
+          "*://returnyoutubedislikeapi.com/*"
+        ],
+        "data_collection": []
+      },
+      "optionalPermissions": {
+        "permissions": [],
+        "origins": [],
+        "data_collection": []
+      },
+      "requestedPermissions": {
+        "permissions": [],
+        "origins": [],
+        "data_collection": []
+      },
+      "icons": {
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+      },
+      "iconURL": null,
+      "blocklistAttentionDismissed": false,
+      "blocklistState": 0,
+      "blocklistURL": null,
+      "startupData": null,
+      "hidden": false,
+      "installTelemetryInfo": {
+        "source": "app-profile",
+        "method": "sideload"
+      },
+      "recommendationState": {
+        "validNotAfter": 1887896715000,
+        "validNotBefore": 1730108715000,
+        "states": [
+          "recommended"
+        ]
+      },
+      "rootURI": "jar:file:///home/lorkas/.config/zen/PrimaryProfile/extensions/%7B762f9885-5a13-4abd-9c77-433dcd38b8fd%7D.xpi!/",
+      "location": "app-profile"
+    },
+    {
+      "id": "uBlock0@raymondhill.net",
+      "syncGUID": "{d982830e-4842-480c-a235-17219f4123a4}",
+      "version": "1.71.0",
+      "type": "extension",
+      "loader": null,
+      "updateURL": null,
+      "installOrigins": null,
+      "manifestVersion": 2,
+      "optionsURL": "dashboard.html",
+      "optionsType": 3,
+      "optionsBrowserStyle": false,
+      "aboutURL": null,
+      "defaultLocale": {
+        "name": "uBlock Origin",
+        "description": "Finally, an efficient blocker. Easy on CPU and memory.",
+        "creator": "Raymond Hill & contributors",
+        "developers": null,
+        "translators": null,
+        "contributors": null
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "embedderDisabled": false,
+      "installDate": 1780777210799,
+      "updateDate": 1780777210799,
+      "applyBackgroundUpdates": 1,
+      "path": "/home/lorkas/.config/zen/PrimaryProfile/extensions/uBlock0@raymondhill.net.xpi",
+      "skinnable": false,
+      "sourceURI": null,
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": true,
+      "strictCompatibility": true,
+      "locales": [],
+      "targetApplications": [
+        {
+          "id": "toolkit@mozilla.org",
+          "minVersion": "115.0",
+          "maxVersion": null
+        }
+      ],
+      "targetPlatforms": [],
+      "signedState": 2,
+      "signedTypes": [
+        2,
+        1
+      ],
+      "signedDate": 1779804372000,
+      "seen": true,
+      "dependencies": [],
+      "incognito": "spanning",
+      "userPermissions": {
+        "permissions": [
+          "alarms",
+          "dns",
+          "menus",
+          "privacy",
+          "storage",
+          "tabs",
+          "unlimitedStorage",
+          "webNavigation",
+          "webRequest",
+          "webRequestBlocking"
+        ],
+        "origins": [
+          "<all_urls>",
+          "http://*/*",
+          "https://*/*",
+          "file://*/*",
+          "https://easylist.to/*",
+          "https://*.fanboy.co.nz/*",
+          "https://filterlists.com/*",
+          "https://forums.lanik.us/*",
+          "https://github.com/*",
+          "https://*.github.io/*",
+          "https://github.com/uBlockOrigin/*",
+          "https://ublockorigin.github.io/*",
+          "https://*.reddit.com/r/uBlockOrigin/*"
+        ],
+        "data_collection": [
+          "none"
+        ]
+      },
+      "optionalPermissions": {
+        "permissions": [],
+        "origins": [],
+        "data_collection": []
+      },
+      "requestedPermissions": {
+        "permissions": [],
+        "origins": [],
+        "data_collection": []
+      },
+      "icons": {
+        "16": "img/ublock.svg",
+        "32": "img/ublock.svg",
+        "48": "img/ublock.svg",
+        "64": "img/ublock.svg",
+        "96": "img/ublock.svg",
+        "128": "img/ublock.svg"
+      },
+      "iconURL": null,
+      "blocklistAttentionDismissed": false,
+      "blocklistState": 0,
+      "blocklistURL": null,
+      "startupData": null,
+      "hidden": false,
+      "installTelemetryInfo": {
+        "source": "app-profile",
+        "method": "sideload"
+      },
+      "recommendationState": {
+        "validNotAfter": 1937592372000,
+        "validNotBefore": 1779804372000,
+        "states": [
+          "recommended",
+          "recommended-android"
+        ]
+      },
+      "rootURI": "jar:file:///home/lorkas/.config/zen/PrimaryProfile/extensions/uBlock0@raymondhill.net.xpi!/",
+      "location": "app-profile"
+    },
+    {
+      "id": "firefox@betterttv.net",
+      "syncGUID": "{44e81c17-70cb-490e-adf0-cfe5de5a5bb7}",
+      "version": "7.7.10",
+      "type": "extension",
+      "loader": null,
+      "updateURL": null,
+      "installOrigins": null,
+      "manifestVersion": 2,
+      "optionsURL": null,
+      "optionsType": null,
+      "optionsBrowserStyle": true,
+      "aboutURL": null,
+      "defaultLocale": {
+        "name": "BetterTTV",
+        "description": "BetterTTV enhances Twitch and YouTube with new features, emotes, and more.",
+        "creator": "NightDev, LLC",
+        "homepageURL": "https://betterttv.com",
+        "developers": null,
+        "translators": null,
+        "contributors": null
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "embedderDisabled": false,
+      "installDate": 1780777210799,
+      "updateDate": 1780777210799,
+      "applyBackgroundUpdates": 1,
+      "path": "/home/lorkas/.config/zen/PrimaryProfile/extensions/firefox@betterttv.net.xpi",
+      "skinnable": false,
+      "sourceURI": null,
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": true,
+      "strictCompatibility": true,
+      "locales": [],
+      "targetApplications": [
+        {
+          "id": "toolkit@mozilla.org",
+          "minVersion": "109.0",
+          "maxVersion": null
+        }
+      ],
+      "targetPlatforms": [],
+      "signedState": 2,
+      "signedTypes": [
+        2,
+        1
+      ],
+      "signedDate": 1779445319000,
+      "seen": true,
+      "dependencies": [],
+      "incognito": "spanning",
+      "userPermissions": {
+        "permissions": [
+          "scripting",
+          "activeTab"
+        ],
+        "origins": [
+          "*://*.twitch.tv/*"
+        ],
+        "data_collection": []
+      },
+      "optionalPermissions": {
+        "permissions": [],
+        "origins": [
+          "*://*.youtube.com/*"
+        ],
+        "data_collection": []
+      },
+      "requestedPermissions": {
+        "permissions": [],
+        "origins": [],
+        "data_collection": []
+      },
+      "icons": {
+        "128": "icon.png"
+      },
+      "iconURL": null,
+      "blocklistAttentionDismissed": false,
+      "blocklistState": 0,
+      "blocklistURL": null,
+      "startupData": null,
+      "hidden": false,
+      "installTelemetryInfo": {
+        "source": "app-profile",
+        "method": "sideload"
+      },
+      "recommendationState": {
+        "validNotAfter": 1937233319000,
+        "validNotBefore": 1779445319000,
+        "states": [
+          "recommended"
+        ]
+      },
+      "rootURI": "jar:file:///home/lorkas/.config/zen/PrimaryProfile/extensions/firefox@betterttv.net.xpi!/",
+      "location": "app-profile"
+    },
+    {
+      "id": "vpn@proton.ch",
+      "syncGUID": "{46218863-1290-455a-9317-eedad51b52b3}",
+      "version": "1.3.0",
+      "type": "extension",
+      "loader": null,
+      "updateURL": null,
+      "installOrigins": null,
+      "manifestVersion": 3,
+      "optionsURL": null,
+      "optionsType": null,
+      "optionsBrowserStyle": true,
+      "aboutURL": null,
+      "defaultLocale": {
+        "name": "Proton VPN: Fast & Secure",
+        "description": "Secure your internet and protect your online privacy in one click.",
+        "creator": null,
+        "developers": null,
+        "translators": null,
+        "contributors": null
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "embedderDisabled": false,
+      "installDate": 1780777210799,
+      "updateDate": 1780777210799,
+      "applyBackgroundUpdates": 1,
+      "path": "/home/lorkas/.config/zen/PrimaryProfile/extensions/vpn@proton.ch.xpi",
+      "skinnable": false,
+      "sourceURI": null,
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": true,
+      "strictCompatibility": true,
+      "locales": [],
+      "targetApplications": [
+        {
+          "id": "toolkit@mozilla.org",
+          "minVersion": "109.0",
+          "maxVersion": null
+        }
+      ],
+      "targetPlatforms": [],
+      "signedState": 2,
+      "signedTypes": [
+        2,
+        1
+      ],
+      "signedDate": 1777027942000,
+      "seen": true,
+      "dependencies": [],
+      "incognito": "spanning",
+      "userPermissions": {
+        "permissions": [
+          "idle",
+          "notifications",
+          "privacy",
+          "scripting",
+          "storage",
+          "tabs",
+          "webRequest",
+          "activeTab",
+          "webRequestBlocking"
+        ],
+        "origins": [],
+        "data_collection": []
+      },
+      "optionalPermissions": {
+        "permissions": [
+          "proxy"
+        ],
+        "origins": [
+          "https://*/",
+          "http://*/",
+          "ftp://*/",
+          "wss://*/",
+          "ws://*/",
+          "https://account.protonvpn.com/*",
+          "https://account.proton.me/*"
+        ],
+        "data_collection": []
+      },
+      "requestedPermissions": {
+        "permissions": [],
+        "origins": [
+          "https://*/",
+          "http://*/",
+          "ftp://*/",
+          "wss://*/",
+          "ws://*/",
+          "https://account.protonvpn.com/*",
+          "https://account.proton.me/*"
+        ],
+        "data_collection": []
+      },
+      "icons": {
+        "16": "img/icon-16.png",
+        "19": "img/icon-19.png",
+        "24": "img/icon-24.png",
+        "32": "img/icon-32.png",
+        "38": "img/icon-38.png",
+        "48": "img/icon-48.png",
+        "64": "img/icon-64.png",
+        "72": "img/icon-72.png",
+        "96": "img/icon-96.png",
+        "128": "img/icon-128.png",
+        "256": "img/icon-256.png",
+        "512": "img/icon-512.png"
+      },
+      "iconURL": null,
+      "blocklistAttentionDismissed": false,
+      "blocklistState": 0,
+      "blocklistURL": null,
+      "startupData": null,
+      "hidden": false,
+      "installTelemetryInfo": {
+        "source": "app-profile",
+        "method": "sideload"
+      },
+      "recommendationState": null,
+      "rootURI": "jar:file:///home/lorkas/.config/zen/PrimaryProfile/extensions/vpn@proton.ch.xpi!/",
+      "location": "app-profile"
+    },
+    {
+      "id": "keepassxc-browser@keepassxc.org",
+      "syncGUID": "{24eaa914-e968-4a88-84f6-c034ff02da47}",
+      "version": "1.10.3",
+      "type": "extension",
+      "loader": null,
+      "updateURL": null,
+      "installOrigins": null,
+      "manifestVersion": 2,
+      "optionsURL": "options/options.html",
+      "optionsType": 3,
+      "optionsBrowserStyle": false,
+      "aboutURL": null,
+      "defaultLocale": {
+        "name": "KeePassXC-Browser",
+        "description": "KeePassXC integration for modern web browsers",
+        "creator": "KeePassXC Team",
+        "developers": null,
+        "translators": null,
+        "contributors": null
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "embedderDisabled": false,
+      "installDate": 1780777210799,
+      "updateDate": 1780777210799,
+      "applyBackgroundUpdates": 1,
+      "path": "/home/lorkas/.config/zen/PrimaryProfile/extensions/keepassxc-browser@keepassxc.org.xpi",
+      "skinnable": false,
+      "sourceURI": null,
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": true,
+      "strictCompatibility": true,
+      "locales": [],
+      "targetApplications": [
+        {
+          "id": "toolkit@mozilla.org",
+          "minVersion": "100.0",
+          "maxVersion": null
+        }
+      ],
+      "targetPlatforms": [],
+      "signedState": 2,
+      "signedTypes": [
+        2,
+        1
+      ],
+      "signedDate": 1780583814000,
+      "seen": true,
+      "dependencies": [],
+      "incognito": "spanning",
+      "userPermissions": {
+        "permissions": [
+          "activeTab",
+          "clipboardWrite",
+          "contextMenus",
+          "cookies",
+          "nativeMessaging",
+          "notifications",
+          "storage",
+          "tabs",
+          "webNavigation",
+          "webRequest",
+          "webRequestBlocking"
+        ],
+        "origins": [
+          "https://*/*",
+          "http://*/*",
+          "https://api.github.com/",
+          "<all_urls>"
+        ],
+        "data_collection": []
+      },
+      "optionalPermissions": {
+        "permissions": [
+          "privacy"
+        ],
+        "origins": [],
+        "data_collection": []
+      },
+      "requestedPermissions": {
+        "permissions": [],
+        "origins": [],
+        "data_collection": []
+      },
+      "icons": {
+        "16": "icons/keepassxc.svg",
+        "32": "icons/keepassxc.svg",
+        "48": "icons/keepassxc.svg",
+        "64": "icons/keepassxc.svg",
+        "96": "icons/keepassxc.svg",
+        "128": "icons/keepassxc.svg"
+      },
+      "iconURL": null,
+      "blocklistAttentionDismissed": false,
+      "blocklistState": 0,
+      "blocklistURL": null,
+      "startupData": null,
+      "hidden": false,
+      "installTelemetryInfo": {
+        "source": "app-profile",
+        "method": "sideload"
+      },
+      "recommendationState": null,
+      "rootURI": "jar:file:///home/lorkas/.config/zen/PrimaryProfile/extensions/keepassxc-browser@keepassxc.org.xpi!/",
+      "location": "app-profile"
+    },
+    {
+      "id": "{6b733b82-9261-47ee-a595-2dda294a4d08}",
+      "syncGUID": "{06d4f38b-d3bf-465f-b1fc-e687b2c57e70}",
+      "version": "26.5.19.0",
+      "type": "extension",
+      "loader": null,
+      "updateURL": null,
+      "installOrigins": null,
+      "manifestVersion": 3,
+      "optionsURL": "settings.html",
+      "optionsType": 3,
+      "optionsBrowserStyle": false,
+      "aboutURL": null,
+      "defaultLocale": {
+        "name": "Yomitan Popup Dictionary",
+        "description": "Popup dictionary for language learning",
+        "creator": "Yomidevs",
+        "developers": null,
+        "translators": null,
+        "contributors": null
+      },
+      "visible": true,
+      "active": true,
+      "userDisabled": false,
+      "appDisabled": false,
+      "embedderDisabled": false,
+      "installDate": 1780777210799,
+      "updateDate": 1780777210799,
+      "applyBackgroundUpdates": 1,
+      "path": "/home/lorkas/.config/zen/PrimaryProfile/extensions/{6b733b82-9261-47ee-a595-2dda294a4d08}.xpi",
+      "skinnable": false,
+      "sourceURI": null,
+      "releaseNotesURI": null,
+      "softDisabled": false,
+      "foreignInstall": true,
+      "strictCompatibility": true,
+      "locales": [],
+      "targetApplications": [
+        {
+          "id": "toolkit@mozilla.org",
+          "minVersion": "115.0",
+          "maxVersion": null
+        }
+      ],
+      "targetPlatforms": [],
+      "signedState": 2,
+      "signedTypes": [
+        2,
+        1
+      ],
+      "signedDate": 1779979276000,
+      "seen": true,
+      "dependencies": [],
+      "incognito": "spanning",
+      "userPermissions": {
+        "permissions": [
+          "storage",
+          "clipboardWrite",
+          "unlimitedStorage",
+          "declarativeNetRequest",
+          "scripting",
+          "contextMenus"
+        ],
+        "origins": [],
+        "data_collection": []
+      },
+      "optionalPermissions": {
+        "permissions": [
+          "clipboardRead",
+          "nativeMessaging"
+        ],
+        "origins": [
+          "<all_urls>",
+          "http://*/*",
+          "https://*/*",
+          "file://*/*"
+        ],
+        "data_collection": []
+      },
+      "requestedPermissions": {
+        "permissions": [],
+        "origins": [
+          "<all_urls>",
+          "http://*/*",
+          "https://*/*",
+          "file://*/*"
+        ],
+        "data_collection": []
+      },
+      "icons": {
+        "16": "images/icon16.png",
+        "19": "images/icon19.png",
+        "32": "images/icon32.png",
+        "38": "images/icon38.png",
+        "48": "images/icon48.png",
+        "64": "images/icon64.png",
+        "128": "images/icon128.png"
+      },
+      "iconURL": null,
+      "blocklistAttentionDismissed": false,
+      "blocklistState": 0,
+      "blocklistURL": null,
+      "startupData": null,
+      "hidden": false,
+      "installTelemetryInfo": {
+        "source": "app-profile",
+        "method": "sideload"
+      },
+      "recommendationState": {
+        "validNotAfter": 1937767274000,
+        "validNotBefore": 1779979274000,
+        "states": [
+          "recommended",
+          "recommended-android"
+        ]
+      },
+      "rootURI": "jar:file:///home/lorkas/.config/zen/PrimaryProfile/extensions/%7B6b733b82-9261-47ee-a595-2dda294a4d08%7D.xpi!/",
+      "location": "app-profile"
+    }
+  ]
+}

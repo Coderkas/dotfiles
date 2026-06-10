@@ -71,6 +71,7 @@ in
         pkgs._7zip-zstd-rar
         pkgs.unrar
         pkgs.cabextract
+        pkgs.file-roller
         # Multimedia
         pkgs.ffmpeg
         pkgs.viu
@@ -90,8 +91,10 @@ in
         pkgs.numbat # Calculator/math scripting
         pkgs.termscp # terminal for ftp, scp, etc.
         pkgs.sqlite
+        pkgs.lazysql
         pkgs.nurl # Nix url resolver
         pkgs.systemctl-tui
+        pkgs.vim
 
         pkgs.zathura
         (pkgs.mpv.override {
