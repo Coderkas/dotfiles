@@ -53,20 +53,6 @@ in
         clobber = true;
         permissions = "644";
       };
-      "zen/ImmersionProfile/storage/default/moz-extension+++0a5c1077-6284-4a92-8c3f-03a448e29516^userContextId=4294967295" =
-        {
-          source = ./config/yomitan;
-          type = "copy";
-          clobber = true;
-          permissions = "644";
-        };
-      "zen/ImmersionProfile/storage/default/moz-extension+++3b79b31b-3a1e-4175-a558-ebd5f7b633dc^userContextId=4294967295" =
-        {
-          source = ./config/ublock;
-          type = "copy";
-          clobber = true;
-          permissions = "644";
-        };
 
       "zen/PrimaryProfile/user.js".source = ./config/user.js;
       "zen/PrimaryProfile/search.json.mozlz4" = {
@@ -93,20 +79,6 @@ in
         clobber = true;
         permissions = "644";
       };
-      "zen/PrimaryProfile/storage/default/moz-extension+++0a5c1077-6284-4a92-8c3f-03a448e29516^userContextId=4294967295" =
-        {
-          source = ./config/yomitan;
-          type = "copy";
-          clobber = true;
-          permissions = "644";
-        };
-      "zen/PrimaryProfile/storage/default/moz-extension+++3b79b31b-3a1e-4175-a558-ebd5f7b633dc^userContextId=4294967295" =
-        {
-          source = ./config/ublock;
-          type = "copy";
-          clobber = true;
-          permissions = "644";
-        };
     }
     // lib.listToAttrs ((extensionsMapped "PrimaryProfile") ++ (extensionsMapped "ImmersionProfile"));
 
