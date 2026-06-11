@@ -9,14 +9,7 @@
 
     hjem = {
       url = "github:feel-co/hjem";
-      inputs = {
-        smfh.inputs = {
-          rust-overlay.follows = "rust-overlay";
-          nixpkgs.follows = "nixpkgs";
-          systems.follows = "systems";
-        };
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     lanzaboote = {
@@ -27,18 +20,7 @@
       };
     };
 
-    nix-cachyos-kernel = {
-      url = "github:xddxdd/nix-cachyos-kernel/release";
-      inputs.flake-parts.follows = "flake-parts";
-    };
-
-    # Dependencies
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
-    rust-overlay.follows = "lanzaboote/rust-overlay";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     # Applications
     hyprland = {
@@ -50,8 +32,9 @@
       inputs = {
         aquamarine.follows = "hyprland/aquamarine";
         hyprgraphics.follows = "hyprland/hyprgraphics";
-        hyprutils.follows = "hyprland/hyprutils";
         hyprlang.follows = "hyprland/hyprlang";
+        hyprtoolkit.follow = "hyprland/hyprland-guiutils/hyprtoolkit";
+        hyprutils.follows = "hyprland/hyprutils";
         hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
         hyprwire.follows = "hyprland/hyprwire";
         nixpkgs.follows = "hyprland/nixpkgs";
