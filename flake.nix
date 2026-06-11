@@ -33,7 +33,7 @@
         aquamarine.follows = "hyprland/aquamarine";
         hyprgraphics.follows = "hyprland/hyprgraphics";
         hyprlang.follows = "hyprland/hyprlang";
-        hyprtoolkit.follow = "hyprland/hyprland-guiutils/hyprtoolkit";
+        hyprtoolkit.follows = "hyprland/hyprland-guiutils/hyprtoolkit";
         hyprutils.follows = "hyprland/hyprutils";
         hyprwayland-scanner.follows = "hyprland/hyprwayland-scanner";
         hyprwire.follows = "hyprland/hyprwire";
