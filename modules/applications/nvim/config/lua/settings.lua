@@ -22,6 +22,7 @@ vim.o.smartindent = true
 vim.o.splitright = true
 vim.o.splitbelow = true
 vim.o.tm = 300
+vim.o.undofile = true
 vim.o.updatetime = 250
 vim.o.winborder = "rounded"
 vim.o.wrap = false

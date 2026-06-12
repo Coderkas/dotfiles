@@ -10,7 +10,6 @@
 
       primaryMonitor = "DP-2";
     };
-    secureBoot.enable = true;
     gaming.enable = true;
     themeName = "Gruvbox";
     owner = "lorkas";

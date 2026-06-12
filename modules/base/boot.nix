@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -10,10 +9,8 @@ let
   cachyos = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto;
 in
 {
-  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
 
   options.machine = {
-    secureBoot.enable = lib.mkEnableOption "Activate secure boot";
     kernel = lib.mkOption {
       type = lib.types.attrs;
       default = if cachyos.kernel.version != "6.15.4" then cachyos else pkgs.linuxPackages_zen;
@@ -68,28 +65,21 @@ in
       };
 
       loader = {
-        efi.canTouchEfiVariables = true;
-
         grub = {
-          enable = !cfg.secureBoot.enable;
+          enable = true;
           efiSupport = true;
+          efiInstallAsRemovable = true;
           useOSProber = true;
           configurationLimit = 3;
           device = "nodev";
           theme = pkgs.catppuccin-grub;
+          gfxmodeEfi = "2560x1440,1024x768,auto";
         };
 
         systemd-boot.enable = lib.mkForce false;
       };
-      lanzaboote = {
-        enable = cfg.secureBoot.enable;
-        pkiBundle = "/var/lib/sbctl";
-        configurationLimit = 3;
-      };
 
       tmp.cleanOnBoot = true;
     };
-
-    environment.systemPackages = lib.optionals cfg.secureBoot.enable [ pkgs.sbctl ];
   };
 }

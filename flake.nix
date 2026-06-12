@@ -5,19 +5,10 @@
     # System
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    systems.url = "github:nix-systems/default-linux";
 
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.0.0";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        pre-commit.follows = "";
-      };
     };
 
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
