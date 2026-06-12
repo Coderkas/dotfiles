@@ -49,7 +49,10 @@ in
           "xhci_pci"
         ];
 
-        systemd.dmVerity.enable = true;
+        systemd = {
+          dmVerity.enable = false;
+          tpm2.enable = false;
+        };
       };
 
       blacklistedKernelModules = [
