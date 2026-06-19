@@ -95,11 +95,6 @@ in
     };
 
     environment = {
-      pathsToLink = [
-        "/share/xdg-desktop-portal"
-        "/share/applications"
-      ];
-
       systemPackages = [
         pkgs.xdg-utils
         pkgs.xdg-terminal-exec

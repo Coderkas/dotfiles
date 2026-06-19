@@ -127,7 +127,11 @@ in
     services = {
       dbus = {
         implementation = "broker";
-        packages = lib.mkForce (lib.unique config.environment.systemPackages);
+        # TODO either write the whole dbus config by myself or stop linking share/dbus, throw out config.system.path and actually only include the packages passed to this option
+        packages = lib.mkForce [
+          config.system.path
+          pkgs.gcr
+        ];
       };
 
       # More scheduling stuff

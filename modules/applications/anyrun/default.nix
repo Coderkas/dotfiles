@@ -9,10 +9,11 @@ let
   primaryRunner = config.machine.desktop.runner.name;
   inherit (config.machine) owner;
   anyrun-prep = pkgs.writeShellScriptBin "anyrun-prep" /* sh */ ''
+    args=("$@")
     if [[ "$1" == "no-term" ]]; then
-      echo "systemd-run --user sh -c '$2'"
+      echo "systemd-run --user sh -c \"''${args[*]:1}\""
     else
-      echo $2
+      echo "$2"
     fi
   '';
 in
