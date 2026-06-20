@@ -9,6 +9,7 @@
     ./rofi
     ./walker
     ./zen-browser
+    ./dbus.nix
     ./dunst.nix
     ./easyeffects.nix
     ./ghostty.nix
