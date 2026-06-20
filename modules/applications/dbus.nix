@@ -26,15 +26,21 @@ let
       ignoreCollisions = true;
     });
 
-  dbusPaths = makeDBusPaths "dbus-paths" cfg.packages;
+  dbusPaths = makeDBusPaths "dbus-paths" (
+    [
+      cfg.dbusPackage
+      config.systemd.package
+    ]
+    ++ cfg.packages
+  );
   initrdDBusPaths = makeDBusPaths "dbus-initrd-paths" [
     cfg.dbusPackage
     config.boot.initrd.systemd.package
   ];
 
   mkSystemConfContent = apparmor: servicehelper: paths: /* xml */ ''
-    <!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-Bus Bus Configuration 1.0//EN"
-     "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE busconfig SYSTEM "busconfig.dtd">
     <busconfig>
       <type>system</type>
       <user>messagebus</user>
@@ -78,8 +84,8 @@ let
       </policy>
 
       <servicedir>${paths}/share/dbus-1/system-services</servicedir>
-      <includedir>${paths}/etc/dbus-1/systemd.d</includedir>
-      <includedir>${paths}/share/dbus-1/systemd.d</includedir>
+      <includedir>${paths}/etc/dbus-1/system.d</includedir>
+      <includedir>${paths}/share/dbus-1/system.d</includedir>
       <include ignore_missing="yes">/etc/dbus-1/system-local.conf</include>
 
       <apparmor mode="${apparmor}"/>
@@ -87,8 +93,8 @@ let
   '';
 
   mkSessionConfContent = apparmor: paths: /* xml */ ''
-    <!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-Bus Bus Configuration 1.0//EN"
-     "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE busconfig SYSTEM "busconfig.dtd">
     <busconfig>
       <type>session</type>
       <keep_umask/>
@@ -106,10 +112,10 @@ let
       <limit name="max_outgoing_bytes">1000000000</limit>
       <limit name="max_outgoing_unix_fds">250000000</limit>
       <limit name="max_message_size">1000000000</limit>
-      <limit name="service_start_timeout">120000</limit>  
+      <limit name="service_start_timeout">120000</limit>
       <limit name="auth_timeout">240000</limit>
       <limit name="pending_fd_timeout">150000</limit>
-      <limit name="max_completed_connections">100000</limit>  
+      <limit name="max_completed_connections">100000</limit>
       <limit name="max_incomplete_connections">10000</limit>
       <limit name="max_connections_per_user">100000</limit>
       <limit name="max_pending_service_starts">10000</limit>
@@ -142,7 +148,9 @@ in
 
   options = {
     boot.initrd.systemd.dbus = {
-      enable = mkEnableOption "dbus in stage 1" { default = true; };
+      enable = mkEnableOption "dbus in stage 1" // {
+        default = true;
+      };
     };
 
     services.dbus = {
@@ -236,17 +244,20 @@ in
       users.groups.messagebus.gid = config.ids.gids.messagebus;
 
       # Install dbus for dbus tools even when using dbus-broker
-      environment.systemPackages = [
-        cfg.dbusPackage
-      ];
+      environment = {
+        etc = {
+          "dbus-1/system.conf".source = systemConf;
+          "dbus-1/session.conf".source = sessionConf;
+        };
+        systemPackages = [
+          cfg.dbusPackage
+        ];
+      };
 
       systemd = {
         sockets.dbus = {
           description = "D-Bus System Message Bus Socket";
           listenStreams = [ "/run/dbus/system_bus_socket" ];
-          wantedBy = [
-            "sockets.target"
-          ];
         };
         user.sockets.dbus = {
           description = "D-Bus User Message Bus Socket";
