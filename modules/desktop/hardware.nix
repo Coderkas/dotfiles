@@ -12,7 +12,6 @@ in
     hardware = {
       amdgpu = lib.mkIf cfg.hasDedicatedGpu {
         initrd.enable = true;
-        opencl.enable = true;
       };
 
       keyboard.qmk.enable = true;
