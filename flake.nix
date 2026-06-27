@@ -86,6 +86,7 @@
     { self, nixpkgs, ... }@inputs:
     let
       customPkgs = import ./pkgs { inherit inputs; };
+      npin-src = import ./npins;
     in
     {
       inherit (customPkgs) packages;
@@ -93,7 +94,14 @@
       nixosConfigurations = nixpkgs.lib.genAttrs [ "omnissiah" "servitor" "automaton" "medusa" ] (
         name:
         nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs customPkgs self; };
+          specialArgs = {
+            inherit
+              inputs
+              customPkgs
+              self
+              npin-src
+              ;
+          };
           modules = [
             ./modules
             ./hosts/${name}.nix

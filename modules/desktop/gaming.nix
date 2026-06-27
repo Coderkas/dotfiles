@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  npin-src,
   pkgs,
   ...
 }:
@@ -17,15 +18,12 @@ in
     programs = {
       steam = {
         enable = true;
-        protontricks.enable = true;
-        extest.enable = true;
-        remotePlay.openFirewall = true;
+        package = pkgs.steam.override {
+          extraEnv.LD_PRELOAD = "libextest.so";
+          extraLibraries = _p: with _p; [ extest ];
+          extraPkgs = _p: [ _p.pulseaudio ];
+        };
         dedicatedServer.openFirewall = true;
-        localNetworkGameTransfers.openFirewall = true;
-        extraCompatPackages = [
-          pkgs.steamtinkerlaunch.steamcompattool
-          pkgs.proton-ge-bin.steamcompattool
-        ];
       };
 
       gamemode = {
@@ -43,7 +41,12 @@ in
 
     environment = {
       sessionVariables = {
-        STEAM_EXTRA_COMPAT_TOOLS_PATHS = [ "\${HOME}/.steam/root/compatibilitytools.d" ];
+        STEAM_EXTRA_COMPAT_TOOLS_PATHS = [
+          "/home/${owner}/.local/share/Steam/compatibilitytools.d"
+          npin-src.proton-ge.outPath
+          npin-src.proton-cachyos.outPath
+          npin-src.proton-dw.outPath
+        ];
         MESA_SHADER_CACHE_MAX_SIZE = "12G"; # bigger shader cache size so they dont have to be processed every time
         # maybe fix for controller stuff?
         PROTON_PREFER_SDL_INPUT = "1";
@@ -54,7 +57,6 @@ in
         pkgs.heroic
         pkgs.wineWow64Packages.stagingFull
         pkgs.umu-launcher
-        pkgs.winetricks
         pkgs.r2modman
         pkgs.prismlauncher
         pkgs.vkbasalt
