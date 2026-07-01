@@ -57,6 +57,7 @@ in
         warn-dirty = false;
         accept-flake-config = false;
         use-cgroups = true;
+        flake-registry = lib.mkAfter config.environment.etc."nix/registry.json".source;
       };
 
       optimise = {
