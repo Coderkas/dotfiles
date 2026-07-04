@@ -16,7 +16,6 @@ in
   config = {
     networking = {
       hostName = cfg.name; # Define your hostname.
-      hosts.${cfg.ipv4} = [ cfg.name ];
 
       networkmanager = {
         enable = true;

@@ -18,12 +18,8 @@ in
     programs = {
       steam = {
         enable = true;
-        package = pkgs.steam.override {
-          extraEnv.LD_PRELOAD = "libextest.so";
-          extraLibraries = _p: with _p; [ extest ];
-          extraPkgs = _p: [ _p.pulseaudio ];
-        };
         dedicatedServer.openFirewall = true;
+        extraPackages = [ pkgs.pulseaudio ];
       };
 
       gamemode = {
