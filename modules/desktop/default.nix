@@ -8,6 +8,12 @@
 let
   cfg = config.machine;
   hyprpicker-git = inputs.hyprpicker.packages.${cfg.platform}.hyprpicker;
+  nautilus-custom = pkgs.nautilus.overrideAttrs (oldAttrs: {
+    buildInputs = oldAttrs.buildInputs ++ [
+      pkgs.gst_all_1.gst-plugins-good
+      pkgs.gst_all_1.gst-plugins-bad
+    ];
+  });
 in
 {
   imports = [
@@ -57,6 +63,14 @@ in
       devmon.enable = true;
       gnome.sushi.enable = true;
       gvfs.enable = true;
+
+      dbus.packages = [
+        nautilus-custom
+        pkgs.file-roller
+        pkgs.gnome-clocks
+        pkgs.kdePackages.kdeconnect-kde
+        pkgs.zathura
+      ];
     };
 
     environment = {
@@ -106,12 +120,7 @@ in
         pkgs.gnome-clocks
         pkgs.oculante # image viewer
         # Gnome files with plugin for previewer
-        (pkgs.nautilus.overrideAttrs (oldAttrs: {
-          buildInputs = oldAttrs.buildInputs ++ [
-            pkgs.gst_all_1.gst-plugins-good
-            pkgs.gst_all_1.gst-plugins-bad
-          ];
-        }))
+        nautilus-custom
         pkgs.proton-vpn
         pkgs.qbittorrent
         pkgs.wireguard-tools

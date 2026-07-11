@@ -10,10 +10,14 @@ in
 {
   config = lib.mkIf cfg.desktop.enable {
     # Configure keymap in X11
-    services.xserver.xkb = {
-      layout = "us,de,jp";
-      variant = ",qwerty,";
-      options = "grp:win_space_toggle,ctrl:nocaps";
+    services = {
+      xserver.xkb = {
+        layout = "us,de,jp";
+        variant = ",qwerty,";
+        options = "grp:win_space_toggle,ctrl:nocaps";
+      };
+
+      dbus.packages = [ config.i18n.inputMethod.package ];
     };
 
     # Configure IME/Input method

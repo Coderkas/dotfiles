@@ -48,24 +48,24 @@ in
       };
     };
 
-    systemd = {
-      user.services.dunst = {
-        description = "Dunst notification daemon";
-        documentation = [ "man:dunst(1)" ];
-        after = [ "graphical-session.target" ];
-        partOf = [ "graphical-session.target" ];
-        wantedBy = [ "graphical-session.target" ];
-        restartTriggers = [ config.hjem.users.${owner}.xdg.config.files."dunst/dunstrc".source ];
-        path = lib.mkForce [ ];
-        serviceConfig = {
-          Type = "dbus";
-          BusName = "org.freedesktop.Notifications";
-          Slice = "session.slice";
-          ExecStart = "${lib.getExe pkgs.dunst}";
-          ExecReload = "${pkgs.dunst}/bin/dunstctl reload";
-        };
+    systemd.user.services.dunst = {
+      description = "Dunst notification daemon";
+      documentation = [ "man:dunst(1)" ];
+      after = [ "graphical-session.target" ];
+      partOf = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
+      restartTriggers = [ config.hjem.users.${owner}.xdg.config.files."dunst/dunstrc".source ];
+      path = lib.mkForce [ ];
+      serviceConfig = {
+        Type = "dbus";
+        BusName = "org.freedesktop.Notifications";
+        Slice = "session.slice";
+        ExecStart = "${lib.getExe pkgs.dunst}";
+        ExecReload = "${pkgs.dunst}/bin/dunstctl reload";
       };
     };
+
+    services.dbus.packages = [ pkgs.dunst ];
 
     environment.systemPackages = [
       pkgs.dunst

@@ -87,6 +87,8 @@ in
       '';
     };
 
+    services.dbus.packages = [ pkgs.ghostty ];
+
     environment.systemPackages = [
       pkgs.ghostty
     ];
