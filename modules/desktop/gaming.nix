@@ -13,6 +13,13 @@ in
   options.machine.gaming.enable = lib.mkEnableOption "Enable gaming";
 
   config = lib.mkIf cfg.enable {
+    hjem.users.${owner}.xdg.data.files = {
+      "Steam/compatibilitytools.d/GE-Proton".source = npin-src.proton-ge.outPath;
+      "Steam/compatibilitytools.d/proton-cachyos".source = npin-src.proton-cachyos.outPath;
+      "Steam/compatibilitytools.d/dwproton".source = npin-src.proton-dw.outPath;
+      "Steam/compatibilitytools.d/steamtinkerlaunch".source = pkgs.steamtinkerlaunch.steamcompattool;
+    };
+
     boot.kernelModules = [ "ntsync" ];
 
     programs = {
@@ -39,9 +46,6 @@ in
       sessionVariables = {
         STEAM_EXTRA_COMPAT_TOOLS_PATHS = [
           "/home/${owner}/.local/share/Steam/compatibilitytools.d"
-          npin-src.proton-ge.outPath
-          npin-src.proton-cachyos.outPath
-          npin-src.proton-dw.outPath
         ];
         MESA_SHADER_CACHE_MAX_SIZE = "12G"; # bigger shader cache size so they dont have to be processed every time
         # maybe fix for controller stuff?
