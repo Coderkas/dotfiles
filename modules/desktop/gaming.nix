@@ -40,7 +40,10 @@ in
 
     users.users.${owner}.extraGroups = [ "gamemode" ];
 
-    services.udev.packages = [ pkgs.game-devices-udev-rules ];
+    services = {
+      udev.packages = [ pkgs.game-devices-udev-rules ];
+      dbus.packages = [ config.programs.gamemode.package ];
+    };
 
     environment = {
       sessionVariables = {
