@@ -20,7 +20,6 @@ return {
                 library = {
                     vim.env.VIMRUNTIME,
                     "/run/current-system/sw/share/hypr/stubs",
-                    vim.env.XDG_DATA_HOME .. "/nvim/site/pack/" .. vim.env.USER,
                 },
             },
         },

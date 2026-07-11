@@ -4,6 +4,10 @@
   pkgs,
   ...
 }:
+let
+  hostName = "automaton";
+  address = "192.168.0.11";
+in
 {
   imports = [ inputs.nixos-hardware.nixosModules.raspberry-pi-4 ];
 
@@ -11,7 +15,6 @@
     themeName = "Gruvbox";
     owner = "lorkas";
     platform = "aarch64-linux";
-    name = "automaton";
     cpu = "pi";
     syncthing = {
       enable = true;
@@ -21,8 +24,6 @@
         servitor.id = "H35QFRA-DRR45Q3-7RCHTAP-AWPZKYT-DI6IJC2-OSNTZVV-PSQEUGM-2YW7NQF";
       };
     };
-    interface = "wlan0";
-    ipv4 = "192.168.0.101";
   };
 
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
@@ -43,14 +44,28 @@
   swapDevices = [ ];
 
   networking = {
+    inherit hostName; # Define your hostname.
     interfaces.wlan0.ipv4.addresses = [
       {
-        address = "192.168.0.4";
+        inherit address;
         prefixLength = 24;
       }
     ];
+
+    defaultGateway = {
+      address = "192.168.0.1";
+      interface = "enp6s0";
+    };
+
     networkmanager.wifi.powersave = lib.mkForce false;
   };
+
+  environment.etc.hosts.source = lib.mkForce (
+    pkgs.writeText "hosts" ''
+      127.0.0.1 localhost
+      ${address} ${hostName}
+    ''
+  );
 
   system.stateVersion = "25.05";
 }

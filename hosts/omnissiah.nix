@@ -1,4 +1,13 @@
-{ customPkgs, pkgs, ... }:
+{
+  customPkgs,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  hostName = "omnissiah";
+  address = "192.168.0.10";
+in
 {
   machine = {
     desktop = {
@@ -14,15 +23,27 @@
     themeName = "Gruvbox";
     owner = "lorkas";
     platform = "x86_64-linux";
-    name = "omnissiah";
     cpu = "intel";
     hasDedicatedGpu = true;
     dunst.monitor = "DP-3";
     vms.enable = false;
     syncthing.devices."automaton".id =
       "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
-    interface = "enp6s0";
-    ipv4 = "192.168.0.10";
+  };
+
+  networking = {
+    inherit hostName; # Define your hostname.
+    interfaces."enp6s0".ipv4.addresses = [
+      {
+        inherit address;
+        prefixLength = 24;
+      }
+    ];
+
+    defaultGateway = {
+      address = "192.168.0.1";
+      interface = "enp6s0";
+    };
   };
 
   programs = {
@@ -42,14 +63,23 @@
 
   virtualisation.waydroid.enable = true;
 
-  environment.systemPackages = [
-    pkgs.signal-desktop
-    pkgs.gimp
-    pkgs.element-desktop
-    pkgs.anki
-    pkgs.gpclient
-    customPkgs.packages."x86_64-linux".waydroid_script
-  ];
+  environment = {
+    systemPackages = [
+      pkgs.signal-desktop
+      pkgs.gimp
+      pkgs.element-desktop
+      pkgs.anki
+      pkgs.gpclient
+      customPkgs.packages."x86_64-linux".waydroid_script
+    ];
+
+    etc.hosts.source = lib.mkForce (
+      pkgs.writeText "hosts" ''
+        127.0.0.1 localhost
+        ${address} ${hostName}
+      ''
+    );
+  };
 
   powerManagement.cpuFreqGovernor = "performance";
 

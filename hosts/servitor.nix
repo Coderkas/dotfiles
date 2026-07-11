@@ -16,14 +16,11 @@
     themeName = "Gruvbox";
     owner = "lorkas";
     platform = "x86_64-linux";
-    name = "servitor";
     cpu = "amd";
     syncthing = {
       enable = true;
       devices."automaton".id = "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
     };
-    interface = "wlo1";
-    ipv4 = "192.168.0.102";
   };
   # Kernel stuff
   boot = {
@@ -45,7 +42,10 @@
     fprintd.enable = true;
   };
 
-  networking.firewall.checkReversePath = false;
+  networking = {
+    hostName = "servitor";
+    firewall.checkReversePath = false;
+  };
 
   environment.systemPackages = [
     pkgs.brightnessctl

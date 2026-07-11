@@ -18,12 +18,11 @@
     themeName = "Gruvbox";
     owner = "lorkas";
     platform = "x86_64-linux";
-    name = "medusa";
     cpu = "intel";
     syncthing.enable = false;
-    interface = "wlp3s0";
-    ipv4 = "192.168.0.14";
   };
+
+  networking.hostName = "medusa";
 
   services = {
     tlp = {

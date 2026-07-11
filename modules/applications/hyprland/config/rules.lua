@@ -28,7 +28,7 @@ hl.window_rule { match = { float = false, workspace = "f[1]", focus = false }, b
 hl.window_rule {
     name = "gayming",
     match = {
-        class = "^(hunt.exe|Overwatch.exe|nightreign.exe|chaosgate.exe|Warhammer 40000 Space Marine 2.exe|ReadyOrNot.exe|warhammer3.exe)$",
+        class = "^(AC3SP.exe|acu.exe|hunt.exe|Overwatch.exe|nightreign.exe|chaosgate.exe|Warhammer 40000 Space Marine 2.exe|ReadyOrNot.exe|warhammer3.exe)$",
     },
     float = false,
     fullscreen = true,

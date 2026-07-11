@@ -58,7 +58,7 @@ in
           bmenu = "${desktop.runner.commands.web}",
           cmenu = "",
           toggleWvkbd = "${pkgs.procps}/bin/kill --signal 34 $(${pkgs.procps}/bin/pgrep wvkbd-mobintl)",
-          host = "${config.machine.name}",
+          host = "${config.networking.hostName}",
         }
       '';
 

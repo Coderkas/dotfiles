@@ -71,10 +71,6 @@ in
       type = lib.types.package;
     };
 
-    name = lib.mkOption {
-      type = lib.types.nonEmptyStr;
-    };
-
     platform = lib.mkOption {
       type = lib.types.nonEmptyStr;
     };
@@ -97,7 +93,7 @@ in
         message = "owner is not set";
       }
       {
-        assertion = cfg.name != null;
+        assertion = config.networking.hostName != null;
         message = "machine name is not set";
       }
       {
