@@ -66,7 +66,10 @@ in
       ];
     };
 
-    xdg.portal.extraPortals = [ pkgs.gnome-keyring ];
+    xdg.portal = {
+      config.common."org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+      extraPortals = [ pkgs.gnome-keyring ];
+    };
 
     programs.seahorse.enable = true;
 

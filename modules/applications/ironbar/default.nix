@@ -7,35 +7,6 @@
 let
   cfg = config.machine.ironbar;
   inherit (config.machine) owner theme desktop;
-
-  ironbar-pkg = pkgs.ironbar.override {
-    features = [
-      "cli"
-      "ipc"
-      "config+toml"
-      "battery"
-      "bindmode+all"
-      "bluetooth"
-      "cairo"
-      "clipboard"
-      "clock"
-      "custom"
-      "focused"
-      "keyboard"
-      "label"
-      "launcher"
-      "menu"
-      "music+all"
-      "network_manager"
-      "notifications"
-      "script"
-      "sys_info"
-      "tray"
-      "workspaces+all"
-      "volume"
-      "extras"
-    ];
-  };
 in
 {
   options.machine.ironbar.enable = lib.mkEnableOption "Enable ironbar as taskbar";
@@ -70,6 +41,7 @@ in
         icon_size = 16
         [[monitors.${desktop.primaryMonitor}.end]]
         type = "network_manager"
+        types_blacklist = [ "loopback", "bridge" ]
         [[monitors.${desktop.primaryMonitor}.end]]
         type = "volume"
         [[monitors.${desktop.primaryMonitor}.end]]
@@ -87,7 +59,9 @@ in
         IRONBAR_LOG = "error";
         IRONBAR_FILE_LOG = "error";
       };
-      after = [ "graphical-session.target" ];
+      after = [
+        "graphical-session.target"
+      ];
       before = [ "tray.target" ];
       partOf = [ "graphical-session.target" ];
       wantedBy = [ "graphical-session.target" ];
@@ -95,12 +69,12 @@ in
       serviceConfig = {
         Type = "exec";
         Slice = "session.slice";
-        ExecStart = lib.getExe ironbar-pkg;
+        ExecStart = lib.getExe pkgs.ironbar;
       };
     };
 
     environment.systemPackages = [
-      ironbar-pkg
+      pkgs.ironbar
     ];
   };
 }

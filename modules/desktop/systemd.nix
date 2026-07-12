@@ -43,6 +43,15 @@ in
             ];
           };
         };
+        tray-delay = {
+          after = [ "graphical-session.target" ];
+          before = [ "tray.target" ];
+          wantedBy = [ "graphical-session.target" ];
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = "${pkgs.coreutils-full}/bin/sleep 2";
+          };
+        };
       };
 
       timers = {
