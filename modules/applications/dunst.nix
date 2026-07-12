@@ -65,7 +65,18 @@ in
       };
     };
 
-    services.dbus.packages = [ pkgs.dunst ];
+    services.dbus.packages = [
+      (pkgs.writeTextFile {
+        name = "dunst-dbus-service";
+        text = ''
+          [D-BUS Service]
+          Name=org.freedesktop.Notifications
+          Exec=${lib.getExe pkgs.dunst}
+          SystemdService=dunst.service
+        '';
+        destination = "/share/dbus-1/services/org.freedesktop.Notifications.service";
+      })
+    ];
 
     environment.systemPackages = [
       pkgs.dunst

@@ -18,6 +18,7 @@
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
+    ./kdeconnect.nix
     ./kitty.nix
     ./okular.nix
     ./syncthing.nix

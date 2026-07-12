@@ -8,12 +8,6 @@
 let
   cfg = config.machine;
   hyprpicker-git = inputs.hyprpicker.packages.${cfg.platform}.hyprpicker;
-  nautilus-custom = pkgs.nautilus.overrideAttrs (oldAttrs: {
-    buildInputs = oldAttrs.buildInputs ++ [
-      pkgs.gst_all_1.gst-plugins-good
-      pkgs.gst_all_1.gst-plugins-bad
-    ];
-  });
 in
 {
   imports = [
@@ -36,7 +30,6 @@ in
     programs = {
       bandwhich.enable = true; # top for sockets/connections
       dconf.enable = true;
-      kdeconnect.enable = true;
       thunderbird.enable = true;
       java.enable = true;
 
@@ -65,15 +58,17 @@ in
       gvfs.enable = true;
 
       dbus.packages = [
-        nautilus-custom
+        pkgs.nautilus
         pkgs.file-roller
         pkgs.gnome-clocks
-        pkgs.kdePackages.kdeconnect-kde
         pkgs.zathura
       ];
     };
 
     environment = {
+      sessionVariables = {
+        GST_PLUGIN_PATH = "/run/current-system/sw/lib/gstreamer-1.0/";
+      };
       shellAliases = {
         dd = ''echo -e "\033[0;95mReminder:\033[0m caligula is also installed"; ${pkgs.coreutils-full}/bin/dd'';
         df = ''echo -e "\033[0;95mReminder:\033[0m dua is also installed"; ${pkgs.coreutils-full}/bin/df'';
@@ -81,6 +76,11 @@ in
       };
 
       systemPackages = [
+        pkgs.gst_all_1.gstreamer
+        pkgs.gst_all_1.gst-plugins-base
+        pkgs.gst_all_1.gst-plugins-good
+        pkgs.gst_all_1.gst-plugins-bad
+        pkgs.gst_all_1.gst-plugins-ugly
         # Extracting things
         pkgs._7zip-zstd-rar
         pkgs.unrar
@@ -120,7 +120,7 @@ in
         pkgs.gnome-clocks
         pkgs.oculante # image viewer
         # Gnome files with plugin for previewer
-        nautilus-custom
+        pkgs.nautilus
         pkgs.proton-vpn
         pkgs.qbittorrent
         pkgs.wireguard-tools
