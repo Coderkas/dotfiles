@@ -24,9 +24,9 @@ in
     systemd.user.services = {
       kdeconnectd = {
         description = "KDEConnect daemon";
-        after = [ "graphical-session.target" ];
-        partOf = [ "graphical-session.target" ];
-        wantedBy = [ "graphical-session.target" ];
+        after = [ "tray.target" ];
+        partOf = [ "tray.target" ];
+        wantedBy = [ "tray.target" ];
         path = lib.mkForce [ ];
         serviceConfig = {
           Type = "dbus";
@@ -35,15 +35,12 @@ in
           ExecStart = "${kdeconnect-pkg}/bin/kdeconnectd";
         };
       };
+
       kdeconnect-indicator = {
         description = "KDEConnect tray indicator";
-        after = [
-          "tray.target"
-          "kdeconnectd.service"
-        ];
-        partOf = [ "tray.target" ];
-        wantedBy = [ "tray.target" ];
-        bindsTo = [ "kdeconnectd.service" ];
+        after = [ "kdeconnectd.service" ];
+        partOf = [ "kdeconnectd.service" ];
+        wantedBy = [ "kdeconnectd.service" ];
         path = lib.mkForce [ ];
         serviceConfig = {
           Type = "exec";
