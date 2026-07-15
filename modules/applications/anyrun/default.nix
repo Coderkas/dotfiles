@@ -6,8 +6,8 @@
 }:
 let
   cfg = config.machine.anyrun;
-  primaryRunner = config.machine.desktop.runner.name;
-  inherit (config.machine) owner;
+  inherit (config.machine) owner desktop;
+  primaryRunner = desktop.runner.name;
   anyrun-prep = pkgs.writeShellScriptBin "anyrun-prep" /* sh */ ''
     args=("$@")
     if [[ "$1" == "no-term" ]]; then
@@ -18,9 +18,9 @@ let
   '';
 in
 {
-  options.machine.anyrun.enable = lib.mkEnableOption "Enable anyrun and its service";
+  options.machine.anyrun.enable = lib.mkEnableOption "Anyrun";
 
-  config = lib.mkIf (cfg.enable || primaryRunner == "anyrun") {
+  config = lib.mkIf (cfg.enable || (desktop.enable && primaryRunner == "anyrun")) {
     machine.desktop.runner.commands = {
       menu = "${lib.getExe pkgs.anyrun} --plugins libapplications.so --plugins libshell.so --plugins librink.so --plugins libactions.so";
       web = "${lib.getExe pkgs.anyrun} --plugins libwebsearch.so --plugins libdictionary.so";

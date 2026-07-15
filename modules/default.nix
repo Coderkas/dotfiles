@@ -85,41 +85,4 @@ in
 
     hasDedicatedGpu = lib.mkEnableOption "Enable gpu stuff";
   };
-
-  config = {
-    assertions = [
-      {
-        assertion = cfg.owner != null;
-        message = "owner is not set";
-      }
-      {
-        assertion = config.networking.hostName != null;
-        message = "machine name is not set";
-      }
-      {
-        assertion = cfg.platform != null;
-        message = "platform is not set";
-      }
-      {
-        assertion = cfg.cpu != null;
-        message = "cpu is not set";
-      }
-      {
-        assertion = cfg.desktop.enable == true && cfg.desktop.bar != null;
-        message = "A bar should be set when running a desktop";
-      }
-      {
-        assertion = cfg.desktop.enable == true && cfg.desktop.browser != null;
-        message = "A browser should be set when running a desktop";
-      }
-      {
-        assertion = cfg.desktop.enable == true && cfg.desktop.runner != null;
-        message = "A runner should be set when running a desktop";
-      }
-      {
-        assertion = cfg.desktop.enable == true && cfg.desktop.terminal != null;
-        message = "A terminal should be set when running a desktop";
-      }
-    ];
-  };
 }

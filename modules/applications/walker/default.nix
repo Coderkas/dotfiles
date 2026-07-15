@@ -6,13 +6,13 @@
 }:
 let
   cfg = config.machine.walker;
-  primaryRunner = config.machine.desktop.runner.name;
-  inherit (config.machine) owner;
+  inherit (config.machine) owner desktop;
+  primaryRunner = desktop.runner.name;
 in
 {
-  options.machine.walker.enable = lib.mkEnableOption "Enable walker, elephant and the respective services";
+  options.machine.walker.enable = lib.mkEnableOption "Walker with Elephant";
 
-  config = lib.mkIf (cfg.enable || primaryRunner == "walker") {
+  config = lib.mkIf (cfg.enable || (desktop.enable && primaryRunner == "walker")) {
     machine.desktop.runner.commands = {
       menu = lib.getExe pkgs.walker;
       web = "${lib.getExe pkgs.walker} -m websearch";

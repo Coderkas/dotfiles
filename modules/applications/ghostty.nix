@@ -6,13 +6,13 @@
 }:
 let
   cfg = config.machine.ghostty;
-  primaryTerminal = config.machine.desktop.terminal.name;
-  inherit (config.machine) owner theme;
+  inherit (config.machine) owner theme desktop;
+  primaryTerminal = desktop.terminal.name;
 in
 {
-  options.machine.ghostty.enable = lib.mkEnableOption "Enable ghostty with its service";
+  options.machine.ghostty.enable = lib.mkEnableOption "Ghostty";
 
-  config = lib.mkIf (cfg.enable || primaryTerminal == "ghostty") {
+  config = lib.mkIf (cfg.enable || (desktop.enable && primaryTerminal == "ghostty")) {
     machine.desktop.terminal.command = "${lib.getExe pkgs.ghostty} +new-window";
 
     hjem.users.${owner}.xdg.config.files = {

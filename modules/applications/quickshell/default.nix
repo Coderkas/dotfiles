@@ -11,7 +11,7 @@ in
 {
   options.machine.quickshell.enable = lib.mkEnableOption "Enable quickshell as taskbar";
 
-  config = lib.mkIf (cfg.enable || desktop.bar == "quickshell") {
+  config = lib.mkIf (cfg.enable || (desktop.enable && desktop.bar == "quickshell")) {
     hjem.users.${owner}.xdg.config.files."quickshell".source = ./config;
 
     systemd.user.services.quickshell-daemon = {

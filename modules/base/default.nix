@@ -21,7 +21,7 @@ in
   config = {
     machine = {
       yazi.enable = true;
-      neovim.enable = true;
+      neovim.enable = cfg.cpu != "pi";
     };
 
     console.colors = cfg.theme.ttyColors; # Colors for tty
@@ -45,20 +45,6 @@ in
         filter = "*rpi-4-*.dtb";
       };
     };
-
-    fonts.packages = [
-      pkgs.noto-fonts
-      pkgs.noto-fonts-cjk-sans
-      pkgs.noto-fonts-cjk-serif
-      pkgs.noto-fonts-color-emoji
-      pkgs.nerd-fonts.fira-code
-      pkgs.nerd-fonts.iosevka-term
-      pkgs.nerd-fonts.caskaydia-cove
-      pkgs.nerd-fonts.jetbrains-mono
-      pkgs.nerd-fonts.symbols-only
-      pkgs.ipaexfont
-      pkgs.jigmo
-    ];
 
     programs = {
       bash = {
@@ -176,7 +162,6 @@ in
         pkgs.fd
         pkgs.jq
         pkgs.eza
-        pkgs.btop
 
         pkgs.babelfish
         pkgs.fishPlugins.fzf-fish
@@ -189,10 +174,15 @@ in
             hash = "sha256-Ynb0Yd5EMoz7tXwqF8NNKqCGbzTZn/CwLsZRQXIAVp4=";
           };
         }))
+
+        pkgs.tlrc # Official rust tldr client
+        pkgs.btop
+        pkgs.vim
       ]
       ++ lib.optionals (cfg.cpu == "pi") [
         pkgs.libraspberrypi
         pkgs.raspberrypi-eeprom
+        pkgs.neovim
       ];
     };
   };

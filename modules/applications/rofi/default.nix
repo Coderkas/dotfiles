@@ -6,13 +6,13 @@
 }:
 let
   cfg = config.machine.rofi;
-  primaryRunner = config.machine.desktop.runner.name;
-  inherit (config.machine) owner theme;
+  inherit (config.machine) owner theme desktop;
+  primaryRunner = desktop.runner.name;
 in
 {
-  options.machine.rofi.enable = lib.mkEnableOption "Enable rofi";
+  options.machine.rofi.enable = lib.mkEnableOption "Rofi";
 
-  config = lib.mkIf (cfg.enable || primaryRunner == "rofi") {
+  config = lib.mkIf (cfg.enable || (desktop.enable && primaryRunner == "rofi")) {
     machine.desktop.runner.commands = {
       menu = "${lib.getExe pkgs.rofi} -modes 'combi,calc' -combi-modes 'windows,drun,run' -show combi";
       web = "~/.config/hypr/browser.sh";

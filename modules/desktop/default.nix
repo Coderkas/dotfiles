@@ -27,6 +27,20 @@ in
       "mpv/mpv.conf".text = "volume=20";
     };
 
+    fonts.packages = [
+      pkgs.noto-fonts
+      pkgs.noto-fonts-cjk-sans
+      pkgs.noto-fonts-cjk-serif
+      pkgs.noto-fonts-color-emoji
+      pkgs.nerd-fonts.fira-code
+      pkgs.nerd-fonts.iosevka-term
+      pkgs.nerd-fonts.caskaydia-cove
+      pkgs.nerd-fonts.jetbrains-mono
+      pkgs.nerd-fonts.symbols-only
+      pkgs.ipaexfont
+      pkgs.jigmo
+    ];
+
     programs = {
       bandwhich.enable = true; # top for sockets/connections
       dconf.enable = true;
@@ -99,7 +113,6 @@ in
         pkgs.file
         pkgs.poppler-utils
 
-        pkgs.tlrc # Official rust tldr client
         pkgs.caligula # Better dd in rust
         pkgs.dua # Disk usage analyzer
         pkgs.numbat # Calculator/math scripting
@@ -108,7 +121,6 @@ in
         pkgs.lazysql
         pkgs.nurl # Nix url resolver
         pkgs.systemctl-tui
-        pkgs.vim
 
         pkgs.zathura
         (pkgs.mpv.override {

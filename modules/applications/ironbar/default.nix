@@ -11,7 +11,7 @@ in
 {
   options.machine.ironbar.enable = lib.mkEnableOption "Enable ironbar as taskbar";
 
-  config = lib.mkIf (cfg.enable || desktop.bar == "ironbar") {
+  config = lib.mkIf (cfg.enable || (desktop.enable && desktop.bar == "ironbar")) {
     hjem.users.${owner}.xdg.config.files = {
       "ironbar/config.toml".text = /* toml */ ''
         [monitors.${desktop.primaryMonitor}]

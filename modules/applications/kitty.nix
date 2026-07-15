@@ -6,13 +6,13 @@
 }:
 let
   cfg = config.machine.kitty;
-  primaryTerminal = config.machine.desktop.terminal.name;
-  inherit (config.machine) owner theme;
+  inherit (config.machine) owner theme desktop;
+  primaryTerminal = desktop.terminal.name;
 in
 {
-  options.machine.kitty.enable = lib.mkEnableOption "Enable kitty";
+  options.machine.kitty.enable = lib.mkEnableOption "Kitty";
 
-  config = lib.mkIf (cfg.enable || primaryTerminal == "kitty") {
+  config = lib.mkIf (cfg.enable || (desktop.enable && primaryTerminal == "kitty")) {
     machine.desktop.terminal.command = lib.getExe pkgs.kitty;
 
     hjem.users.${owner}.xdg.config.files = {

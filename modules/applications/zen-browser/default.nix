@@ -7,8 +7,8 @@
 }:
 let
   cfg = config.machine.zen-browser;
-  primaryBrowser = config.machine.desktop.browser.name;
-  inherit (config.machine) platform owner;
+  inherit (config.machine) platform owner desktop;
+  primaryBrowser = desktop.browser.name;
 
   zen-browser-git = inputs.zen-browser.packages.${platform}.twilight;
 
@@ -23,8 +23,8 @@ let
     }) extensionsList);
 in
 {
-  options.machine.zen-browser.enable = lib.mkEnableOption "Enable zen-browser with extensions";
-  config = lib.mkIf (cfg.enable || primaryBrowser == "zen-browser") {
+  options.machine.zen-browser.enable = lib.mkEnableOption "Zen-browser with extensions";
+  config = lib.mkIf (cfg.enable || (desktop.enable && primaryBrowser == "zen-browser")) {
     machine.desktop.browser.command = "${zen-browser-git}/bin/zen-twilight";
 
     hjem.users.${owner}.xdg.config.files = {
