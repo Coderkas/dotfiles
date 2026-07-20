@@ -54,7 +54,7 @@ in
 
     defaultGateway = {
       address = "192.168.0.1";
-      interface = "enp6s0";
+      interface = "wlan0";
     };
 
     networkmanager.wifi.powersave = lib.mkForce false;

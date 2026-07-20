@@ -31,6 +31,8 @@ in
       "RS6ZTBC-XHEWDBH-4EU6JUV-4NPHL3I-D66CZDO-JNEMRQL-OSVMTH5-Q5RZUQP";
   };
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   networking = {
     inherit hostName; # Define your hostname.
     interfaces."enp6s0".ipv4.addresses = [
