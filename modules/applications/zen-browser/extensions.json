@@ -2,27 +2,27 @@
   {
     "name": "uBlock0@raymondhill.net",
     "url": "https://addons.mozilla.org/en-US/firefox/downloads/latest/ublock-origin/latest.xpi",
-    "sha256": "1swzhiwsfjygp0cznrajijwh2mv1i2ayzc0bncq4h09czjhqixs7"
+    "sha256": "0y65nzqqcj9113h6bn7b1a9a1psq1ajygypcan0qcwbqvaq1bhs0"
   },
   {
     "name": "firefox@betterttv.net",
     "url": "https://addons.mozilla.org/en-US/firefox/downloads/latest/betterttv/latest.xpi",
-    "sha256": "18l57rd1yp341cqhf1y1dj3d1k1qqdb65xmy79g05q1cggh27dgv"
+    "sha256": "1p7nq8c0s9d33zqzqk1w84acr94ykbbmqa7kqyh2bhc5yspkq6mv"
   },
   {
     "name": "addon@darkreader.org",
     "url": "https://addons.mozilla.org/en-US/firefox/downloads/latest/darkreader/latest.xpi",
-    "sha256": "19r8jlrl5aiy3qq6wzndsgbwakja60gyhgd2dzdzhnhalqkr3gdh"
+    "sha256": "0i4ajppbh2fx71ppwar6na94hy3v1ah8wwqpjv9bc87413z4gw7l"
   },
   {
     "name": "vpn@proton.ch",
     "url": "https://addons.mozilla.org/en-US/firefox/downloads/latest/proton-vpn-firefox-extension/latest.xpi",
-    "sha256": "00x79kfs7jcldx7m3yadk2pabkxlfzndg8p4r6kbmgvpilbn03zm"
+    "sha256": "1av4k9081hkzbymcqs44pznjwq7k23v28aids6l1ifkzyn4s7v4i"
   },
   {
     "name": "{6b733b82-9261-47ee-a595-2dda294a4d08}",
     "url": "https://addons.mozilla.org/en-US/firefox/downloads/latest/yomitan/latest.xpi",
-    "sha256": "0ffi6npg0fr99k5sdnmvb6wqkhgfg72jsa5fc505myc4ajqhz5b1"
+    "sha256": "1p5968dgadzgf8zhrvbjmhp4bfhikg3kxz33p108pphi9bi8w17x"
   },
   {
     "name": "{762f9885-5a13-4abd-9c77-433dcd38b8fd}",
