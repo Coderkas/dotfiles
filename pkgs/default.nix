@@ -13,7 +13,7 @@ in
       pkgs = inputs.nixpkgs.legacyPackages.${host_platform};
     in
     {
-      waydroid_script = import ./waydroid_script {
+      waydroid_script = import ./waydroid_script.nix {
         inherit pkgs;
         inherit (inputs.nixpkgs) lib;
       };

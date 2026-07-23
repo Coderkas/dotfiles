@@ -26,6 +26,10 @@ in
     };
   };
 
+  services.syncthing.guiAddress = "${address}:8384";
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   hardware.raspberry-pi."4".apply-overlays-dtmerge.enable = true;
 
   programs.bash.interactiveShellInit = /* sh */ ''

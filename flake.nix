@@ -4,12 +4,17 @@
   inputs = {
     # System
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hjem = {
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-core.url = "github:manic-systems/nixos-core";
 
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
@@ -86,7 +91,7 @@
     { self, nixpkgs, ... }@inputs:
     let
       customPkgs = import ./pkgs { inherit inputs; };
-      npin-src = import ./npins;
+      tack-src = import ./.tack;
     in
     {
       inherit (customPkgs) packages;
@@ -99,7 +104,7 @@
               inputs
               customPkgs
               self
-              npin-src
+              tack-src
               ;
           };
           modules = [

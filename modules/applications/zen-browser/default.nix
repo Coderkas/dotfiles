@@ -3,6 +3,7 @@
   inputs,
   lib,
   pkgs,
+  tack-src,
   ...
 }:
 let
@@ -12,15 +13,40 @@ let
 
   zen-browser-git = inputs.zen-browser.packages.${platform}.twilight;
 
-  extensionsJSON = builtins.readFile ./extensions.json;
-  extensionsList = builtins.fromJSON extensionsJSON;
-
-  extensionsMapped =
-    profile:
-    (map (ext: {
-      name = "zen/${profile}/extensions/${ext.name}.xpi";
-      value.source = builtins.fetchurl { inherit (ext) url sha256; };
-    }) extensionsList);
+  mapExtensions = profilePath: [
+    {
+      name = profilePath + "uBlock0@raymondhill.net.xpi";
+      value.source = tack-src.ublock;
+    }
+    {
+      name = profilePath + "firefox@betterttv.net.xpi";
+      value.source = tack-src.betterttv;
+    }
+    {
+      name = profilePath + "addon@darkreader.org.xpi";
+      value.source = tack-src.darkreader;
+    }
+    {
+      name = profilePath + "vpn@proton.ch.xpi";
+      value.source = tack-src.proton-vpn;
+    }
+    {
+      name = profilePath + "{6b733b82-9261-47ee-a595-2dda294a4d08}.xpi";
+      value.source = tack-src.yomitan;
+    }
+    {
+      name = profilePath + "{762f9885-5a13-4abd-9c77-433dcd38b8fd}.xpi";
+      value.source = tack-src.return-youtube-dislikes;
+    }
+    {
+      name = profilePath + "keepassxc-browser@keepassxc.org.xpi";
+      value.source = tack-src.keepassxc-browser;
+    }
+    {
+      name = profilePath + "{d7742d87-e61d-4b78-b8a1-b469842139fa}.xpi";
+      value.source = tack-src.vimium-ff;
+    }
+  ];
 in
 {
   options.machine.zen-browser.enable = lib.mkEnableOption "Zen-browser with extensions";
@@ -33,7 +59,6 @@ in
       "zen/ImmersionProfile/search.json.mozlz4" = {
         source = ./config/search.json.mozlz4;
         type = "copy";
-        clobber = true;
         permissions = "644";
       };
       "zen/ImmersionProfile/prefs.js" = {
@@ -44,13 +69,11 @@ in
       "zen/ImmersionProfile/extensions.json" = {
         source = ./config/extensions.json;
         type = "copy";
-        clobber = true;
         permissions = "644";
       };
       "zen/ImmersionProfile/extension-preferences.json" = {
         source = ./config/extension-preferences.json;
         type = "copy";
-        clobber = true;
         permissions = "644";
       };
 
@@ -58,7 +81,6 @@ in
       "zen/PrimaryProfile/search.json.mozlz4" = {
         source = ./config/search.json.mozlz4;
         type = "copy";
-        clobber = true;
         permissions = "644";
       };
       "zen/PrimaryProfile/prefs.js" = {
@@ -70,17 +92,18 @@ in
       "zen/PrimaryProfile/extensions.json" = {
         source = ./config/extensions.json;
         type = "copy";
-        clobber = true;
         permissions = "644";
       };
       "zen/PrimaryProfile/extension-preferences.json" = {
         source = ./config/extension-preferences.json;
         type = "copy";
-        clobber = true;
         permissions = "644";
       };
     }
-    // lib.listToAttrs ((extensionsMapped "PrimaryProfile") ++ (extensionsMapped "ImmersionProfile"));
+    // lib.listToAttrs (
+      (mapExtensions "zen/PrimaryProfile/extensions/")
+      ++ (mapExtensions "zen/ImmersionProfile/extensions/")
+    );
 
     environment = {
       sessionVariables.BROWSER = "zen-twilight";

@@ -56,6 +56,7 @@ in
 
     environment.systemPackages = [
       pkgs.kitty
+      pkgs.kitty.terminfo
     ];
   };
 }

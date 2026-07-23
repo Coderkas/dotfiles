@@ -91,6 +91,7 @@ in
 
     environment.systemPackages = [
       pkgs.ghostty
+      pkgs.ghostty.terminfo
     ];
   };
 }

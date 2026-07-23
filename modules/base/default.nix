@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -16,6 +17,8 @@ in
     ./nix.nix
     ./ssh.nix
     ./users.nix
+
+    inputs.nixos-core.nixosModules.default
   ];
 
   config = {
@@ -23,6 +26,8 @@ in
       yazi.enable = true;
       neovim.enable = cfg.cpu != "pi";
     };
+
+    system.nixos-core.enable = true;
 
     console.colors = cfg.theme.ttyColors; # Colors for tty
 
@@ -178,6 +183,8 @@ in
         pkgs.tlrc # Official rust tldr client
         pkgs.btop
         pkgs.vim
+        pkgs.tack
+        pkgs.nix-tree
       ]
       ++ lib.optionals (cfg.cpu == "pi") [
         pkgs.libraspberrypi

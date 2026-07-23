@@ -39,6 +39,7 @@ in
         enable = true;
         directory = "/home/${cfg.owner}";
         user = cfg.owner;
+        clobberFiles = true;
       };
     };
 

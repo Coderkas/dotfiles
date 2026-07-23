@@ -103,7 +103,8 @@ in
         pkgs.emmylua-ls
         pkgs.gopls
         pkgs.lua-language-server
-        inputs.nil.packages.${platform}.default
+        #inputs.nil.packages.${platform}.default
+        pkgs.nil
         pkgs.nixd
         pkgs.ols
         pkgs.rust-analyzer
