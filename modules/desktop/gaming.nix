@@ -1,8 +1,8 @@
 {
   config,
   lib,
-  npin-src,
   pkgs,
+  tack-src,
   ...
 }:
 let
@@ -14,9 +14,9 @@ in
 
   config = lib.mkIf cfg.enable {
     hjem.users.${owner}.xdg.data.files = {
-      "Steam/compatibilitytools.d/GE-Proton".source = npin-src.proton-ge.outPath;
-      "Steam/compatibilitytools.d/proton-cachyos".source = npin-src.proton-cachyos.outPath;
-      "Steam/compatibilitytools.d/dwproton".source = npin-src.proton-dw.outPath;
+      "Steam/compatibilitytools.d/GE-Proton".source = tack-src.proton-ge;
+      "Steam/compatibilitytools.d/proton-cachyos".source = tack-src.proton-cachyos;
+      "Steam/compatibilitytools.d/dwproton".source = tack-src.proton-dw;
       "Steam/compatibilitytools.d/steamtinkerlaunch".source = pkgs.steamtinkerlaunch.steamcompattool;
     };
 
